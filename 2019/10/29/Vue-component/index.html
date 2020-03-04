@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Vue,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Vue CLI 快速原型开发安装工具 npm install @vue/cli@3 -g npm install @vue/cli-service-global@3 -g  启动 vue serve">
+<meta name="keywords" content="Vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue核心应用（五）— 组件间的通讯">
+<meta property="og:url" content="http://yoursite.com/2019/10/29/Vue-component/index.html">
+<meta property="og:site_name" content="Hi 加菲">
+<meta property="og:description" content="Vue CLI 快速原型开发安装工具 npm install @vue/cli@3 -g npm install @vue/cli-service-global@3 -g  启动 vue serve">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://jiafei2333.github.io/html/images/vue-2.png">
+<meta property="og:image" content="https://jiafei2333.github.io/html/images/vue-attr-1.png">
+<meta property="og:image" content="https://jiafei2333.github.io/html/images/vue-attr-2.png">
+<meta property="og:image" content="https://jiafei2333.github.io/html/images/vue-attr-3.png">
+<meta property="og:image" content="https://jiafei2333.github.io/html/images/vue-attr-4.png">
+<meta property="og:image" content="https://jiafei2333.github.io/html/images/vue-attr-5.png">
+<meta property="og:updated_time" content="2019-11-01T07:07:16.338Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue核心应用（五）— 组件间的通讯">
+<meta name="twitter:description" content="Vue CLI 快速原型开发安装工具 npm install @vue/cli@3 -g npm install @vue/cli-service-global@3 -g  启动 vue serve">
+<meta name="twitter:image" content="https://jiafei2333.github.io/html/images/vue-2.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/29/Vue-component/">
+
+
+
+
+
+  <title>Vue核心应用（五）— 组件间的通讯 | Hi 加菲</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi 加菲</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每个人都在负重前行</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/29/Vue-component/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="加菲">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/Prueba.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi 加菲">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Vue核心应用（五）— 组件间的通讯</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-29T17:09:06+08:00">
+                2019-10-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Vue-CLI-快速原型开发"><a href="#Vue-CLI-快速原型开发" class="headerlink" title="Vue CLI 快速原型开发"></a>Vue CLI 快速原型开发</h2><h3 id="安装工具"><a href="#安装工具" class="headerlink" title="安装工具"></a>安装工具</h3><ul>
+<li>npm install @vue/cli@3 -g</li>
+<li>npm install @vue/cli-service-global@3 -g</li>
+</ul>
+<p>启动 vue serve</p>
+<a id="more"></a>
+
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><h3 id="1）son1改parent中的钱"><a href="#1）son1改parent中的钱" class="headerlink" title="1）son1改parent中的钱"></a>1）son1改parent中的钱</h3><p>入口文件 main.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 当前文件的作用 主要：加载全局样式 全局组件 全局指令</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//1.入口文件 webpack会根据这个入口文件进行打包(这里不需要额外安装webpack，上面的包里已集成)</span></span><br><span class="line"><span class="comment">//2.默认会渲染App.vue组件</span></span><br><span class="line"><span class="comment">// 创建一个vue实例</span></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    el: <span class="string">'#app'</span>,</span><br><span class="line">    render:<span class="function"><span class="params">h</span>=&gt;</span>h(App) <span class="comment">// 用h(createElement)</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// vue serve 启动  会默认去找当前文件夹下的main.js 没有就找App.vue</span></span><br></pre></td></tr></table></figure>
+
+<p>App.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--根实例 根组件--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Parent</span> @<span class="attr">say</span>=<span class="string">"say"</span>&gt;</span><span class="tag">&lt;/<span class="name">Parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 组件使用的三部： 声明 + 注册 + 使用</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> Parent <span class="keyword">from</span> <span class="string">'./components/parent'</span>;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span>&#123;</span></span><br><span class="line">        components:&#123;</span><br><span class="line">            Parent</span><br><span class="line">        &#125;,</span><br><span class="line">        methods:&#123;</span><br><span class="line">            say()&#123;</span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(<span class="string">'say'</span>);</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>组件（components）<br>/components/parent.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        父亲有&#123;&#123;mny&#125;&#125;</span><br><span class="line">        <span class="comment">&lt;!-- 这里需要给子组件绑定一个自定义事件 --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- son1.$on('changeItem', change)  'changeItem'是属性名，后面是值，绑定的是一个函数， = 号右边的内容都是当前组件的内容--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 事件绑完之后在这个实例上有个属性 vm._event 订阅 原理--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Son1</span> <span class="attr">:mny</span>=<span class="string">"mny"</span> @<span class="attr">changeItem</span>=<span class="string">"change"</span>&gt;</span><span class="tag">&lt;/<span class="name">Son1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> Son1 <span class="keyword">from</span> <span class="string">'./son1'</span>;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    components:&#123;</span><br><span class="line">        Son1</span><br><span class="line">    &#125;,</span><br><span class="line">    data()&#123;</span><br><span class="line"><span class="javascript">        <span class="keyword">return</span>&#123;</span></span><br><span class="line">            mny: 100</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods:&#123;</span><br><span class="line">        change(newValue)&#123;</span><br><span class="line"><span class="javascript">            <span class="keyword">this</span>.mny = newValue;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>/components/son1.vue<br>单向数据流 不能子组件直接修改父组件的数据 这里指mny 可以子组件点击让父组件修改</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        son1  &#123;&#123;mny&#125;&#125;</span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"changeMoney()"</span>&gt;</span>修改钱<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span>&#123;</span></span><br><span class="line">    props:&#123;</span><br><span class="line">        mny:&#123;</span><br><span class="line"><span class="javascript">            type: <span class="built_in">Number</span> <span class="comment">// 校验类型</span></span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods:&#123;</span><br><span class="line">        changeMoney()&#123;</span><br><span class="line"><span class="javascript">            <span class="comment">// 这里面的这个this 就相当于 son1.$on('changeItem', change) 里面的son1</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">this</span>.$emit(<span class="string">'changeItem'</span>,<span class="number">200</span>);</span></span><br><span class="line"><span class="javascript">            <span class="built_in">console</span>.log(<span class="keyword">this</span>._events); <span class="comment">// 这里能够打印出发布订阅绑定的事件</span></span></span><br><span class="line"><span class="javascript">            <span class="comment">//  &#123;changeItem: Array(1)&#125; 如下图</span></span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://jiafei2333.github.io/html/images/vue-2.png" alt title="绑定的发布订阅事件"></p>
+<h3 id="2-grandson1改parent中的钱"><a href="#2-grandson1改parent中的钱" class="headerlink" title="2) grandson1改parent中的钱"></a>2) grandson1改parent中的钱</h3><ul>
+<li>孙=&gt;子=&gt;父 三层触发</li>
+<li>.$parent.$parent.$parent 多级</li>
+</ul>
+<p>/components/son1.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        son1  &#123;&#123;mny&#125;&#125;</span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"changeMoney()"</span>&gt;</span>修改钱<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 给Grandson1绑定事件 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Grandson1</span> <span class="attr">:mny</span>=<span class="string">"mny"</span> @<span class="attr">changeGrand</span>=<span class="string">"grandChange"</span>&gt;</span><span class="tag">&lt;/<span class="name">Grandson1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> Grandson1 <span class="keyword">from</span> <span class="string">'./grandson1'</span>;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span>&#123;</span></span><br><span class="line">    components:&#123;</span><br><span class="line">        Grandson1</span><br><span class="line">    &#125;,</span><br><span class="line">    props:&#123;</span><br><span class="line">        mny:&#123;</span><br><span class="line"><span class="javascript">            type: <span class="built_in">Number</span> <span class="comment">// 校验类型</span></span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods:&#123;</span><br><span class="line">        changeMoney()&#123;</span><br><span class="line"><span class="javascript">            <span class="comment">// 这里面的这个this 就相当于 son1.$on('changeItem', change) 里面的son1</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">this</span>.$emit(<span class="string">'changeItem'</span>,<span class="number">200</span>);</span></span><br><span class="line"><span class="javascript">            <span class="built_in">console</span>.log(<span class="keyword">this</span>._events); <span class="comment">// 这里能够打印出发布订阅绑定的事件</span></span></span><br><span class="line">        &#125;,</span><br><span class="line">        grandChange(newValue)&#123;</span><br><span class="line"><span class="javascript">            <span class="keyword">this</span>.$emit(<span class="string">'changeItem'</span>,newValue);</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>/components/grandson1.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        grandson1</span><br><span class="line">        &#123;&#123;mny&#125;&#125;</span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"changeMoney"</span>&gt;</span>孙子组件改变钱<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span>&#123;</span></span><br><span class="line">        props:&#123;</span><br><span class="line">            mny:&#123;</span><br><span class="line"><span class="javascript">                type: <span class="built_in">Number</span></span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        methods:&#123;</span><br><span class="line">            changeMoney()&#123;</span><br><span class="line"><span class="javascript">                <span class="comment">// 触发自己的事件</span></span></span><br><span class="line"><span class="javascript">                <span class="keyword">this</span>.$emit(<span class="string">'changeGrand'</span>, <span class="number">300</span>); <span class="comment">// 孙=&gt;子=&gt;父 三层触发</span></span></span><br><span class="line"></span><br><span class="line"><span class="javascript">                <span class="comment">// this.$parent.$emit('changeItem', 400); // 直接触发父组件绑定的事件，当前父组件是另一个父组件的子组件，触发了绑定的该父组件的changeItem事件</span></span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>.$dispatch 自动向上查找</li>
+</ul>
+<p>/components/grandson1.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        grandson1</span><br><span class="line">        &#123;&#123;mny&#125;&#125;</span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"changeMoney"</span>&gt;</span>孙子组件改变钱<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span>&#123;</span></span><br><span class="line">        props:&#123;</span><br><span class="line">            mny:&#123;</span><br><span class="line"><span class="javascript">                type: <span class="built_in">Number</span></span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        methods:&#123;</span><br><span class="line">            changeMoney()&#123;</span><br><span class="line"><span class="javascript">                <span class="comment">// 触发自己的事件</span></span></span><br><span class="line"><span class="javascript">                <span class="comment">// this.$emit('changeGrand', 300); // 孙=&gt;子=&gt;父 三层触发</span></span></span><br><span class="line"><span class="javascript">                <span class="comment">// this.$parent.$emit('changeItem', 400); // 直接触发父组件绑定的事件，当前父组件是另一个父组件的子组件，触发了绑定的该父组件的changeItem事件</span></span></span><br><span class="line"></span><br><span class="line"><span class="javascript">                <span class="keyword">this</span>.$dispatch(<span class="string">'changeItem'</span>, <span class="number">500</span>); </span></span><br><span class="line"><span class="javascript">                <span class="comment">// 自动向上查找他的父亲，有changeItem的话就触发   在main里写一个这个方法</span></span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>main.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Vue.prototype.$dispatch = <span class="function"><span class="keyword">function</span>(<span class="params">eventName,value</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> parent = <span class="keyword">this</span>.$parent; <span class="comment">// 先找第一层的parent</span></span><br><span class="line">    <span class="keyword">while</span>(parent)&#123;</span><br><span class="line">        parent.$emit(eventName,value); <span class="comment">// 触发方法</span></span><br><span class="line">        parent = parent.$parent; <span class="comment">// 接着向上找</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-往下"><a href="#3-往下" class="headerlink" title="3) 往下"></a>3) 往下</h3><blockquote>
+<p>注意：一定要先订阅，才能触发</p>
+</blockquote>
+<p>触发所有子组件带有 eat 方法<br>main.js中写 $broadcast方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 验证这个方法 在App.vue中加个say，底下子组件调用 </span></span><br><span class="line">Vue.prototype.$broadcast = <span class="function"><span class="keyword">function</span>(<span class="params">eventName</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> children = <span class="keyword">this</span>.$children;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">broad</span>(<span class="params">children</span>)</span>&#123;</span><br><span class="line">        children.forEach(<span class="function"><span class="params">child</span> =&gt;</span> &#123; <span class="comment">// 如果自己的儿子下面还有儿子 继续查找</span></span><br><span class="line">            child.$emit(eventName); <span class="comment">// 触发当前儿子上的对应事件</span></span><br><span class="line">            <span class="keyword">if</span>(child.$children)&#123;</span><br><span class="line">                broad(child.$children)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    broad(children); <span class="comment">// 先找自己的儿子</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>App.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--根实例 根组件--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Parent</span>&gt;</span><span class="tag">&lt;/<span class="name">Parent</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"broadcast"</span>&gt;</span>触发所有子组件带有 eat 的方法<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> Parent <span class="keyword">from</span> <span class="string">'./components/parent'</span>;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span>&#123;</span></span><br><span class="line">        components:&#123;</span><br><span class="line">            Parent</span><br><span class="line">        &#125;,</span><br><span class="line">        methods:&#123;</span><br><span class="line">            broadcast()&#123;</span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(<span class="string">"App-this:"</span>, <span class="keyword">this</span>);</span></span><br><span class="line"><span class="javascript">                <span class="keyword">this</span>.$broadcast(<span class="string">'eat'</span>);</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>parent.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 这里需要给子组件绑定一个自定义事件 --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- son1.$on('changeItem', change)  'changeItem'是属性名，后面是值，绑定的是一个函数  =号右边的内容都是当前组件的内容--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 事件绑完之后在这个实例上有个属性 vm._event 订阅 原理--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Son1</span> @<span class="attr">eat</span>=<span class="string">"eatFun"</span> &gt;</span><span class="tag">&lt;/<span class="name">Son1</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 注意： 这里的 @eat="eatFun" 就是订阅的过程，如果没有订阅 则不会触发。************************************************** --&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> Son1 <span class="keyword">from</span> <span class="string">'./son1'</span>;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    components:&#123;</span><br><span class="line">        Son1</span><br><span class="line">    &#125;,</span><br><span class="line">    methods:&#123;</span><br><span class="line">        eatFun()&#123;</span><br><span class="line"><span class="javascript">            <span class="built_in">console</span>.log(<span class="string">'parent-eat~'</span>)</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>son1.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 给Grandson1绑定事件 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Grandson1</span> @<span class="attr">eat</span>=<span class="string">"eat"</span>&gt;</span><span class="tag">&lt;/<span class="name">Grandson1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> Grandson1 <span class="keyword">from</span> <span class="string">'./grandson1'</span>;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span>&#123;</span></span><br><span class="line">    components:&#123;</span><br><span class="line">        Grandson1</span><br><span class="line">    &#125;,</span><br><span class="line">    methods:&#123;</span><br><span class="line">        eat()&#123;</span><br><span class="line"><span class="javascript">            <span class="built_in">console</span>.log(<span class="string">'son-eat~~'</span>);</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>点击App.vue中的 <button>触发所有子组件带有 eat 的方法</button>，打印: parent-eat~  &nbsp;&nbsp; son-eat~~</p>
+<h3 id="4-子组件-gt-父组件（多种写法）"><a href="#4-子组件-gt-父组件（多种写法）" class="headerlink" title="4) 子组件 =&gt; 父组件（多种写法）"></a>4) 子组件 =&gt; 父组件（多种写法）</h3><h4 id="gt-4-1"><a href="#gt-4-1" class="headerlink" title="&gt; 4.1"></a>&gt; 4.1</h4><p>parent.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Son2</span> <span class="attr">:count</span>=<span class="string">"count"</span> @<span class="attr">update:count</span>=<span class="string">"newValue=&gt;count=newValue"</span>&gt;</span><span class="tag">&lt;/<span class="name">Son2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> Son2 <span class="keyword">from</span> <span class="string">'./son2'</span>;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    components:&#123;</span><br><span class="line">        Son2</span><br><span class="line">    &#125;,</span><br><span class="line">    data()&#123;</span><br><span class="line"><span class="javascript">        <span class="keyword">return</span>&#123;</span></span><br><span class="line">            count: 1,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>son2.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        son2</span><br><span class="line">        count: &#123;&#123;count&#125;&#125;</span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"changeCount"</span>&gt;</span>点我改变count<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    props:&#123;</span><br><span class="line">        count:&#123;</span><br><span class="line"><span class="javascript">            type: <span class="built_in">Number</span> <span class="comment">// 类型检测</span></span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods:&#123;</span><br><span class="line">        changeCount()&#123;</span><br><span class="line"><span class="javascript">            <span class="keyword">this</span>.$emit(<span class="string">"update:count"</span>,<span class="number">2</span>); <span class="comment">//注意这里触发的写法 ****************************************</span></span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>点击子组件 <button>点我改变count</button>，修改父组件 count的值  1 =&gt; 2</p>
+<h4 id="gt-4-2"><a href="#gt-4-2" class="headerlink" title="&gt; 4.2"></a>&gt; 4.2</h4><p>parent.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- &lt;Son2 :count="count" @update:count="newValue=&gt;count=newValue"&gt;&lt;/Son2&gt; --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--1.下面是上一行的语法糖 写成 :count.sync 那么子组件中$emit触发的事件必须是 update:变量名 这里是count--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Son2</span> <span class="attr">:count.sync</span>=<span class="string">"count"</span>&gt;</span><span class="tag">&lt;/<span class="name">Son2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> Son2 <span class="keyword">from</span> <span class="string">'./son2'</span>;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    components:&#123;</span><br><span class="line">        Son2</span><br><span class="line">    &#125;,</span><br><span class="line">    data()&#123;</span><br><span class="line"><span class="javascript">        <span class="keyword">return</span>&#123;</span></span><br><span class="line">            count: 1,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>son2.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        son2</span><br><span class="line">        count: &#123;&#123;count&#125;&#125;</span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"changeCount"</span>&gt;</span>点我改变count<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    props:&#123;</span><br><span class="line">        count:&#123;</span><br><span class="line"><span class="javascript">            type: <span class="built_in">Number</span> <span class="comment">// 类型检测</span></span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods:&#123;</span><br><span class="line">        changeCount()&#123;</span><br><span class="line"><span class="javascript">            <span class="keyword">this</span>.$emit(<span class="string">"update:count"</span>,<span class="number">2</span>);</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>点击子组件 <button>点我改变count</button>，修改父组件 count的值  1 =&gt; 2</p>
+<h4 id="gt-4-3"><a href="#gt-4-3" class="headerlink" title="&gt; 4.3"></a>&gt; 4.3</h4><p>parent.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- &lt;Son2 :count="count" @update:count="newValue=&gt;count=newValue"&gt;&lt;/Son2&gt; --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--1.上一行的语法糖 写成 :count.sync 那么子组件中$emit触发的事件必须是 update:变量名 这里是count--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- &lt;Son2 :count.sync="count"&gt;&lt;/Son2&gt; --&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--这里传过去的值不是名字不是count，而是value，对应的子组件也需要改下，触发的方法是 input--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Son2</span> <span class="attr">:value</span>=<span class="string">"count"</span> @<span class="attr">input</span>=<span class="string">"newValue=&gt;count=newValue"</span>&gt;</span><span class="tag">&lt;/<span class="name">Son2</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> Son2 <span class="keyword">from</span> <span class="string">'./son2'</span>;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    components:&#123;</span><br><span class="line">        Son2</span><br><span class="line">    &#125;,</span><br><span class="line">    data()&#123;</span><br><span class="line"><span class="javascript">        <span class="keyword">return</span>&#123;</span></span><br><span class="line">            count: 1,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>son.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- son2</span></span><br><span class="line"><span class="comment">        count: &#123;&#123;count&#125;&#125;</span></span><br><span class="line"><span class="comment">        &lt;button @click="changeCount"&gt;点我改变count&lt;/button&gt; --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">        "value":</span><br><span class="line">        &#123;&#123;value&#125;&#125;</span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"changeValue"</span>&gt;</span>点我改变value<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    props:&#123;</span><br><span class="line">        count:&#123;</span><br><span class="line"><span class="javascript">            type: <span class="built_in">Number</span> <span class="comment">// 类型检测</span></span></span><br><span class="line">        &#125;,</span><br><span class="line">        value:&#123;</span><br><span class="line"><span class="javascript">            type: <span class="built_in">Number</span></span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods:&#123;</span><br><span class="line"><span class="javascript">        <span class="comment">// changeCount()&#123;</span></span></span><br><span class="line"><span class="javascript">        <span class="comment">//     this.$emit("update:count",2);</span></span></span><br><span class="line"><span class="javascript">        <span class="comment">// &#125;,</span></span></span><br><span class="line">        changeValue()&#123;</span><br><span class="line"><span class="javascript">            <span class="keyword">this</span>.$emit(<span class="string">'input'</span>,<span class="number">3</span>);</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>点击子组件 <button>点我改变value</button>，修改父组件 count的值  1 =&gt; 3</p>
+<h4 id="gt-4-4"><a href="#gt-4-4" class="headerlink" title="&gt; 4.4"></a>&gt; 4.4</h4><p>parent.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- &lt;Son2 :count="count" @update:count="newValue=&gt;count=newValue"&gt;&lt;/Son2&gt; --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--1.上一行的语法糖 写成 :count.sync 那么子组件中$emit触发的事件必须是 update:变量名 这里是count--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- &lt;Son2 :count.sync="count"&gt;&lt;/Son2&gt; --&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--这里传过去的值不是名字不是count，而是value，对应的子组件也需要改下，触发的方法是 input--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- &lt;Son2 :value="count" @input="newValue=&gt;count=newValue"&gt;&lt;/Son2&gt;  --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 2. 这个写法是上面写法的替代品，默认组件内部需要触发 input--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Son2</span> <span class="attr">v-model</span>=<span class="string">"count"</span>&gt;</span><span class="tag">&lt;/<span class="name">Son2</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- v-model局限 只能传递一个属性，如果只有一个可以使用v-model,多个依然需要使用.sync --&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> Son2 <span class="keyword">from</span> <span class="string">'./son2'</span>;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    components:&#123;</span><br><span class="line">        Son2</span><br><span class="line">    &#125;,</span><br><span class="line">    data()&#123;</span><br><span class="line"><span class="javascript">        <span class="keyword">return</span>&#123;</span></span><br><span class="line">            count: 1,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>son.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- son2</span></span><br><span class="line"><span class="comment">        count: &#123;&#123;count&#125;&#125;</span></span><br><span class="line"><span class="comment">        &lt;button @click="changeCount"&gt;点我改变count&lt;/button&gt; --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">        "value":</span><br><span class="line">        &#123;&#123;value&#125;&#125;</span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"changeValue"</span>&gt;</span>点我改变value<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    props:&#123;</span><br><span class="line">        count:&#123;</span><br><span class="line"><span class="javascript">            type: <span class="built_in">Number</span> <span class="comment">// 类型检测</span></span></span><br><span class="line">        &#125;,</span><br><span class="line">        value:&#123;</span><br><span class="line"><span class="javascript">            type: <span class="built_in">Number</span></span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods:&#123;</span><br><span class="line"><span class="javascript">        <span class="comment">// changeCount()&#123;</span></span></span><br><span class="line"><span class="javascript">        <span class="comment">//     this.$emit("update:count",2);</span></span></span><br><span class="line"><span class="javascript">        <span class="comment">// &#125;,</span></span></span><br><span class="line">        changeValue()&#123;</span><br><span class="line"><span class="javascript">            <span class="keyword">this</span>.$emit(<span class="string">'input'</span>,<span class="number">3</span>);</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-传递多个属性"><a href="#5-传递多个属性" class="headerlink" title="5) 传递多个属性"></a>5) 传递多个属性</h3><p>将多个属性 mny、count都传给son2</p>
+<h4 id="gt-5-1-attrs-属性的集合"><a href="#gt-5-1-attrs-属性的集合" class="headerlink" title="&gt; 5.1 $attrs 属性的集合"></a>&gt; 5.1 $attrs 属性的集合</h4><p>parent.vue</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Son2 :mny=&quot;mny&quot; :count=&quot;count&quot;&gt;&lt;/Son2&gt;</span><br></pre></td></tr></table></figure>
+
+<p>son2.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        son2</span><br><span class="line">        <span class="comment">&lt;!-- 属性的集合 --&gt;</span></span><br><span class="line">        &#123;&#123;$attrs&#125;&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>如下图：<br><img src="https://jiafei2333.github.io/html/images/vue-attr-1.png" alt></p>
+<h4 id="gt-5-2-props-attrs"><a href="#gt-5-2-props-attrs" class="headerlink" title="&gt; 5.2 props + $attrs"></a>&gt; 5.2 props + $attrs</h4><p>parent.vue</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Son2 :mny=&quot;mny&quot; :count=&quot;count&quot;&gt;&lt;/Son2&gt;</span><br></pre></td></tr></table></figure>
+
+<p>son2.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        son2</span><br><span class="line">        <span class="comment">&lt;!-- //属性的集合 --&gt;</span></span><br><span class="line">        &#123;&#123;$attrs&#125;&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="comment">// 如果组件中使用了 props 就会将 attrs 从当前的 $attrs 移除掉</span></span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    props:&#123;</span><br><span class="line"><span class="javascript">        mny:&#123;&#125; <span class="comment">// 从$attrs中移除mny属性</span></span></span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>如下图：<br><img src="https://jiafei2333.github.io/html/images/vue-attr-2.png" alt></p>
+<h4 id="gt-5-3-inheritAttrs"><a href="#gt-5-3-inheritAttrs" class="headerlink" title="&gt; 5.3 inheritAttrs"></a>&gt; 5.3 inheritAttrs</h4><p>parent.vue</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Son2 :mny=&quot;mny&quot; :count=&quot;count&quot;&gt;&lt;/Son2&gt;</span><br></pre></td></tr></table></figure>
+
+<p>son2.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        son2</span><br><span class="line">        <span class="comment">&lt;!-- //属性的集合 --&gt;</span></span><br><span class="line">        &#123;&#123;$attrs&#125;&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="comment">// 如果组件中使用了 props 就会将 attrs 从当前的 $attrs 移除掉</span></span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">    <span class="comment">// props:&#123;</span></span></span><br><span class="line"><span class="javascript">    <span class="comment">//     mny:&#123;&#125; // 从$attrs中移除mny属性</span></span></span><br><span class="line"><span class="javascript">    <span class="comment">// &#125;,</span></span></span><br><span class="line"><span class="javascript">    <span class="comment">// 不用props写 也可以用下面这个属性</span></span></span><br><span class="line"><span class="javascript">    inheritAttrs: <span class="literal">false</span>,</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>如下图：<br><img src="https://jiafei2333.github.io/html/images/vue-attr-3.png" alt></p>
+<blockquote>
+<p>官方文档：<br>inheritAttrs: 默认情况下父作用域的不被认作 props 的特性绑定 (attribute bindings) 将会“回退”且作为普通的 HTML 特性应用在子组件的根元素上。当撰写包裹一个目标元素或另一个组件的组件时，这可能不会总是符合预期行为。通过设置 inheritAttrs 到 false，这些默认行为将会被去掉。而通过 (同样是 2.4 新增的) 实例属性 $attrs 可以让这些特性生效，且可以通过 v-bind 显性的绑定到非根元素上。 inheritAttrs默认为true。</p>
+</blockquote>
+<h4 id="gt-5-4-attrs-应用"><a href="#gt-5-4-attrs-应用" class="headerlink" title="&gt; 5.4 $attrs 应用"></a>&gt; 5.4 $attrs 应用</h4><p>父传递给子 =&gt; 儿子 有属性用不到 =&gt; 孙子<br>parent.vue</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Son2 :mny=&quot;mny&quot; :count=&quot;count&quot;&gt;&lt;/Son2&gt;</span><br></pre></td></tr></table></figure>
+
+<p>son2.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        son2</span><br><span class="line">        <span class="comment">&lt;!-- 属性的集合 --&gt;</span></span><br><span class="line">        &#123;&#123;$attrs.mny&#125;&#125;</span><br><span class="line">        <span class="tag">&lt;<span class="name">Grandson2</span> <span class="attr">v-bind</span>=<span class="string">"$attrs"</span>&gt;</span><span class="tag">&lt;/<span class="name">Grandson2</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 可以理解为把当前组件的所有属性都传递下去 如果这里line19-23注释打开，即props里面有用到属性，那么mny属性就不会往下传--&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> Grandson2 <span class="keyword">from</span> <span class="string">'./grandson2'</span>;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    components:&#123;</span><br><span class="line">        Grandson2</span><br><span class="line">    &#125;,</span><br><span class="line"><span class="javascript">    inheritAttrs: <span class="literal">false</span>,</span></span><br><span class="line"><span class="javascript">    <span class="comment">// props:&#123;</span></span></span><br><span class="line"><span class="javascript">    <span class="comment">//     mny:&#123;</span></span></span><br><span class="line"><span class="javascript">    <span class="comment">//         type:Number</span></span></span><br><span class="line"><span class="javascript">    <span class="comment">//     &#125;</span></span></span><br><span class="line"><span class="javascript">    <span class="comment">// &#125;,</span></span></span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>如下图：<br><img src="https://jiafei2333.github.io/html/images/vue-attr-4.png" alt></p>
+<h4 id="6-传递事件"><a href="#6-传递事件" class="headerlink" title="6) 传递事件"></a>6) 传递事件</h4><p>要给组件传递一个show方法  跨组件传递 父 =&gt; 孙 </p>
+<h5 id="gt-6-1-native"><a href="#gt-6-1-native" class="headerlink" title="&gt; 6.1 .native"></a>&gt; 6.1 .native</h5><p>parent.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>		</span><br><span class="line">        <span class="comment">&lt;!-- 传递事件 要给组件传递一个show方法  跨组件传递 父 =&gt; 孙 --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 如下这样写，给Son2绑定show方法，点击Son2是不会有click事件的，因为这是自定义事件 这个@click和上面的 @input一样，名字和原生事件相同 想要变成原生事件可以如下加上.navive--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 这时点击son2组件没有反应 *********************************--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Son2</span> <span class="attr">:mny</span>=<span class="string">"mny"</span> <span class="attr">:count</span>=<span class="string">"count"</span> @<span class="attr">click</span>=<span class="string">"show"</span>&gt;</span><span class="tag">&lt;/<span class="name">Son2</span>&gt;</span>  </span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- .native 就是给组件的最外层div元素上绑定事件--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 这时点击son2组件最外层就会触发show事件 ***********************--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Son2</span> <span class="attr">:mny</span>=<span class="string">"mny"</span> <span class="attr">:count</span>=<span class="string">"count"</span> @<span class="attr">click.native</span>=<span class="string">"show"</span>&gt;</span><span class="tag">&lt;/<span class="name">Son2</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> Son2 <span class="keyword">from</span> <span class="string">'./son2'</span>;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    components:&#123;</span><br><span class="line">        Son2</span><br><span class="line">    &#125;,</span><br><span class="line">    data()&#123;</span><br><span class="line"><span class="javascript">        <span class="keyword">return</span>&#123;</span></span><br><span class="line">            mny: 100,</span><br><span class="line">            count: 1,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods:&#123;</span><br><span class="line">        show()&#123;</span><br><span class="line"><span class="javascript">            <span class="built_in">console</span>.log(<span class="string">'show~~'</span>);</span></span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="gt-6-2-listeners"><a href="#gt-6-2-listeners" class="headerlink" title="&gt; 6.2 $listeners"></a>&gt; 6.2 $listeners</h5><p>现在希望点击 grandson2 中的 button 时才触发 parent 中的 show 方法<br>在son2中添加$listeners<br>parnet.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 现在希望点击grandson中的button时才触发show方法   在son2中添加$listeners  这里的 @click @mouseup 都不是原生事件 同名而已--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">Son2</span> <span class="attr">:mny</span>=<span class="string">"mny"</span> <span class="attr">:count</span>=<span class="string">"count"</span> @<span class="attr">click</span>=<span class="string">"show"</span> @<span class="attr">mouseup</span>=<span class="string">"show"</span>&gt;</span><span class="tag">&lt;/<span class="name">Son2</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>son2.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 传递事件  可以在mounted中打印  v-bind 将属性全部向下传递  方法绑定v-on 将方法全部向下传递 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Grandson2</span> <span class="attr">v-bind</span>=<span class="string">"$attrs"</span> <span class="attr">v-on</span>=<span class="string">"$listeners"</span>&gt;</span><span class="tag">&lt;/<span class="name">Grandson2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> Grandson2 <span class="keyword">from</span> <span class="string">'./grandson2'</span>;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    mounted()&#123;</span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"listeners:"</span>,<span class="keyword">this</span>.$listeners); <span class="comment">// 如下图</span></span></span><br><span class="line">    &#125;,</span><br><span class="line">    components:&#123;</span><br><span class="line">        Grandson2</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://jiafei2333.github.io/html/images/vue-attr-5.png" alt></p>
+<p>grandson2.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        grandson2</span><br><span class="line">        &#123;&#123;$attrs&#125;&#125;</span><br><span class="line">        <span class="comment">&lt;!-- 这里的 @click 和 $mouseup 是原生的--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"$listeners.click"</span>&gt;</span>点我click<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">mouseup</span>=<span class="string">"$listeners.mouseup"</span>&gt;</span>点我mouseup<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>如上，点击 grandson2.vue 中的 button 触发的是 parent.vue 中的say方法</p>
+<h5 id="gt-6-3-provide-amp-amp-inject"><a href="#gt-6-3-provide-amp-amp-inject" class="headerlink" title="&gt; 6.3 provide &amp;&amp; inject"></a>&gt; 6.3 provide &amp;&amp; inject</h5><p>grandson2.vue 触发 App.vue 中的方法</p>
+<p>App.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> Parent <span class="keyword">from</span> <span class="string">'./components/parent'</span>;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span>&#123;</span></span><br><span class="line">        provide()&#123;</span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> &#123; <span class="attr">vm</span>: <span class="keyword">this</span>&#125; <span class="comment">// 暴露全局方法</span></span></span><br><span class="line">        &#125;,</span><br><span class="line">        components:&#123;</span><br><span class="line">            Parent</span><br><span class="line">        &#125;,</span><br><span class="line">        methods:&#123;</span><br><span class="line">            say()&#123;</span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(<span class="string">'say-provide'</span>);</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>grandson2.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">    inject:[<span class="string">'vm'</span>],  <span class="comment">// 注入 会向上查找  如果重名，找到就停止。</span></span></span><br><span class="line">    mounted()&#123;</span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.vm); <span class="comment">// 这个vm就是App.vue组件的实例</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">this</span>.vm.say(); <span class="comment">// 可以直接触发父级方法</span></span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="gt-6-4-ref-amp-amp-ref"><a href="#gt-6-4-ref-amp-amp-ref" class="headerlink" title="&gt; 6.4 ref &amp;&amp; $ref"></a>&gt; 6.4 ref &amp;&amp; $ref</h5><p>parent.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- ref示例 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Son2</span> <span class="attr">ref</span>=<span class="string">"son2"</span> <span class="attr">:mny</span>=<span class="string">"mny"</span> <span class="attr">:count</span>=<span class="string">"count"</span> @<span class="attr">click</span>=<span class="string">"show"</span> @<span class="attr">mouseup</span>=<span class="string">"show"</span>&gt;</span><span class="tag">&lt;/<span class="name">Son2</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> Son2 <span class="keyword">from</span> <span class="string">'./son2'</span>;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">    <span class="comment">// refs 示例</span></span></span><br><span class="line">    mounted()&#123;</span><br><span class="line"><span class="javascript">        <span class="keyword">this</span>.$refs.son2.alertLayer(); <span class="comment">// 直接在父组件中拿到组件的实例，并且ref不要重名，只有v-for才会出现数组的情况</span></span></span><br><span class="line">    &#125;,</span><br><span class="line">    components:&#123;</span><br><span class="line">        Son2</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>son2.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    methods:&#123;</span><br><span class="line"><span class="javascript">        alertLayer()&#123;<span class="comment">// ref示例</span></span></span><br><span class="line"><span class="javascript">            alert(<span class="string">"ref示例"</span>);</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>如上，页面弹出 alert(“ref示例”)；</p>
+<p>和上述 <code>provide &amp;&amp; inject</code> 相反，<code>provide &amp;&amp; inject</code>是父组件将实例暴露出来供子组件调用，<code>ref</code>是父组件去调用子组件的实例。</p>
+<h5 id="gt-6-5-bus"><a href="#gt-6-5-bus" class="headerlink" title="&gt; 6.5 $bus"></a>&gt; 6.5 $bus</h5><p>main.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个全局的发布订阅 偶尔用一次还可以，使用起来比较混乱</span></span><br><span class="line">Vue.prototype.$bus = <span class="keyword">new</span> Vue(); <span class="comment">// 创建一个实例 把它放到$bus上</span></span><br><span class="line"><span class="comment">// 创建的这个vue实例上有 $on  $emit ，这样就可以去任何的一个组件中绑定事件</span></span><br><span class="line"><span class="comment">// 这样就可以全局调用 $bus</span></span><br></pre></td></tr></table></figure>
+
+<p>parent.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> Son2 <span class="keyword">from</span> <span class="string">'./son2'</span>;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    mounted()&#123;</span><br><span class="line"><span class="javascript">        <span class="keyword">this</span>.$bus.$on(<span class="string">"changeBus"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="comment">// this.$bus 是通过全局的实例去绑定事件 (订阅)</span></span></span><br><span class="line"><span class="javascript">            <span class="built_in">console</span>.log(<span class="string">"change bus绑定事件"</span>)</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">    components:&#123;</span><br><span class="line">        Son2</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>grandson2.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    mounted()&#123;</span><br><span class="line"><span class="javascript">        <span class="keyword">this</span>.$bus.$emit(<span class="string">"changeBus"</span>); <span class="comment">//这样是不会执行的，多级组件的挂载顺序 </span></span></span><br><span class="line"><span class="javascript">        <span class="comment">// 可以</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">this</span>.$nextTick(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">this</span>.$bus.$emit(<span class="string">"changeBus"</span>);</span></span><br><span class="line">        &#125;)</span><br><span class="line"><span class="javascript">        <span class="comment">// 这样就会执行 console.log 打印出 change bus绑定事件</span></span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>父传递给子数据 props emit （这个用的多些）</li>
+<li>$parent $children</li>
+<li>$attrs $listeners</li>
+<li>provide inject  和 context很像 （可以在父组件中声明一个公共数据），在子组件中可以注入原理 (特点：比较混乱，名称问题 他不会在业务代码中使用) 组件库 多级通信时为了方便可以使用provide</li>
+<li>ref 能获取真实dom元素，如果放到组件上 代表的是 当前组件的实例 ,父组件中可以直接获取子组件的方法或者数据 示例 6.4</li>
+<li>eventbus (像 $parent，$children 中，比如 a.$on() 必须 a.$emit() 来触发， b.$emit() 不行) 绑定 $on 只能通过绑定 $on 的那个组件来触发， (这里 eventbus 使用混乱，不管在哪里绑定都能触发 $bus )</li>
+</ul>
+<p>vue 初学者用 props + emit 就够用了</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Vue/" rel="tag"># Vue</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/29/Vue-core-4/" rel="next" title="Vue核心应用（四）— 生命周期">
+                <i class="fa fa-chevron-left"></i> Vue核心应用（四）— 生命周期
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/01/Vue-UI-Components/" rel="prev" title="Vue核心应用（六）— 手写UI组件">
+                Vue核心应用（六）— 手写UI组件 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/Prueba.gif" alt="加菲">
+            
+              <p class="site-author-name" itemprop="name">加菲</p>
+              <p class="site-description motion-element" itemprop="description">啦啦啦~~~加油码字</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-CLI-快速原型开发"><span class="nav-number">1.</span> <span class="nav-text">Vue CLI 快速原型开发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装工具"><span class="nav-number">1.1.</span> <span class="nav-text">安装工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例"><span class="nav-number">2.</span> <span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1）son1改parent中的钱"><span class="nav-number">2.1.</span> <span class="nav-text">1）son1改parent中的钱</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-grandson1改parent中的钱"><span class="nav-number">2.2.</span> <span class="nav-text">2) grandson1改parent中的钱</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-往下"><span class="nav-number">2.3.</span> <span class="nav-text">3) 往下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-子组件-gt-父组件（多种写法）"><span class="nav-number">2.4.</span> <span class="nav-text">4) 子组件 =&gt; 父组件（多种写法）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#gt-4-1"><span class="nav-number">2.4.1.</span> <span class="nav-text">&gt; 4.1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gt-4-2"><span class="nav-number">2.4.2.</span> <span class="nav-text">&gt; 4.2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gt-4-3"><span class="nav-number">2.4.3.</span> <span class="nav-text">&gt; 4.3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gt-4-4"><span class="nav-number">2.4.4.</span> <span class="nav-text">&gt; 4.4</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-传递多个属性"><span class="nav-number">2.5.</span> <span class="nav-text">5) 传递多个属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#gt-5-1-attrs-属性的集合"><span class="nav-number">2.5.1.</span> <span class="nav-text">&gt; 5.1 $attrs 属性的集合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gt-5-2-props-attrs"><span class="nav-number">2.5.2.</span> <span class="nav-text">&gt; 5.2 props + $attrs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gt-5-3-inheritAttrs"><span class="nav-number">2.5.3.</span> <span class="nav-text">&gt; 5.3 inheritAttrs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gt-5-4-attrs-应用"><span class="nav-number">2.5.4.</span> <span class="nav-text">&gt; 5.4 $attrs 应用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-传递事件"><span class="nav-number">2.5.5.</span> <span class="nav-text">6) 传递事件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#gt-6-1-native"><span class="nav-number">2.5.5.1.</span> <span class="nav-text">&gt; 6.1 .native</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#gt-6-2-listeners"><span class="nav-number">2.5.5.2.</span> <span class="nav-text">&gt; 6.2 $listeners</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#gt-6-3-provide-amp-amp-inject"><span class="nav-number">2.5.5.3.</span> <span class="nav-text">&gt; 6.3 provide &amp;&amp; inject</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#gt-6-4-ref-amp-amp-ref"><span class="nav-number">2.5.5.4.</span> <span class="nav-text">&gt; 6.4 ref &amp;&amp; $ref</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#gt-6-5-bus"><span class="nav-number">2.5.5.5.</span> <span class="nav-text">&gt; 6.5 $bus</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">加菲</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

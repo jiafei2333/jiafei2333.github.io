@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Nodejs,文件系统 fs,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言  可读流中有 on(‘data’) on(‘end’)可写流有 write    end  fs.createWriteStream概念这里先创建一个文件 notd.md 1你好">
+<meta name="keywords" content="Nodejs,文件系统 fs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nodejs fs （三）之 可写流 createWriteStream">
+<meta property="og:url" content="http://yoursite.com/2019/09/27/Node-fs-createWriteStream/index.html">
+<meta property="og:site_name" content="Hi 加菲">
+<meta property="og:description" content="前言  可读流中有 on(‘data’) on(‘end’)可写流有 write    end  fs.createWriteStream概念这里先创建一个文件 notd.md 1你好">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://jiafei2333.github.io/html/images/fs.createWriteStream.png">
+<meta property="og:updated_time" content="2019-09-29T03:16:03.613Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nodejs fs （三）之 可写流 createWriteStream">
+<meta name="twitter:description" content="前言  可读流中有 on(‘data’) on(‘end’)可写流有 write    end  fs.createWriteStream概念这里先创建一个文件 notd.md 1你好">
+<meta name="twitter:image" content="https://jiafei2333.github.io/html/images/fs.createWriteStream.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/09/27/Node-fs-createWriteStream/">
+
+
+
+
+
+  <title>Nodejs fs （三）之 可写流 createWriteStream | Hi 加菲</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi 加菲</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每个人都在负重前行</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/27/Node-fs-createWriteStream/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="加菲">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/Prueba.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi 加菲">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Nodejs fs （三）之 可写流 createWriteStream</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-27T16:30:08+08:00">
+                2019-09-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nodejs/" itemprop="url" rel="index">
+                    <span itemprop="name">Nodejs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p> 可读流中有 on(‘data’) on(‘end’)<br>可写流有 write    end</p>
+</blockquote>
+<h2 id="fs-createWriteStream"><a href="#fs-createWriteStream" class="headerlink" title="fs.createWriteStream"></a>fs.createWriteStream</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>这里先创建一个文件 notd.md</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">你好</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 可读流</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">let</span> rs = fs.createReadStream(path.resolve(__dirname,<span class="string">'note.md'</span>),&#123;</span><br><span class="line">    highWaterMark: <span class="number">1</span> <span class="comment">// 代表每次读1个</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 可写流</span></span><br><span class="line"><span class="keyword">let</span> ws = fs.createWriteStream(path.resolve(__dirname,<span class="string">'copy.md'</span>));</span><br><span class="line"><span class="comment">// 默认是暂停模式</span></span><br><span class="line"><span class="keyword">let</span> arr = [];</span><br><span class="line">rs.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    arr.push(data)</span><br><span class="line">    <span class="comment">// 去做写的操作</span></span><br><span class="line">    ws.write(data);</span><br><span class="line">&#125;)</span><br><span class="line">rs.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(Buffer.concat(arr).toString()); <span class="comment">//你好</span></span><br><span class="line">    ws.end();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> rs = fs.createReadStream(path.resolve(__dirname,<span class="string">'note1.md'</span>),&#123;</span><br><span class="line">    highWaterMark: <span class="number">1</span> <span class="comment">// 默认64 * 1024 每次读一个 读完一个往里写</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 可写流</span></span><br><span class="line"><span class="keyword">let</span> ws = fs.createWriteStream(path.resolve(__dirname,<span class="string">'copy1.md'</span>),&#123;</span><br><span class="line">    highWaterMark: <span class="number">3</span>, <span class="comment">// 默认 16 * 1024  预计占用的内存空间是多少</span></span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 默认是暂停模式</span></span><br><span class="line"><span class="keyword">let</span> arr = [];</span><br><span class="line"></span><br><span class="line">rs.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    arr.push(data)</span><br><span class="line">    <span class="comment">// 去做写的操作</span></span><br><span class="line">    <span class="keyword">let</span> flag = ws.write(data); <span class="comment">// 做到收支平衡，读一点写一点</span></span><br><span class="line">    <span class="comment">// flag代表的是当前预计的内存大小是否被撑满</span></span><br><span class="line">    <span class="built_in">console</span>.log(flag);</span><br><span class="line">    <span class="comment">// write调的就是fs.write是异步的，相当于多个异步请求操作同一个文件，不能多个异步同时操作一个文件，所以会放到缓存区中</span></span><br><span class="line">&#125;)</span><br><span class="line">rs.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(Buffer.concat(arr).toString());</span><br><span class="line">    ws.end();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>具体要看flag可以看下面的 只看可写流</p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><h4 id="1-预计写10个数-同步的写"><a href="#1-预计写10个数-同步的写" class="headerlink" title="1. 预计写10个数 同步的写"></a>1. 预计写10个数 同步的写</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">let</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">let</span> ws = fs.createWriteStream(path.resolve(__dirname, <span class="string">'note3.md'</span>), &#123;</span><br><span class="line">    highWaterMark: <span class="number">3</span>,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">let</span> index = <span class="number">-1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">write</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(++index&lt;<span class="number">10</span>)&#123; </span><br><span class="line">        <span class="keyword">let</span> flag = ws.write(index+<span class="string">''</span>); <span class="comment">// 可写流写入的数据只能是字符串或者Buffer 所以这里+''</span></span><br><span class="line">        <span class="built_in">console</span>.log(flag);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">write();</span><br><span class="line"><span class="comment">/*执行结果</span></span><br><span class="line"><span class="comment">true</span></span><br><span class="line"><span class="comment">true</span></span><br><span class="line"><span class="comment">false</span></span><br><span class="line"><span class="comment">false</span></span><br><span class="line"><span class="comment">false</span></span><br><span class="line"><span class="comment">false</span></span><br><span class="line"><span class="comment">false</span></span><br><span class="line"><span class="comment">false</span></span><br><span class="line"><span class="comment">false</span></span><br><span class="line"><span class="comment">false</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">// 文件 note3.md   0123456789</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>可写流写入的数据只能是字符串或者Buffer 所以这里+’’</p>
+</blockquote>
+<p>原理如图：<br><img src="https://jiafei2333.github.io/html/images/fs.createWriteStream.png" alt title="可写流"></p>
+<p>第一次0往里写还能写下，第二次1往里写还能写下，第三次2往里写，2能写下，但是之后的不能写下了，所以如图flag为false，即flag表示是否还能继续往里写，值为false时表示预计的缓存区放不下， 但是还是会放进去，会撑开，这样就浪费内存了，希望的是写不下了，就等待，等写完了再放进去。</p>
+<h4 id="2-加flag的判断"><a href="#2-加flag的判断" class="headerlink" title="2. 加flag的判断"></a>2. 加flag的判断</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">let</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">let</span> ws = fs.createWriteStream(path.resolve(__dirname, <span class="string">'note3.md'</span>), &#123;</span><br><span class="line">    highWaterMark: <span class="number">3</span>,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">let</span> index = <span class="number">-1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">write</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> flag = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">while</span>(++index&lt;<span class="number">10</span> &amp;&amp; flag)&#123; </span><br><span class="line">        flag = ws.write(index+<span class="string">''</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(flag);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">write();</span><br><span class="line"><span class="comment">// 文件 note3.md   012</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-当内存中的值都写入文件之后继续写入"><a href="#3-当内存中的值都写入文件之后继续写入" class="headerlink" title="3. 当内存中的值都写入文件之后继续写入"></a>3. 当内存中的值都写入文件之后继续写入</h4><blockquote>
+<p>on(‘drain’)</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 当内存中的值都写入文件之后继续写入</span></span><br><span class="line"><span class="keyword">let</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">let</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">let</span> ws = fs.createWriteStream(path.resolve(__dirname, <span class="string">'note3.md'</span>), &#123;</span><br><span class="line">    highWaterMark: <span class="number">3</span>,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">let</span> index = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">write</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> flag = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">while</span>(index&lt;<span class="number">10</span> &amp;&amp; flag)&#123; </span><br><span class="line">        flag = ws.write(index+<span class="string">''</span>);</span><br><span class="line">        index ++;</span><br><span class="line">        <span class="built_in">console</span>.log(flag);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">write();</span><br><span class="line"><span class="comment">// 只有当写入的个数达到了预计的大小 并且被写入到文件后清空了 才会触发drain，所以这里最后只有一个9传进去之后没有再触发（即执行结果里面最后一个true之后没有再触发‘干了’）</span></span><br><span class="line">ws.on(<span class="string">'drain'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'干了'</span>);</span><br><span class="line">    write();</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">/*执行结果：</span></span><br><span class="line"><span class="comment">true</span></span><br><span class="line"><span class="comment">true</span></span><br><span class="line"><span class="comment">false</span></span><br><span class="line"><span class="comment">干了</span></span><br><span class="line"><span class="comment">true</span></span><br><span class="line"><span class="comment">true</span></span><br><span class="line"><span class="comment">false</span></span><br><span class="line"><span class="comment">干了</span></span><br><span class="line"><span class="comment">true</span></span><br><span class="line"><span class="comment">true</span></span><br><span class="line"><span class="comment">false</span></span><br><span class="line"><span class="comment">干了</span></span><br><span class="line"><span class="comment">true</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="4-只有手动调end-才会触发关闭文件的事件"><a href="#4-只有手动调end-才会触发关闭文件的事件" class="headerlink" title="4. 只有手动调end 才会触发关闭文件的事件"></a>4. 只有手动调end 才会触发关闭文件的事件</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">let</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">let</span> ws = fs.createWriteStream(path.resolve(__dirname, <span class="string">'note3.md'</span>), &#123;</span><br><span class="line">    highWaterMark: <span class="number">3</span>,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">let</span> index = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">write</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> flag = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">while</span>(index&lt;<span class="number">10</span> &amp;&amp; flag)&#123; </span><br><span class="line">        flag = ws.write(index+<span class="string">''</span>);</span><br><span class="line">        index ++;</span><br><span class="line">        <span class="built_in">console</span>.log(flag);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(index === <span class="number">10</span>)&#123;</span><br><span class="line">        ws.end(); <span class="comment">// 关闭文件 关闭可写流   // 0123456789</span></span><br><span class="line">        <span class="comment">//ws.end('hello'); // 如果end里加了参数，最后会写入文件中 // 0123456789hello</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">write();</span><br><span class="line">ws.on(<span class="string">'drain'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'干了'</span>);</span><br><span class="line">    write();</span><br><span class="line">&#125;)</span><br><span class="line">ws.on(<span class="string">'close'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'close'</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="手写可写流"><a href="#手写可写流" class="headerlink" title="手写可写流"></a>手写可写流</h3><p>新建：调用文件 write.js &nbsp;&nbsp;&nbsp;&nbsp; 原理 ReadStream.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// write.js</span></span><br><span class="line"><span class="keyword">let</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">let</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> WriteStream = <span class="built_in">require</span>(<span class="string">'./WriteStream'</span>);</span><br><span class="line"><span class="keyword">let</span> ws = <span class="keyword">new</span> WriteStream(path.resolve(__dirname, <span class="string">'note3.md'</span>), &#123;</span><br><span class="line">    highWaterMark: <span class="number">3</span>, <span class="comment">// 表示预期占用几个内存</span></span><br><span class="line">    encoding: <span class="string">'utf8'</span>, <span class="comment">// 写入的编码</span></span><br><span class="line">    start: <span class="number">0</span>, <span class="comment">// 从文件的第0个位置写入</span></span><br><span class="line">    mode: <span class="number">438</span>,</span><br><span class="line">    flags: <span class="string">'w'</span>, <span class="comment">// 默认操作是可写</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">let</span> index = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">write</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> flag = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">while</span>(index&lt;<span class="number">10</span> &amp;&amp; flag)&#123; </span><br><span class="line">        flag = ws.write(index+<span class="string">''</span>);</span><br><span class="line">        index ++;</span><br><span class="line">        <span class="built_in">console</span>.log(flag);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// if(index === 10)&#123;</span></span><br><span class="line">    <span class="comment">//     ws.end('hello');</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">&#125;</span><br><span class="line">write();</span><br><span class="line">ws.on(<span class="string">'drain'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'干了'</span>);</span><br><span class="line">    write();</span><br><span class="line">&#125;)</span><br><span class="line">ws.on(<span class="string">'close'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'close'</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// WriteStream.js</span></span><br><span class="line"><span class="keyword">const</span> EventEmitter = <span class="built_in">require</span>(<span class="string">'events'</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WriteStream</span> <span class="keyword">extends</span> <span class="title">EventEmitter</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(path, options = &#123;&#125;)&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="keyword">this</span>.path = path;</span><br><span class="line">        <span class="keyword">this</span>.highWaterMark = options.highWaterMark || <span class="number">16</span> * <span class="number">1024</span>;</span><br><span class="line">        <span class="keyword">this</span>.encoding = options.encoding || <span class="string">'utf8'</span>;</span><br><span class="line">        <span class="keyword">this</span>.start = options.start || <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">this</span>.mode = options.mode || <span class="number">0o666</span>;</span><br><span class="line">        <span class="keyword">this</span>.flags = options.flags || <span class="string">'w'</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 先打开文件</span></span><br><span class="line">        <span class="keyword">this</span>.open();</span><br><span class="line">        <span class="comment">// 缓存区</span></span><br><span class="line">        <span class="keyword">this</span>.cache = []; <span class="comment">// 写的时候只有第一次往文件里写，其他的都放缓存区</span></span><br><span class="line">        <span class="keyword">this</span>.writing = <span class="literal">false</span>; <span class="comment">// 判断是否正在被写入</span></span><br><span class="line">        <span class="keyword">this</span>.len = <span class="number">0</span>; <span class="comment">// 缓存区的大小</span></span><br><span class="line">        <span class="keyword">this</span>.needDrain = <span class="literal">false</span>; <span class="comment">// 是否触发drain事件</span></span><br><span class="line">        <span class="keyword">this</span>.offset = <span class="keyword">this</span>.start; <span class="comment">// 表示每次写入文件的偏移量</span></span><br><span class="line">    &#125;</span><br><span class="line">    open()&#123; <span class="comment">// 先打开文件</span></span><br><span class="line">        fs.open(<span class="keyword">this</span>.path, <span class="keyword">this</span>.flags, (err, fd)=&gt;&#123;</span><br><span class="line">            <span class="keyword">this</span>.fd = fd; <span class="comment">// 文件标识符</span></span><br><span class="line">            <span class="keyword">this</span>.emit(<span class="string">'open'</span>, <span class="keyword">this</span>.write);</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    write(chunk, encoding=<span class="keyword">this</span>.encoding,callback)&#123; <span class="comment">// 用户会同步的调用write方法</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'write~~'</span>,<span class="keyword">this</span>.fd); <span class="comment">// 打印这里可以看到 write比open先调用，write这里是同步操作，open是异步  line27当open打开文件之后再触发write</span></span><br><span class="line">        <span class="comment">// 此时这里面用户调用write方法时 需要判断当前是否正在写入，如果正在写入放到缓存中，如果不是正在写入需要把它真正的向文件写入</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 因为len取的长度是字节长度，所以这里面数据类型要统一，判断是否为Buffer</span></span><br><span class="line">        <span class="comment">// 1) 判断这个chunk 是不是Buffer 如果不是Buffer转化成Buffer</span></span><br><span class="line">        chunk = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);</span><br><span class="line">        <span class="keyword">this</span>.len += chunk.length; <span class="comment">// 统计写入数据的个数</span></span><br><span class="line">        <span class="keyword">let</span> flag = <span class="keyword">this</span>.len &lt; <span class="keyword">this</span>.highWaterMark;</span><br><span class="line">        <span class="keyword">this</span>.needDrain = !flag; <span class="comment">//当前写入的内容&gt;=highWaterMark才会触发</span></span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.writing)&#123; <span class="comment">// 当前是否正在写入 是  往内存中放</span></span><br><span class="line">            <span class="keyword">this</span>.cache.push(&#123; <span class="comment">// 将除了第一次真实的向内存中写入的 其他都放入内存中</span></span><br><span class="line">                chunk,</span><br><span class="line">                encoding,</span><br><span class="line">                callback</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;<span class="comment">// 真实向文件中写入</span></span><br><span class="line">            <span class="keyword">this</span>.writing = <span class="literal">true</span>; <span class="comment">// 标识正在写入</span></span><br><span class="line">            <span class="keyword">this</span>._write(chunk,encoding,()=&gt;&#123;</span><br><span class="line">                callback &amp;&amp; callback(); <span class="comment">// 先执行自己的成功操作</span></span><br><span class="line">                <span class="keyword">this</span>.clearBuffer(); <span class="comment">// 再清空队列中的第一个</span></span><br><span class="line">            &#125;); </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> flag;</span><br><span class="line">    &#125;</span><br><span class="line">    clearBuffer()&#123; <span class="comment">// </span></span><br><span class="line">        <span class="comment">// console.log('清空缓存区队列中的数据');</span></span><br><span class="line">        <span class="keyword">let</span> obj = <span class="keyword">this</span>.cache.shift();<span class="comment">// 取第一个值</span></span><br><span class="line">        <span class="keyword">if</span>(obj)&#123;<span class="comment">// 说明需要写入</span></span><br><span class="line">            <span class="keyword">this</span>._write(obj.chunk,obj.encoding,()=&gt;&#123;</span><br><span class="line">                obj.callback &amp;&amp; obj.callback(); </span><br><span class="line">                <span class="keyword">this</span>.clearBuffer(); </span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123; <span class="comment">// 说明缓存区中没有 需要写入</span></span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">this</span>.needDrain)&#123;</span><br><span class="line">                <span class="keyword">this</span>.needDrain = <span class="literal">false</span>; <span class="comment">// 表示下一次需要重新判断是否需要触发drain事件</span></span><br><span class="line">                <span class="keyword">this</span>.writing = <span class="literal">false</span>; <span class="comment">// 表示下一次调用write要向文件中写入(因为缓存区已经obj没有数据了)))</span></span><br><span class="line">                <span class="keyword">this</span>.emit(<span class="string">'drain'</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 核心的写入方法</span></span><br><span class="line">    _write(chunk,encoding,clearBuffer)&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="keyword">this</span>.fd !== <span class="string">'number'</span>)&#123; <span class="comment">//write()相对于open是先调用的</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.once(<span class="string">'open'</span>,()=&gt;&#123;<span class="keyword">this</span>._write(chunk,encoding,clearBuffer)&#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// todo 写入操作</span></span><br><span class="line">        <span class="comment">// flags 是读取还是写入</span></span><br><span class="line">        <span class="comment">// chunk 写入的数据</span></span><br><span class="line">        <span class="comment">// 0表示把数据的第0个位置开始写入</span></span><br><span class="line">        <span class="comment">// 读取buffer多少个字节</span></span><br><span class="line">        <span class="comment">// 每次写入文件的偏移量</span></span><br><span class="line">        fs.write(<span class="keyword">this</span>.fd,chunk,<span class="number">0</span>,chunk.length,<span class="keyword">this</span>.offset, (err, written)=&gt;&#123; <span class="comment">// written表示真实写入的格式</span></span><br><span class="line">            <span class="keyword">this</span>.offset += written; <span class="comment">// 增加偏移量</span></span><br><span class="line">            <span class="keyword">this</span>.len -= written; <span class="comment">// 减少缓存区的数据</span></span><br><span class="line">            clearBuffer(); <span class="comment">// 清空缓存</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    close()&#123;</span><br><span class="line">        fs.close(<span class="keyword">this</span>.fd, ()=&gt;&#123;</span><br><span class="line">            <span class="keyword">this</span>.emit(<span class="string">'close'</span>);</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    end(chunk,encoding)&#123; <span class="comment">// 如果传递参数 就需要写入</span></span><br><span class="line">        <span class="keyword">if</span>(chunk)&#123; <span class="comment">// 写入</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>._write(chunk,encoding,()=&gt;&#123;</span><br><span class="line">                <span class="keyword">this</span>.close();</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = WriteStream;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Nodejs/" rel="tag"># Nodejs</a>
+          
+            <a href="/tags/文件系统-fs/" rel="tag"># 文件系统 fs</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/27/Node-fs-createReadStream/" rel="next" title="Nodejs fs （二）之 可读流 createReadStream">
+                <i class="fa fa-chevron-left"></i> Nodejs fs （二）之 可读流 createReadStream
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/29/Node-stream-pipe/" rel="prev" title="Nodejs 流(stream) Readable、Writable">
+                Nodejs 流(stream) Readable、Writable <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/Prueba.gif" alt="加菲">
+            
+              <p class="site-author-name" itemprop="name">加菲</p>
+              <p class="site-description motion-element" itemprop="description">啦啦啦~~~加油码字</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fs-createWriteStream"><span class="nav-number">2.</span> <span class="nav-text">fs.createWriteStream</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概念"><span class="nav-number">2.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例"><span class="nav-number">2.2.</span> <span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-预计写10个数-同步的写"><span class="nav-number">2.2.1.</span> <span class="nav-text">1. 预计写10个数 同步的写</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-加flag的判断"><span class="nav-number">2.2.2.</span> <span class="nav-text">2. 加flag的判断</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-当内存中的值都写入文件之后继续写入"><span class="nav-number">2.2.3.</span> <span class="nav-text">3. 当内存中的值都写入文件之后继续写入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-只有手动调end-才会触发关闭文件的事件"><span class="nav-number">2.2.4.</span> <span class="nav-text">4. 只有手动调end 才会触发关闭文件的事件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#手写可写流"><span class="nav-number">2.3.</span> <span class="nav-text">手写可写流</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">加菲</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言 文件流&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;文件的读取和操作readFile 、writeFile 缺陷 ：会淹没内存 所以可以变成=&amp;gt; read+write（open、read、close） 读一点写一点，但是这样又太复杂  fs自己封装了 fs.createReadStream">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nodejs fs （二）之 可读流 createReadStream">
+<meta property="og:url" content="http://yoursite.com/2019/09/27/Node-fs-stream/index.html">
+<meta property="og:site_name" content="Hi 加菲">
+<meta property="og:description" content="前言 文件流&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;文件的读取和操作readFile 、writeFile 缺陷 ：会淹没内存 所以可以变成=&amp;gt; read+write（open、read、close） 读一点写一点，但是这样又太复杂  fs自己封装了 fs.createReadStream">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-27T07:07:41.082Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nodejs fs （二）之 可读流 createReadStream">
+<meta name="twitter:description" content="前言 文件流&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;文件的读取和操作readFile 、writeFile 缺陷 ：会淹没内存 所以可以变成=&amp;gt; read+write（open、read、close） 读一点写一点，但是这样又太复杂  fs自己封装了 fs.createReadStream">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/09/27/Node-fs-stream/">
+
+
+
+
+
+  <title>Nodejs fs （二）之 可读流 createReadStream | Hi 加菲</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi 加菲</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/27/Node-fs-stream/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="加菲">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/Prueba.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi 加菲">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Nodejs fs （二）之 可读流 createReadStream</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-27T10:08:22+08:00">
+                2019-09-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nodejs/" itemprop="url" rel="index">
+                    <span itemprop="name">Nodejs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>文件流&nbsp;&nbsp;&nbsp;&nbsp;文件的读取和操作<br>readFile 、writeFile 缺陷 ：会淹没内存 所以可以变成=&gt; read+write（open、read、close） 读一点写一点，但是这样又太复杂  fs自己封装了 <code>fs.createReadStream</code></p>
+</blockquote>
+<a id="more"></a>
+
+<h2 id="fs-createReadStream"><a href="#fs-createReadStream" class="headerlink" title="fs.createReadStream"></a>fs.createReadStream</h2><h3 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h3><p>这里先创建一个文件1.txt</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">12345678909</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这里的参数在vscode编辑器中可以将鼠标放到createReadStream就会显示出来了</span></span><br><span class="line"><span class="keyword">let</span> rs = fs.createReadStream(path.resolve(__dirname, <span class="string">'1.txt'</span>),&#123;</span><br><span class="line">    flags:<span class="string">'r'</span>, <span class="comment">// 当前要做什么操作</span></span><br><span class="line">    encoding:<span class="literal">null</span>, <span class="comment">// 默认是Buffer</span></span><br><span class="line">    highWaterMark: <span class="number">64</span> * <span class="number">1024</span>,<span class="comment">// 内部会创建 64k大的Buffer</span></span><br><span class="line">    <span class="comment">//highWaterMark: 2,</span></span><br><span class="line">    <span class="comment">// 读取 默认权限是4 写入默认是2  执行是1  ls可以查看文件权限 chmod改变权限</span></span><br><span class="line">    mode:<span class="number">0o666</span>,<span class="comment">//默认  文件读取 写入权限 执行权限  16进制 转化为十进制 438</span></span><br><span class="line">    autoClose:<span class="literal">true</span>, <span class="comment">// true 读完之后会关闭</span></span><br><span class="line">    start:<span class="number">0</span>, <span class="comment">// 开始读取的位置</span></span><br><span class="line">    end:<span class="number">10</span> <span class="comment">// 这样的话一次性读取11个 包前 又包后</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 默认流的模式是暂停模式</span></span><br><span class="line">rs.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123; <span class="comment">// 每次读取到的结果</span></span><br><span class="line">    <span class="built_in">console</span>.log(data); <span class="comment">// &lt;Buffer 31 32 33 34 35 36 37 38 39 30 39&gt;</span></span><br><span class="line">    <span class="comment">//如果把line9打开</span></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    &lt;Buffer 31 32&gt;</span></span><br><span class="line"><span class="comment">    &lt;Buffer 33 34&gt;</span></span><br><span class="line"><span class="comment">    &lt;Buffer 35 36&gt;</span></span><br><span class="line"><span class="comment">    &lt;Buffer 37 38&gt;</span></span><br><span class="line"><span class="comment">    &lt;Buffer 39 30&gt;</span></span><br><span class="line"><span class="comment">    &lt;Buffer 39&gt;</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="comment">// 读取了6次 11/2</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可读流需要掌握的方法 ‘data’ ‘end’ Buffer.concat()</li>
+</ul>
+<p>1.txt</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">你好</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">let</span> rs = fs.createReadStream(path.resolve(__dirname, <span class="string">'1.txt'</span>),&#123;</span><br><span class="line">    flags:<span class="string">'r'</span>,</span><br><span class="line">    encoding:<span class="literal">null</span>, </span><br><span class="line">    highWaterMark: <span class="number">2</span>,</span><br><span class="line">    mode:<span class="number">0o666</span>,</span><br><span class="line">    autoClose:<span class="literal">true</span>, </span><br><span class="line">    start:<span class="number">0</span>,</span><br><span class="line">    end:<span class="number">10</span></span><br><span class="line">&#125;)</span><br><span class="line">rs.on(<span class="string">'open'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'文件打开触发open事件'</span>);</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 每次将传入的数据 接收保存起来</span></span><br><span class="line"><span class="keyword">let</span> arr = [];</span><br><span class="line">rs.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data);</span><br><span class="line">    arr.push(data);</span><br><span class="line">&#125;)</span><br><span class="line">rs.on(<span class="string">'end'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'文件读取完毕'</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(Buffer.concat(arr).toString());<span class="comment">// 你好 这里用了Buffer中文转码的时候不会乱码</span></span><br><span class="line">&#125;)</span><br><span class="line">rs.on(<span class="string">'close'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'文件关闭'</span>);</span><br><span class="line">&#125;)</span><br><span class="line">rs.on(<span class="string">'error'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'出错了'</span>);</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">/*执行结果：</span></span><br><span class="line"><span class="comment">文件打开触发open事件</span></span><br><span class="line"><span class="comment">&lt;Buffer e4 bd&gt;</span></span><br><span class="line"><span class="comment">&lt;Buffer a0 e5&gt;</span></span><br><span class="line"><span class="comment">&lt;Buffer a5 bd&gt;</span></span><br><span class="line"><span class="comment">文件读取完毕</span></span><br><span class="line"><span class="comment">你好</span></span><br><span class="line"><span class="comment">文件关闭</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="手写可读流原理"><a href="#手写可读流原理" class="headerlink" title="手写可读流原理"></a>手写可读流原理</h3><h4 id="1】"><a href="#1】" class="headerlink" title="1】"></a>1】</h4><p>新建：调用文件 stream.js&nbsp;&nbsp;&nbsp;&nbsp; 原理 ReadStream.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// stream.js</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">let</span> ReadStream = <span class="built_in">require</span>(<span class="string">'./ReadStream'</span>);</span><br><span class="line"><span class="keyword">let</span> rs = <span class="keyword">new</span> ReadStream(path.resolve(__dirname, <span class="string">'1.txt'</span>),&#123;</span><br><span class="line">    flags:<span class="string">'r'</span>,</span><br><span class="line">    encoding:<span class="literal">null</span>, </span><br><span class="line">    highWaterMark: <span class="number">2</span>,</span><br><span class="line">    mode:<span class="number">0o666</span>,</span><br><span class="line">    autoClose:<span class="literal">true</span>, </span><br><span class="line">    start:<span class="number">0</span>,</span><br><span class="line">    end:<span class="number">10</span></span><br><span class="line">&#125;)</span><br><span class="line">rs.on(<span class="string">'open'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'文件打开触发open事件'</span>);</span><br><span class="line">&#125;)</span><br><span class="line">rs.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>对<code>ReadStream.js</code>分析：rs这个实例是有<code>on</code>方法，并且这里上面line17 <code>rs.on(&#39;data&#39;)</code> 时能够读取文件，所以我需要下面line21能够监听到<code>on(&#39;data&#39;)</code> 这个事件， 所以这里继承 <code>events</code> ，因为它有 <code>&#39;newListener&#39;</code> 可以监听到 <code>&#39;data&#39;</code> ,同样的这个实例上也就有<br><code>on (&#39;newListener&#39;)</code> 方法 如line21，所以这里 <code>ReadStream extends Events</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ReadStream.js</span></span><br><span class="line"><span class="keyword">const</span> Events = <span class="built_in">require</span>(<span class="string">'events'</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ReadStream</span> <span class="keyword">extends</span> <span class="title">Events</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(path, options = &#123;&#125;)&#123;</span><br><span class="line">        <span class="keyword">super</span>(); </span><br><span class="line">        <span class="comment">// 写类的时候构造函数中的属性都放到this上，这是一个规范，为了扩展方便，下面扩展方法的时候可以拿到</span></span><br><span class="line">        <span class="comment">// 默认参数的赋值</span></span><br><span class="line">        <span class="keyword">this</span>.path = path;</span><br><span class="line">        <span class="keyword">this</span>.flags = options.flags || <span class="string">'r'</span>;</span><br><span class="line">        <span class="keyword">this</span>.encoding = options.encoding || <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">this</span>.highWaterMark = options.highWaterMark || <span class="number">64</span> * <span class="number">1024</span>;</span><br><span class="line">        <span class="keyword">this</span>.mode = options.mode || <span class="number">438</span>;</span><br><span class="line">        <span class="keyword">this</span>.autoClose = options.autoClose || <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">this</span>.start = options.start | <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">this</span>.end = options.end;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.flowing = <span class="literal">null</span>; <span class="comment">// 默认是暂停模式</span></span><br><span class="line">        <span class="keyword">this</span>.open(); <span class="comment">// 打开文件 当创建可读流时，就打开文件(异步执行)</span></span><br><span class="line">        <span class="comment">// 继承了events所以这里也有on newListener方法</span></span><br><span class="line">        <span class="keyword">this</span>.on(<span class="string">'newListener'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">type</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(type === <span class="string">'data'</span>)&#123;<span class="comment">// 当用户监听data事件的时候 就开始读取文件</span></span><br><span class="line">                <span class="keyword">this</span>.flowing = <span class="literal">true</span>;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">'开始读取'</span>);</span><br><span class="line">                <span class="keyword">this</span>.read();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    read()&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'read~'</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.fd);</span><br><span class="line">        <span class="comment">//这里要fs.read(fd)所以必须要拿到fd</span></span><br><span class="line">    &#125;</span><br><span class="line">    open()&#123;</span><br><span class="line">        fs.open(<span class="keyword">this</span>.path, <span class="keyword">this</span>.flags, (err, fd) =&gt;&#123;</span><br><span class="line">            <span class="keyword">this</span>.fd = fd;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'open~'</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = ReadStream;</span><br><span class="line"><span class="comment">/*执行结果：</span></span><br><span class="line"><span class="comment">开始读取</span></span><br><span class="line"><span class="comment">read~</span></span><br><span class="line"><span class="comment">undefined</span></span><br><span class="line"><span class="comment">open~</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<p>结果分析：从打印结果可以看出，虽然line19先执行的是open，但是line35 执行的是异步，而stream.js line17这里又绑了data，就会马上触发line21，只要stream.js里面的on绑定了事件（此刻是’data‘），就会立刻触发’newListener‘，这里面是同步的，也就执行了line29read()方法</p>
+<h4 id="2】"><a href="#2】" class="headerlink" title="2】"></a>2】</h4><p>现在希望先open执行完再执行read</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// stream.js</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">let</span> ReadStream = <span class="built_in">require</span>(<span class="string">'./ReadStream'</span>);</span><br><span class="line"><span class="keyword">let</span> rs = <span class="keyword">new</span> ReadStream(path.resolve(__dirname, <span class="string">'1.txt'</span>),&#123;</span><br><span class="line">    flags:<span class="string">'r'</span>,</span><br><span class="line">    encoding:<span class="literal">null</span>, </span><br><span class="line">    highWaterMark: <span class="number">2</span>,</span><br><span class="line">    mode:<span class="number">0o666</span>,</span><br><span class="line">    autoClose:<span class="literal">true</span>, </span><br><span class="line">    start:<span class="number">0</span>,</span><br><span class="line">    end:<span class="number">10</span></span><br><span class="line">&#125;)</span><br><span class="line">rs.on(<span class="string">'open'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">fd</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'文件打开触发open事件'</span>,fd);</span><br><span class="line">&#125;)</span><br><span class="line">rs.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"data:"</span>,data);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ReadStream.js</span></span><br><span class="line"><span class="keyword">const</span> Events = <span class="built_in">require</span>(<span class="string">'events'</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ReadStream</span> <span class="keyword">extends</span> <span class="title">Events</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(path, options = &#123;&#125;)&#123;</span><br><span class="line">        <span class="keyword">super</span>(); </span><br><span class="line">        <span class="comment">// 默认参数的赋值</span></span><br><span class="line">        <span class="keyword">this</span>.path = path;</span><br><span class="line">        <span class="keyword">this</span>.flags = options.flags || <span class="string">'r'</span>;</span><br><span class="line">        <span class="keyword">this</span>.encoding = options.encoding || <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">this</span>.highWaterMark = options.highWaterMark || <span class="number">64</span> * <span class="number">1024</span>;</span><br><span class="line">        <span class="keyword">this</span>.mode = options.mode || <span class="number">438</span>;</span><br><span class="line">        <span class="keyword">this</span>.autoClose = options.autoClose || <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">this</span>.start = options.start | <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">this</span>.end = options.end;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.flowing = <span class="literal">null</span>; <span class="comment">// 默认是暂停模式</span></span><br><span class="line">        <span class="keyword">this</span>.open(); <span class="comment">// 打开文件 </span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.on(<span class="string">'newListener'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">type</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(type === <span class="string">'data'</span>)&#123; </span><br><span class="line">                <span class="keyword">this</span>.flowing = <span class="literal">true</span>;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">'开始读取'</span>);</span><br><span class="line">                <span class="keyword">this</span>.read();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    read()&#123;</span><br><span class="line">        <span class="comment">//console.log('read~');</span></span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="keyword">this</span>.fd !== <span class="string">'number'</span>)&#123;<span class="comment">// 因为read比open先执行</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.once(<span class="string">'open'</span>, <span class="keyword">this</span>.read); <span class="comment">//所以先把read方法存起来，等open后再次调用</span></span><br><span class="line">            <span class="comment">// this.once('open', this.read); // 这2行等同于上一行写法</span></span><br><span class="line">            <span class="comment">// return ;</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'read~~'</span>,<span class="keyword">this</span>.fd); <span class="comment">//这样read里面就能拿到fd</span></span><br><span class="line">    &#125;</span><br><span class="line">    open()&#123;</span><br><span class="line">        fs.open(<span class="keyword">this</span>.path, <span class="keyword">this</span>.flags, (err, fd) =&gt;&#123;</span><br><span class="line">            <span class="keyword">this</span>.fd = fd;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'open~'</span>)</span><br><span class="line">            <span class="keyword">this</span>.emit(<span class="string">'open'</span>,<span class="keyword">this</span>.fd);</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*执行结果：</span></span><br><span class="line"><span class="comment">开始读取</span></span><br><span class="line"><span class="comment">open~</span></span><br><span class="line"><span class="comment">文件打开触发open事件 3</span></span><br><span class="line"><span class="comment">read~~ 3</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="built_in">module</span>.exports = ReadStream;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>分析：</p>
+</blockquote>
+<ul>
+<li>顺序：<code>stream.js</code> line5一new这个类，立马line18执行open事件，因为line38是异步执行，所以在line41emit的时候，<code>stream.js</code>的line14 open已经绑定好了，所以能够触发 并且把fd也能传过去</li>
+<li>这里用发布订阅的思想来解耦<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">// 之前的相当于如下：</span></span><br><span class="line">fs.open(path,..,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="comment">// 成功之后再read</span></span><br><span class="line">    fs.read(...console.)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 现在就相当于</span></span><br><span class="line">fs.open(...,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    rs.emit(<span class="string">'ok'</span>);</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">this</span>.on(<span class="string">'ok'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    rs.read(...);  </span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 让两个相关联的异步解耦并且是有关联的</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="3】"><a href="#3】" class="headerlink" title="3】"></a>3】</h4><p>读取到内容</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// stream.js</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">let</span> ReadStream = <span class="built_in">require</span>(<span class="string">'./ReadStream'</span>);</span><br><span class="line"><span class="keyword">let</span> rs = <span class="keyword">new</span> ReadStream(path.resolve(__dirname, <span class="string">'1.txt'</span>),&#123;</span><br><span class="line">    flags:<span class="string">'r'</span>,</span><br><span class="line">    encoding:<span class="literal">null</span>, </span><br><span class="line">    highWaterMark: <span class="number">2</span>,</span><br><span class="line">    mode:<span class="number">0o666</span>,</span><br><span class="line">    autoClose:<span class="literal">true</span>, </span><br><span class="line">    start:<span class="number">0</span>,</span><br><span class="line">    end:<span class="number">10</span></span><br><span class="line">&#125;)</span><br><span class="line">rs.on(<span class="string">'open'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">fd</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'文件打开触发open事件'</span>,fd);</span><br><span class="line">&#125;)</span><br><span class="line">rs.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Buffer:'</span>,data);</span><br><span class="line">&#125;)</span><br><span class="line">rs.on(<span class="string">'end'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'文件读取完毕'</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ReadStream.js</span></span><br><span class="line"><span class="keyword">const</span> Events = <span class="built_in">require</span>(<span class="string">'events'</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ReadStream</span> <span class="keyword">extends</span> <span class="title">Events</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(path, options = &#123;&#125;)&#123;</span><br><span class="line">        <span class="keyword">super</span>(); </span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 默认参数的赋值</span></span><br><span class="line">        <span class="keyword">this</span>.path = path;</span><br><span class="line">        <span class="keyword">this</span>.flags = options.flags || <span class="string">'r'</span>;</span><br><span class="line">        <span class="keyword">this</span>.encoding = options.encoding || <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">this</span>.highWaterMark = options.highWaterMark || <span class="number">64</span> * <span class="number">1024</span>;</span><br><span class="line">        <span class="keyword">this</span>.mode = options.mode || <span class="number">438</span>;</span><br><span class="line">        <span class="keyword">this</span>.autoClose = options.autoClose || <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">this</span>.start = options.start | <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">this</span>.end = options.end;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.flowing = <span class="literal">null</span>; </span><br><span class="line">        <span class="keyword">this</span>.offset = <span class="number">0</span>; <span class="comment">// 偏移量</span></span><br><span class="line">        <span class="keyword">this</span>.open(); </span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.on(<span class="string">'newListener'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">type</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(type === <span class="string">'data'</span>)&#123; </span><br><span class="line">                <span class="keyword">this</span>.flowing = <span class="literal">true</span>;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">'开始读取'</span>);</span><br><span class="line">                <span class="keyword">this</span>.read();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    read()&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="keyword">this</span>.fd !== <span class="string">'number'</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.once(<span class="string">'open'</span>, <span class="keyword">this</span>.read); </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//读文件</span></span><br><span class="line">        <span class="keyword">let</span> buffer = Buffer.alloc(<span class="keyword">this</span>.highWaterMark);</span><br><span class="line">        <span class="comment">// 每次读取2个把buffer填满</span></span><br><span class="line">        fs.read(<span class="keyword">this</span>.fd,buffer,<span class="number">0</span>,<span class="keyword">this</span>.highWaterMark,<span class="keyword">this</span>.offset,(err,bytesRead)=&gt;&#123;</span><br><span class="line">            <span class="keyword">this</span>.offset += bytesRead; </span><br><span class="line">            <span class="keyword">if</span>(bytesRead &gt; <span class="number">0</span>)&#123;<span class="comment">// 如果读取到内容就再次尝试读取</span></span><br><span class="line">                <span class="comment">// 将数据传输给stream.js line17 data中</span></span><br><span class="line">                <span class="keyword">this</span>.emit(<span class="string">'data'</span>, buffer);</span><br><span class="line">                <span class="keyword">this</span>.read();</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">this</span>.emit(<span class="string">'end'</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    open()&#123;</span><br><span class="line">        fs.open(<span class="keyword">this</span>.path, <span class="keyword">this</span>.flags, (err, fd) =&gt;&#123;</span><br><span class="line">			<span class="built_in">console</span>.log(<span class="string">'open~'</span>)</span><br><span class="line">            <span class="keyword">this</span>.fd = fd;</span><br><span class="line">            <span class="keyword">this</span>.emit(<span class="string">'open'</span>,<span class="keyword">this</span>.fd);</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = ReadStream;</span><br><span class="line"><span class="comment">/*执行结果：</span></span><br><span class="line"><span class="comment">开始读取</span></span><br><span class="line"><span class="comment">open~</span></span><br><span class="line"><span class="comment">文件打开触发open事件 3</span></span><br><span class="line"><span class="comment">Buffer: &lt;Buffer e4 bd&gt;</span></span><br><span class="line"><span class="comment">Buffer: &lt;Buffer a0 e5&gt;</span></span><br><span class="line"><span class="comment">Buffer: &lt;Buffer a5 bd&gt;</span></span><br><span class="line"><span class="comment">文件读取完毕</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<p>问题： 现在可以看到 1.txt里面的 你好 占6个字节 现在将左侧 <code>stream.js</code>的line12 end改成4，这样从0-4就是读取5个 运行可以看到结果还是读取了6个 因为line37读取的是this.highWaterMark；如果使用原生的则是读取5个</p>
+<h4 id="4】"><a href="#4】" class="headerlink" title="4】"></a>4】</h4><p>howMuchToRead 、close()</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// stream.js</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">let</span> ReadStream = <span class="built_in">require</span>(<span class="string">'./ReadStream'</span>);</span><br><span class="line"><span class="keyword">let</span> rs = <span class="keyword">new</span> ReadStream(path.resolve(__dirname, <span class="string">'1.txt'</span>),&#123;</span><br><span class="line">    flags:<span class="string">'r'</span>,</span><br><span class="line">    encoding:<span class="literal">null</span>, </span><br><span class="line">    highWaterMark: <span class="number">2</span>,</span><br><span class="line">    mode:<span class="number">0o666</span>,</span><br><span class="line">    autoClose:<span class="literal">true</span>, </span><br><span class="line">    start:<span class="number">0</span>,</span><br><span class="line">    end:<span class="number">4</span></span><br><span class="line">&#125;)</span><br><span class="line">rs.on(<span class="string">'open'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">fd</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'文件打开触发open事件'</span>,fd);</span><br><span class="line">&#125;)</span><br><span class="line">rs.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'buffer:'</span>,data);</span><br><span class="line">&#125;)</span><br><span class="line">rs.on(<span class="string">'end'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'文件读取完毕'</span>);</span><br><span class="line">&#125;)</span><br><span class="line">rs.on(<span class="string">'close'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'文件关闭'</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ReadStream.js</span></span><br><span class="line"><span class="keyword">const</span> Events = <span class="built_in">require</span>(<span class="string">'events'</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ReadStream</span> <span class="keyword">extends</span> <span class="title">Events</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(path, options = &#123;&#125;)&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 默认参数的赋值</span></span><br><span class="line">        <span class="keyword">this</span>.path = path;</span><br><span class="line">        <span class="keyword">this</span>.flags = options.flags || <span class="string">'r'</span>;</span><br><span class="line">        <span class="keyword">this</span>.encoding = options.encoding || <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">this</span>.highWaterMark = options.highWaterMark || <span class="number">64</span> * <span class="number">1024</span>;</span><br><span class="line">        <span class="keyword">this</span>.mode = options.mode || <span class="number">438</span>;</span><br><span class="line">        <span class="keyword">this</span>.autoClose = options.autoClose || <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">this</span>.start = options.start | <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">this</span>.end = options.end;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.flowing = <span class="literal">null</span>; </span><br><span class="line">        <span class="keyword">this</span>.offset = <span class="number">0</span>; <span class="comment">// 偏移量</span></span><br><span class="line">        <span class="keyword">this</span>.open(); </span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.on(<span class="string">'newListener'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">type</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(type === <span class="string">'data'</span>)&#123; </span><br><span class="line">                <span class="keyword">this</span>.flowing = <span class="literal">true</span>;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">'开始读取'</span>);</span><br><span class="line">                <span class="keyword">this</span>.read();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    read()&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="keyword">this</span>.fd !== <span class="string">'number'</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.once(<span class="string">'open'</span>, <span class="keyword">this</span>.read); </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 每次读取2个把buffer填满</span></span><br><span class="line">        <span class="comment">// 一共读取几个 this.end - this.start + 1   4-0+1 = 5个</span></span><br><span class="line">        <span class="comment">// 现在是 2 2 2</span></span><br><span class="line">        <span class="comment">// 应该是 2 2 1</span></span><br><span class="line">        <span class="keyword">let</span> howMuchToRead = <span class="keyword">this</span>.end ? <span class="built_in">Math</span>.min(<span class="keyword">this</span>.highWaterMark, <span class="keyword">this</span>.end - <span class="keyword">this</span>.start + <span class="number">1</span> - <span class="keyword">this</span>.offset) : <span class="keyword">this</span>.highWaterMark;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> buffer = Buffer.alloc(howMuchToRead);</span><br><span class="line"></span><br><span class="line">        fs.read(<span class="keyword">this</span>.fd,buffer,<span class="number">0</span>,howMuchToRead,<span class="keyword">this</span>.offset,(err,bytesRead)=&gt;&#123;</span><br><span class="line">            <span class="keyword">this</span>.offset += bytesRead; </span><br><span class="line">            <span class="keyword">if</span>(bytesRead &gt; <span class="number">0</span>)&#123;</span><br><span class="line">                <span class="keyword">this</span>.emit(<span class="string">'data'</span>, buffer);</span><br><span class="line">                <span class="keyword">this</span>.read();</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">this</span>.emit(<span class="string">'end'</span>);</span><br><span class="line">                <span class="keyword">this</span>.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    close()&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.autoClose)&#123;</span><br><span class="line">            fs.close(<span class="keyword">this</span>.fd,()=&gt; &#123;</span><br><span class="line">                <span class="keyword">this</span>.emit(<span class="string">'close'</span>);</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    open()&#123;</span><br><span class="line">        fs.open(<span class="keyword">this</span>.path, <span class="keyword">this</span>.flags, (err, fd) =&gt;&#123;</span><br><span class="line">			<span class="built_in">console</span>.log(<span class="string">'open~'</span>);</span><br><span class="line">            <span class="keyword">this</span>.fd = fd;</span><br><span class="line">            <span class="keyword">this</span>.emit(<span class="string">'open'</span>,<span class="keyword">this</span>.fd);</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = ReadStream;</span><br><span class="line"><span class="comment">/*执行结果：</span></span><br><span class="line"><span class="comment">开始读取</span></span><br><span class="line"><span class="comment">open~</span></span><br><span class="line"><span class="comment">文件打开触发open事件 3</span></span><br><span class="line"><span class="comment">buffer: &lt;Buffer e4 bd&gt;</span></span><br><span class="line"><span class="comment">buffer: &lt;Buffer a0 e5&gt;</span></span><br><span class="line"><span class="comment">buffer: &lt;Buffer a5&gt;</span></span><br><span class="line"><span class="comment">文件读取完毕</span></span><br><span class="line"><span class="comment">文件关闭</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="5】"><a href="#5】" class="headerlink" title="5】"></a>5】</h4><p>pause() 、resume()</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这里引用原生 fs.createReadStream</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">let</span> ReadStream = <span class="built_in">require</span>(<span class="string">'./ReadStream'</span>);</span><br><span class="line"><span class="keyword">let</span> rs = fs.createReadStream(path.resolve(__dirname, <span class="string">'1.txt'</span>),&#123;</span><br><span class="line">    flags:<span class="string">'r'</span>,</span><br><span class="line">    encoding:<span class="literal">null</span>, </span><br><span class="line">    highWaterMark: <span class="number">2</span>,</span><br><span class="line">    mode:<span class="number">0o666</span>,</span><br><span class="line">    autoClose:<span class="literal">true</span>, </span><br><span class="line">    start:<span class="number">0</span>,</span><br><span class="line">    end:<span class="number">4</span></span><br><span class="line">&#125;)</span><br><span class="line">rs.on(<span class="string">'open'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">fd</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'文件打开触发open事件'</span>,fd);</span><br><span class="line">&#125;)</span><br><span class="line">rs.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'buffer:'</span>,data);<span class="comment">// 只读取了2个 buffer: &lt;Buffer e4 bd&gt;</span></span><br><span class="line">    rs.pause();  <span class="comment">// 暂停  </span></span><br><span class="line">&#125;)</span><br><span class="line">setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    rs.resume(); <span class="comment">// 每隔2秒开启读取</span></span><br><span class="line">&#125;, <span class="number">2000</span>);</span><br><span class="line">rs.on(<span class="string">'close'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'文件关闭'</span>);</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">/*执行结果</span></span><br><span class="line"><span class="comment">文件打开触发open事件 3</span></span><br><span class="line"><span class="comment">buffer: &lt;Buffer e4 bd&gt;</span></span><br><span class="line"><span class="comment">buffer: &lt;Buffer a0 e5&gt; （隔2秒打印）</span></span><br><span class="line"><span class="comment">buffer: &lt;Buffer a5&gt;    （隔2秒打印）</span></span><br><span class="line"><span class="comment">文件关闭</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<p>引用改成自己手写的ReadStream<br>this.flowing</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// stream.js</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">let</span> ReadStream = <span class="built_in">require</span>(<span class="string">'./ReadStream'</span>);</span><br><span class="line"><span class="keyword">let</span> rs = <span class="keyword">new</span> ReadStream(path.resolve(__dirname, <span class="string">'1.txt'</span>),&#123;</span><br><span class="line">    flags:<span class="string">'r'</span>,</span><br><span class="line">    encoding:<span class="literal">null</span>, </span><br><span class="line">    highWaterMark: <span class="number">2</span>,</span><br><span class="line">    mode:<span class="number">0o666</span>,</span><br><span class="line">    autoClose:<span class="literal">true</span>, </span><br><span class="line">    start:<span class="number">0</span>,</span><br><span class="line">    end:<span class="number">4</span></span><br><span class="line">&#125;)</span><br><span class="line">rs.on(<span class="string">'open'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">fd</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'文件打开触发open事件'</span>,fd);</span><br><span class="line">&#125;)</span><br><span class="line">rs.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'buffer:'</span>,data);</span><br><span class="line">    rs.pause(); <span class="comment">// 暂停</span></span><br><span class="line">&#125;)</span><br><span class="line">setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    rs.resume(); <span class="comment">// 每隔2秒开启读取</span></span><br><span class="line">&#125;, <span class="number">2000</span>);</span><br><span class="line">rs.on(<span class="string">'close'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'文件关闭'</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ReadStream.js</span></span><br><span class="line"><span class="keyword">const</span> Events = <span class="built_in">require</span>(<span class="string">'events'</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ReadStream</span> <span class="keyword">extends</span> <span class="title">Events</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(path, options = &#123;&#125;)&#123;</span><br><span class="line">        <span class="keyword">super</span>(); </span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 默认参数的赋值</span></span><br><span class="line">        <span class="keyword">this</span>.path = path;</span><br><span class="line">        <span class="keyword">this</span>.flags = options.flags || <span class="string">'r'</span>;</span><br><span class="line">        <span class="keyword">this</span>.encoding = options.encoding || <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">this</span>.highWaterMark = options.highWaterMark || <span class="number">64</span> * <span class="number">1024</span>;</span><br><span class="line">        <span class="keyword">this</span>.mode = options.mode || <span class="number">438</span>;</span><br><span class="line">        <span class="keyword">this</span>.autoClose = options.autoClose || <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">this</span>.start = options.start | <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">this</span>.end = options.end;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.flowing = <span class="literal">null</span>;  <span class="comment">// *******************************flowing</span></span><br><span class="line">        <span class="keyword">this</span>.offset = <span class="number">0</span>; <span class="comment">// 偏移量</span></span><br><span class="line">        <span class="keyword">this</span>.temp = <span class="literal">true</span>; <span class="comment">// resume方法里是否执行read()的标识 ********************temp</span></span><br><span class="line">        <span class="keyword">this</span>.open(); </span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.on(<span class="string">'newListener'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">type</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(type === <span class="string">'data'</span>)&#123; </span><br><span class="line">                <span class="keyword">this</span>.flowing = <span class="literal">true</span>;  <span class="comment">// *******************************flowing</span></span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">'开始读取'</span>);</span><br><span class="line">                <span class="keyword">this</span>.read();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    read()&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="keyword">this</span>.fd !== <span class="string">'number'</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.once(<span class="string">'open'</span>, <span class="keyword">this</span>.read); </span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> howMuchToRead = <span class="keyword">this</span>.end ? <span class="built_in">Math</span>.min(<span class="keyword">this</span>.highWaterMark, <span class="keyword">this</span>.end - <span class="keyword">this</span>.start + <span class="number">1</span> - <span class="keyword">this</span>.offset) : <span class="keyword">this</span>.highWaterMark;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> buffer = Buffer.alloc(howMuchToRead);</span><br><span class="line"></span><br><span class="line">        fs.read(<span class="keyword">this</span>.fd,buffer,<span class="number">0</span>,howMuchToRead,<span class="keyword">this</span>.offset,(err,bytesRead)=&gt;&#123;</span><br><span class="line">            <span class="keyword">this</span>.offset += bytesRead; </span><br><span class="line">            <span class="keyword">if</span>(bytesRead &gt; <span class="number">0</span>)&#123;</span><br><span class="line">                <span class="keyword">this</span>.emit(<span class="string">'data'</span>, buffer);</span><br><span class="line">                <span class="keyword">this</span>.flowing &amp;&amp; <span class="keyword">this</span>.read(); <span class="comment">// flowing为true时  *******************************flowing</span></span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">this</span>.temp = <span class="literal">false</span>; <span class="comment">// // *******************************temp</span></span><br><span class="line">                <span class="keyword">this</span>.emit(<span class="string">'end'</span>);</span><br><span class="line">                <span class="keyword">this</span>.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    close()&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.autoClose)&#123;</span><br><span class="line">            fs.close(<span class="keyword">this</span>.fd,()=&gt; &#123;</span><br><span class="line">                <span class="keyword">this</span>.emit(<span class="string">'close'</span>);</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    open()&#123;</span><br><span class="line">        fs.open(<span class="keyword">this</span>.path, <span class="keyword">this</span>.flags, (err, fd) =&gt;&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'open~'</span>);</span><br><span class="line">            <span class="keyword">this</span>.fd = fd;</span><br><span class="line">            <span class="keyword">this</span>.emit(<span class="string">'open'</span>,<span class="keyword">this</span>.fd);</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    pause()&#123;</span><br><span class="line">        <span class="keyword">this</span>.flowing = <span class="literal">false</span>; <span class="comment">// *******************************flowing</span></span><br><span class="line">    &#125;</span><br><span class="line">    resume()&#123;</span><br><span class="line">        <span class="keyword">this</span>.flowing = <span class="literal">true</span>; <span class="comment">// *******************************flowing</span></span><br><span class="line">        <span class="keyword">this</span>.temp &amp;&amp; <span class="keyword">this</span>.read(); <span class="comment">// *******************************temp</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = ReadStream;</span><br><span class="line"><span class="comment">/*执行结果：</span></span><br><span class="line"><span class="comment">开始读取</span></span><br><span class="line"><span class="comment">open~</span></span><br><span class="line"><span class="comment">文件打开触发open事件 3</span></span><br><span class="line"><span class="comment">buffer: &lt;Buffer e4 bd&gt;</span></span><br><span class="line"><span class="comment">buffer: &lt;Buffer a0 e5&gt;   （隔2秒打印）</span></span><br><span class="line"><span class="comment">buffer: &lt;Buffer a5&gt;      （隔2秒打印）</span></span><br><span class="line"><span class="comment">文件关闭                  （隔2秒打印）</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>可读流</p>
+</blockquote>
+<ul>
+<li>如何将多个 有关系的异步代码进行拆分  read() open()  发布订阅</li>
+</ul>
+<blockquote>
+<p>可写流</p>
+</blockquote>
+<ul>
+<li>如何处理并发操作文件 多个异步 造队列 =&gt; 链表</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/25/Node-fs/" rel="next" title="Nodejs fs （一）">
+                <i class="fa fa-chevron-left"></i> Nodejs fs （一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/Prueba.gif" alt="加菲">
+            
+              <p class="site-author-name" itemprop="name">加菲</p>
+              <p class="site-description motion-element" itemprop="description">啦啦啦~~~加油码字</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fs-createReadStream"><span class="nav-number">2.</span> <span class="nav-text">fs.createReadStream</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#知识点"><span class="nav-number">2.1.</span> <span class="nav-text">知识点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#手写可读流原理"><span class="nav-number">2.2.</span> <span class="nav-text">手写可读流原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1】"><span class="nav-number">2.2.1.</span> <span class="nav-text">1】</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2】"><span class="nav-number">2.2.2.</span> <span class="nav-text">2】</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3】"><span class="nav-number">2.2.3.</span> <span class="nav-text">3】</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4】"><span class="nav-number">2.2.4.</span> <span class="nav-text">4】</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5】"><span class="nav-number">2.2.5.</span> <span class="nav-text">5】</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">加菲</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

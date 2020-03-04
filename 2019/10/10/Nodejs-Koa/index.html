@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Nodejs,Koa,中间件,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Koakoa官网 http://koajs.cn 初始化12npm init -ynpm install koa   不管看什么源码 第一步 node_modules/koa/package.json 找package.json文件，找里面的main  这里是  “main”: “lib/application.js”,  然后再去lib找 application.js">
+<meta name="keywords" content="Nodejs,Koa,中间件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nodejs-Koa（一）">
+<meta property="og:url" content="http://yoursite.com/2019/10/10/Nodejs-Koa/index.html">
+<meta property="og:site_name" content="Hi 加菲">
+<meta property="og:description" content="Koakoa官网 http://koajs.cn 初始化12npm init -ynpm install koa   不管看什么源码 第一步 node_modules/koa/package.json 找package.json文件，找里面的main  这里是  “main”: “lib/application.js”,  然后再去lib找 application.js">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://jiafei2333.github.io/html/images/koa-middleware.png">
+<meta property="og:updated_time" content="2019-10-15T03:47:10.455Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nodejs-Koa（一）">
+<meta name="twitter:description" content="Koakoa官网 http://koajs.cn 初始化12npm init -ynpm install koa   不管看什么源码 第一步 node_modules/koa/package.json 找package.json文件，找里面的main  这里是  “main”: “lib/application.js”,  然后再去lib找 application.js">
+<meta name="twitter:image" content="https://jiafei2333.github.io/html/images/koa-middleware.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/10/Nodejs-Koa/">
+
+
+
+
+
+  <title>Nodejs-Koa（一） | Hi 加菲</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi 加菲</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每个人都在负重前行</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/10/Nodejs-Koa/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="加菲">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/Prueba.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi 加菲">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Nodejs-Koa（一）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-10T16:10:53+08:00">
+                2019-10-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nodejs/" itemprop="url" rel="index">
+                    <span itemprop="name">Nodejs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Koa"><a href="#Koa" class="headerlink" title="Koa"></a>Koa</h1><p>koa官网 <a href="http://koajs.cn" target="_blank" rel="noopener">http://koajs.cn</a></p>
+<h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br><span class="line">npm install koa</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>不管看什么源码 第一步 node_modules/koa/package.json 找package.json文件，找里面的main  这里是  “main”: “lib/application.js”,  然后再去lib找 application.js</p>
+</blockquote>
+<a id="more"></a>
+
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1.helloword.js</span></span><br><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"></span><br><span class="line"><span class="comment">// node有原生的 req res(原生)</span></span><br><span class="line"><span class="comment">// request response (koa自己封装的) 又增加了很多的方法</span></span><br><span class="line"><span class="comment">// ctx代理了 req res request response </span></span><br><span class="line">app.use(<span class="function"><span class="params">ctx</span> =&gt;</span> &#123; <span class="comment">// ctx代表上下文</span></span><br><span class="line">    <span class="comment">// console.log(ctx.request.path);// /    // 现在就不用记是request、response的方法直接如下：</span></span><br><span class="line">    <span class="built_in">console</span>.log(ctx.path); <span class="comment">// /</span></span><br><span class="line">    <span class="comment">// 本来这里结束可以用res.end();但是官网上说尽量避免使用node属性 所以现在如下：</span></span><br><span class="line">    <span class="comment">// ctx.body = &#123;name: 'jf'&#125;; // 运行 浏览器输出 &#123;"name":"jf"&#125;</span></span><br><span class="line">    <span class="comment">// 当然也可以还是用之前的</span></span><br><span class="line">    ctx.res.end(<span class="string">'hello'</span>); <span class="comment">// 运行 浏览器输出 hello</span></span><br><span class="line">&#125;);</span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br><span class="line"><span class="comment">// 运行 nodemon 1.helloword.js   浏览器访问 http://localhost:3000/?a=1</span></span><br></pre></td></tr></table></figure>
+
+<p>Context 上下文 <a href="http://koajs.cn/#-context-" target="_blank" rel="noopener">http://koajs.cn/#-context-</a></p>
+<h1 id="手写Koa原理"><a href="#手写Koa原理" class="headerlink" title="手写Koa原理"></a>手写Koa原理</h1><p>新建文件夹koa   koa/application.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 2.server.js</span></span><br><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'./koa/application'</span>); <span class="comment">// 核心逻辑，这里对照原生koa/lib/下的文件，新建context.js|request.js|response.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line">app.use(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    res.end(<span class="string">'hello word'</span>);</span><br><span class="line">&#125;)</span><br><span class="line">app.listen(<span class="number">4000</span>);</span><br></pre></td></tr></table></figure>
+
+<p>application.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ./koa/application.js</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 需要导出一个Koa类</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 如上面 `2.server.js` line1-8 有2个方法use、listen</span></span><br><span class="line">    use(fn)&#123; <span class="comment">// 注册方法</span></span><br><span class="line">        <span class="keyword">this</span>.fn = fn;</span><br><span class="line">    &#125;</span><br><span class="line">    handleRequest(req, res)&#123;</span><br><span class="line">        <span class="keyword">this</span>.fn(req,res);</span><br><span class="line">    &#125;</span><br><span class="line">    listen(...args)&#123; <span class="comment">// 监听端口</span></span><br><span class="line">        <span class="keyword">let</span> server = http.createServer(<span class="keyword">this</span>.handleRequest.bind(<span class="keyword">this</span>));</span><br><span class="line">        server.listen(...args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = Application;</span><br><span class="line"><span class="comment">// 运行 nodemon 2.reserver.js  , 浏览器运行localhost:4000</span></span><br><span class="line"><span class="comment">// 可以看到浏览器打印出hello word</span></span><br></pre></td></tr></table></figure>
+
+<p> 功能上基本类似 但是 <code>2.server.js</code> line5这里不是req、res 而是ctx 如下:<br>新建 context.js &nbsp;&nbsp; request.js &nbsp;&nbsp; response.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// context.js</span></span><br><span class="line"><span class="keyword">let</span> context = &#123;&#125;;</span><br><span class="line"><span class="built_in">module</span>.exports = context;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// request.js</span></span><br><span class="line"><span class="keyword">let</span> request = &#123;&#125;;</span><br><span class="line"><span class="built_in">module</span>.exports = request;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// response.js</span></span><br><span class="line"><span class="keyword">let</span> response = &#123;&#125;;</span><br><span class="line"><span class="built_in">module</span>.exports = response;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 2.server.js</span></span><br><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'./koa/application'</span>); </span><br><span class="line"><span class="comment">//const Koa = require('koa');</span></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"></span><br><span class="line">app.use(<span class="function"><span class="params">ctx</span> =&gt;</span> &#123; <span class="comment">// 这里修改成ctx</span></span><br><span class="line">    <span class="comment">// res.end('hello word');</span></span><br><span class="line">	<span class="comment">// 原生****************************************</span></span><br><span class="line">    <span class="comment">// 原生的写法 line3打开注释</span></span><br><span class="line">    <span class="comment">// console.log(ctx.req.url); //  / </span></span><br><span class="line">    <span class="comment">// console.log(ctx.request.req.url); //  /</span></span><br><span class="line">    <span class="comment">// //line10、11调用的是原生的、line13、14调用的是自己封装的</span></span><br><span class="line">    <span class="comment">// console.log(ctx.request.url); //  /</span></span><br><span class="line">    <span class="comment">// console.log(ctx.url);</span></span><br><span class="line">	<span class="comment">// end ***************************************</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 引用自己的写的Koa</span></span><br><span class="line">    <span class="built_in">console</span>.log(ctx.req.url); <span class="comment">//  / 这个req是原生的</span></span><br><span class="line">    <span class="built_in">console</span>.log(ctx.request.req.url); <span class="comment">//  </span></span><br><span class="line">    <span class="built_in">console</span>.log(ctx.request.url); <span class="comment">// 这里必须要把req放到request上，才可以在request上拿到req的属性</span></span><br><span class="line">    <span class="built_in">console</span>.log(ctx.url);<span class="comment">// 它的原理非常像vue ctx.url =&gt; ctx.request.url  代理</span></span><br><span class="line">    <span class="built_in">console</span>.log(ctx.path);</span><br><span class="line">&#125;)</span><br><span class="line">app.listen(<span class="number">4000</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ./koa/application.js</span></span><br><span class="line"><span class="comment">// ctx需要整合req res</span></span><br><span class="line"><span class="comment">// 封装request和response对象 把他放到ctx上</span></span><br><span class="line"><span class="comment">// 现在分别初始化创建这个三个文件里的对象</span></span><br><span class="line"><span class="keyword">let</span> context = <span class="built_in">require</span>(<span class="string">'./context'</span>);</span><br><span class="line"><span class="keyword">let</span> request = <span class="built_in">require</span>(<span class="string">'./request'</span>);</span><br><span class="line"><span class="keyword">let</span> response = <span class="built_in">require</span>(<span class="string">'./response'</span>);</span><br><span class="line"><span class="comment">// 这些属性可能在后序的逻辑中都会用到，全局的话放在constructor中</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123;        </span><br><span class="line">        <span class="keyword">this</span>.context = context;</span><br><span class="line">        <span class="keyword">this</span>.request = request;</span><br><span class="line">        <span class="keyword">this</span>.response = response;</span><br><span class="line">        <span class="comment">// 看下源码 这里需要修改下</span></span><br><span class="line">    &#125;</span><br><span class="line">    use(fn)&#123; <span class="comment">// 注册方法</span></span><br><span class="line">        <span class="keyword">this</span>.fn = fn;</span><br><span class="line">    &#125;</span><br><span class="line">    createContext(req, res)&#123;</span><br><span class="line">		<span class="comment">// 表示context继承this.context且不会破坏原有的对象，方便扩展</span></span><br><span class="line">        <span class="keyword">let</span> context = <span class="built_in">Object</span>.create(<span class="keyword">this</span>.context); <span class="comment">// 每次都创建全新的上下文</span></span><br><span class="line">        context.request = <span class="built_in">Object</span>.create(<span class="keyword">this</span>.request);</span><br><span class="line">        context.response = <span class="built_in">Object</span>.create(<span class="keyword">this</span>.response);</span><br><span class="line">        <span class="comment">// 我在koa自己的封装的对象上增加 req和res属性</span></span><br><span class="line">        context.req = context.request.req = req;</span><br><span class="line">        context.res = context.response.res = res;</span><br><span class="line">        <span class="comment">// 上面对应 `2.server.js` line 18、19</span></span><br><span class="line">        <span class="comment">// `2.server.js` line20见request.js</span></span><br><span class="line">        <span class="keyword">return</span> context;</span><br><span class="line">    &#125;</span><br><span class="line">    handleRequest(req, res)&#123;</span><br><span class="line">        <span class="comment">// 创建上下文</span></span><br><span class="line">        <span class="keyword">let</span> ctx = <span class="keyword">this</span>.createContext(req, res);</span><br><span class="line">        <span class="keyword">this</span>.fn(ctx);</span><br><span class="line">        <span class="comment">// this.fn(req,res);</span></span><br><span class="line">    &#125;</span><br><span class="line">    listen(...args)&#123; <span class="comment">// 监听端口</span></span><br><span class="line">        <span class="keyword">let</span> server = http.createServer(<span class="keyword">this</span>.handleRequest.bind(<span class="keyword">this</span>));</span><br><span class="line">        server.listen(...args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = Application;</span><br></pre></td></tr></table></figure>
+
+<p>request.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// request.js   是扩展request属性</span></span><br><span class="line"><span class="keyword">let</span> url = <span class="built_in">require</span>(<span class="string">'url'</span>);</span><br><span class="line"><span class="comment">// request.js 是扩展request属性，所以这里不能像context一样用代理，可以从context的'return this[property][key];' 这行看出它值的获取是基于request的值 即当前文档</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> request = &#123; <span class="comment">// 这里对应2.server.js line20</span></span><br><span class="line">    <span class="keyword">get</span> url()&#123; <span class="comment">// 属性访问器 可以帮助我们处理复杂逻辑</span></span><br><span class="line">        <span class="comment">// console(this); // 这里谁调用它就是指谁 这里是ctx.request,所以this等价于ctx.request</span></span><br><span class="line">        <span class="comment">// return '/';</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.req.url;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="keyword">get</span> method()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.req.method</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="keyword">get</span> path()&#123;</span><br><span class="line">        <span class="keyword">return</span> url.parse(<span class="keyword">this</span>.req.url).pathname</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">module</span>.exports = request;</span><br></pre></td></tr></table></figure>
+
+<p>context.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// context.js  代理功能</span></span><br><span class="line"><span class="keyword">let</span> context = &#123; </span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//实现代理功能  这里也可以用proxy写</span></span><br><span class="line">context.__defineGetter__(<span class="string">'url'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 这个context是我们自己创建的</span></span><br><span class="line">    <span class="comment">// let ctx = Object.create(context);</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.request.url; <span class="comment">// 谁调的this指谁，这里是2.server.jsline21,里面ctx调的，所以指的是ctx</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">module</span>.exports = context;</span><br></pre></td></tr></table></figure>
+
+<p>现在 <code>2.server.js</code> line22又增加了一个path属性，也需要代理， 统一封装，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// context.js</span></span><br><span class="line"><span class="keyword">let</span> context = &#123; </span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//  context.js是代理的功能</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">defineGetter</span>(<span class="params">property,key</span>)</span>&#123;</span><br><span class="line">    context.__defineGetter__(key,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="comment">// 这个context是我们自己创建的</span></span><br><span class="line">        <span class="comment">// let ctx = Object.create(context)</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>[property][key];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line">defineGetter(<span class="string">'request'</span>,<span class="string">'url'</span>);</span><br><span class="line">defineGetter(<span class="string">'request'</span>,<span class="string">'method'</span>);</span><br><span class="line">defineGetter(<span class="string">'request'</span>,<span class="string">'path'</span>);</span><br><span class="line"><span class="comment">// 分析：给line6的context做了一个代理属性，属性key，line9真正是从request取，当前从ctx取url 其实是ctx.request的url，line9的this，谁调的就是指谁，2.server.jsline21、22是ctx调的，那就是指ctx</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = context;</span><br></pre></td></tr></table></figure>
+
+<p>下一部分 2.server.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 2.server.js</span></span><br><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'./koa/application'</span>);</span><br><span class="line"><span class="comment">// const Koa = require('koa');</span></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"></span><br><span class="line">app.use(<span class="function"><span class="params">ctx</span> =&gt;</span> &#123; <span class="comment">// 这里修改成ctx</span></span><br><span class="line">    <span class="comment">// res.end('hello word');</span></span><br><span class="line">    <span class="comment">// 原生的写法 line17打开注释</span></span><br><span class="line">    <span class="comment">// console.log(ctx.req.url); //  / </span></span><br><span class="line">    <span class="comment">// console.log(ctx.request.req.url); //  /</span></span><br><span class="line">    <span class="comment">// //line24、25调用的是原生的、line27、28调用的是自己封装的</span></span><br><span class="line">    <span class="comment">// console.log(ctx.request.url); //  /</span></span><br><span class="line">    <span class="comment">// console.log(ctx.url);</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 当前的</span></span><br><span class="line">    <span class="comment">// console.log(ctx.req.url); //  / 这个req是原生的</span></span><br><span class="line">    <span class="comment">// console.log(ctx.request.req.url); //  </span></span><br><span class="line">    <span class="comment">// console.log(ctx.request.url); // 这里必须要把req放到request上，才可以在request上拿到req的属性</span></span><br><span class="line">    <span class="comment">// console.log(ctx.url);// 它的原理非常像vue ctx.url =&gt; ctx.request.url  代理</span></span><br><span class="line">    <span class="comment">// console.log(ctx.path);</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 下一部分****************</span></span><br><span class="line">    <span class="comment">// 用原生</span></span><br><span class="line">    <span class="comment">// ctx.response.body = 'hello word';</span></span><br><span class="line">    <span class="comment">// console.log(ctx.body);</span></span><br><span class="line">    <span class="comment">//或者</span></span><br><span class="line">    <span class="comment">// ctx.body = 'hello word';</span></span><br><span class="line">    <span class="comment">// console.log(ctx.response.body);</span></span><br><span class="line">    <span class="comment">// 也是一样的 </span></span><br><span class="line">    <span class="comment">// 现在用自己的写 看response.js文件</span></span><br><span class="line">    <span class="comment">// 自己的</span></span><br><span class="line">    ctx.response.body = <span class="string">'hello word'</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(ctx.body);</span><br><span class="line">    <span class="comment">// 反过来</span></span><br><span class="line">    ctx.body = <span class="string">'hello word'</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(ctx.response.body);</span><br><span class="line">&#125;)</span><br><span class="line">app.listen(<span class="number">4000</span>);</span><br></pre></td></tr></table></figure>
+
+<p>response.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// response.js</span></span><br><span class="line"><span class="keyword">let</span> response = &#123;</span><br><span class="line">    _body: <span class="string">''</span>,</span><br><span class="line">    <span class="keyword">get</span> body()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>._body;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="keyword">set</span> body(newValue)&#123;</span><br><span class="line">        <span class="keyword">this</span>._body = newValue;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">module</span>.exports = response;</span><br></pre></td></tr></table></figure>
+
+<p>context.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// context.js</span></span><br><span class="line"><span class="keyword">let</span> context = &#123; </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//  context.js是代理的功能</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">defineGetter</span>(<span class="params">property,key</span>)</span>&#123;</span><br><span class="line">    context.__defineGetter__(key,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>[property][key];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line">defineGetter(<span class="string">'request'</span>,<span class="string">'url'</span>);</span><br><span class="line">defineGetter(<span class="string">'request'</span>,<span class="string">'method'</span>);</span><br><span class="line">defineGetter(<span class="string">'request'</span>,<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.server.js line33、34</span></span><br><span class="line">defineGetter(<span class="string">'response'</span>,<span class="string">'body'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.server.js line36、37</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">defineSetter</span>(<span class="params">property,key</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 这里是__defineSetter__(key,  给key即（body）设置属性的时候添加的代理</span></span><br><span class="line">    context.__defineSetter__(key,<span class="function"><span class="keyword">function</span>(<span class="params">newValue</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">this</span>[property][key] = newValue;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line">defineSetter(<span class="string">'response'</span>,<span class="string">'body'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = context;</span><br></pre></td></tr></table></figure>
+
+<h1 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h1><blockquote>
+<p>Koa 应用程序是一个包含一组中间件函数的对象，它是按照类似堆栈的方式组织和执行的。</p>
+</blockquote>
+<h2 id="next"><a href="#next" class="headerlink" title="next"></a>next</h2><p>3.helloword.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 3.helloword.js</span></span><br><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"><span class="comment">// next</span></span><br><span class="line">app.use(<span class="function">(<span class="params">ctx,next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">    next();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">4</span>);</span><br><span class="line">&#125;);</span><br><span class="line">app.use(<span class="function">(<span class="params">ctx,next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">    next();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">5</span>);</span><br><span class="line">&#125;);</span><br><span class="line">app.use(<span class="function">(<span class="params">ctx,next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>);</span><br><span class="line">    next();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">6</span>);</span><br><span class="line">&#125;);</span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br><span class="line"><span class="comment">// 执行结果： 1 2 3 6 5 4</span></span><br></pre></td></tr></table></figure>
+
+<p>组合成了一个大的函数 相当于如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 3.helloword.js</span></span><br><span class="line">app.use(<span class="function">(<span class="params">ctx,next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">    (ctx,next) =&gt; &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">        (<span class="function">(<span class="params">ctx,next</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="number">3</span>);</span><br><span class="line">            next();</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="number">6</span>);</span><br><span class="line">        &#125;();</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="number">5</span>);</span><br><span class="line">    &#125;();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">4</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>如图：</p>
+<p><img src="https://jiafei2333.github.io/html/images/koa-middleware.png" alt></p>
+<p>这个叫中间件  我可以在执行某个过程中 之前增加某些逻辑<br>中间件 use方法 它可以决定是否向下执行（调next就向下走）<br>这里可以使用async+await方法</p>
+<h4 id="1】"><a href="#1】" class="headerlink" title="1】"></a>1】</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 3.helloword.js</span></span><br><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"><span class="keyword">const</span> logger = <span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>)=&gt;</span>&#123;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">'logger'</span>);  </span><br><span class="line">          resolve();</span><br><span class="line">        &#125;, <span class="number">1000</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">app.use(<span class="keyword">async</span> (ctx,next) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">await</span> logger();</span><br><span class="line">    next();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">4</span>);</span><br><span class="line">&#125;);</span><br><span class="line">app.use(<span class="function">(<span class="params">ctx,next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">    next();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">5</span>);</span><br><span class="line">&#125;);</span><br><span class="line">app.use(<span class="function">(<span class="params">ctx,next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>);</span><br><span class="line">    next();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">6</span>);</span><br><span class="line">&#125;);</span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br><span class="line"><span class="comment">// 执行结果：1 过一秒打印logger 23654</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2】"><a href="#2】" class="headerlink" title="2】"></a>2】</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 3.helloword.js</span></span><br><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"><span class="keyword">const</span> logger = <span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>)=&gt;</span>&#123;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">'logger'</span>);  </span><br><span class="line">          resolve();</span><br><span class="line">        &#125;, <span class="number">1000</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">app.use(<span class="function">(<span class="params">ctx,next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">    next(); <span class="comment">// 当前执行next的时候 没有等待next执行完, 但是外层的已经执行完了所以会继续执行 =&gt;4</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">4</span>);</span><br><span class="line">&#125;);</span><br><span class="line">app.use(<span class="keyword">async</span> (ctx,next) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">    <span class="keyword">await</span> logger();</span><br><span class="line">    next();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">5</span>);</span><br><span class="line">&#125;);</span><br><span class="line">app.use(<span class="function">(<span class="params">ctx,next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>);</span><br><span class="line">    next();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">6</span>);</span><br><span class="line">&#125;);</span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br><span class="line"><span class="comment">// 执行结果： 124 logger365</span></span><br></pre></td></tr></table></figure>
+
+<p>分析： 1 ， line14的next() 就是line17-22</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">async (ctx,next) =&gt; &#123;</span><br><span class="line">    console.log(2);</span><br><span class="line">    await logger();</span><br><span class="line">    next();</span><br><span class="line">    console.log(5);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个方法 =&gt;2， next()没有等待执行完 所以 =&gt;4  logger =&gt;3=&gt;6=&gt;5</p>
+<h4 id="3】"><a href="#3】" class="headerlink" title="3】"></a>3】</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 3.helloword.js</span></span><br><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"><span class="keyword">const</span> logger = <span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>)=&gt;</span>&#123;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">'logger'</span>);  </span><br><span class="line">          resolve();</span><br><span class="line">        &#125;, <span class="number">1000</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">app.use(<span class="function">(<span class="params">ctx,next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">    ctx.body = <span class="string">'hello'</span>;</span><br><span class="line">    next();</span><br><span class="line">    ctx.body = <span class="string">'hello4'</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">4</span>);</span><br><span class="line">&#125;);</span><br><span class="line">app.use(<span class="keyword">async</span> (ctx,next) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">    ctx.body = <span class="string">'hello1'</span>;</span><br><span class="line">    <span class="keyword">await</span> logger();</span><br><span class="line">    next();</span><br><span class="line">    ctx.body = <span class="string">'hello5'</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">5</span>);</span><br><span class="line">&#125;);</span><br><span class="line">app.use(<span class="function">(<span class="params">ctx,next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>);</span><br><span class="line">    ctx.body = <span class="string">'hello2'</span>;</span><br><span class="line">    next();</span><br><span class="line">    ctx.body = <span class="string">'hello5'</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">6</span>);</span><br><span class="line">&#125;);</span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br><span class="line"><span class="comment">// 运行 nodemon 3.helloword.js</span></span><br><span class="line"><span class="comment">// 浏览器运行 http://localhost:3000</span></span><br></pre></td></tr></table></figure>
+
+<p>浏览器获取到服务端返回的 ‘hello4’ 因为这里line16 next()方法外层已经执行完了，所以服务器端返回</p>
+<h4 id="4】"><a href="#4】" class="headerlink" title="4】"></a>4】</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 3.helloword.js</span></span><br><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"><span class="keyword">const</span> logger = <span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>)=&gt;</span>&#123;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">'logger'</span>);  </span><br><span class="line">          resolve();</span><br><span class="line">        &#125;, <span class="number">1000</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">app.use(<span class="keyword">async</span> (ctx,next) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">    ctx.body = <span class="string">'hello'</span>;</span><br><span class="line">    <span class="keyword">await</span> next(); <span class="comment">// ****这里加了 await</span></span><br><span class="line">    ctx.body = <span class="string">'hello4'</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">4</span>);</span><br><span class="line">&#125;);</span><br><span class="line">app.use(<span class="keyword">async</span> (ctx,next) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">    ctx.body = <span class="string">'hello1'</span>;</span><br><span class="line">    <span class="keyword">await</span> logger();</span><br><span class="line">    next();</span><br><span class="line">    ctx.body = <span class="string">'hello5'</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">5</span>);</span><br><span class="line">&#125;);</span><br><span class="line">app.use(<span class="function">(<span class="params">ctx,next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>);</span><br><span class="line">    ctx.body = <span class="string">'hello2'</span>;</span><br><span class="line">    next();</span><br><span class="line">    ctx.body = <span class="string">'hello5'</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">6</span>);</span><br><span class="line">&#125;);</span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这样就会等待 next() 这个函数完全执行完再返回 hello4<br>执行: 浏览器会过1秒之后再返回</p>
+<h4 id="5】"><a href="#5】" class="headerlink" title="5】"></a>5】</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 3.helloword.js</span></span><br><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"><span class="keyword">const</span> logger = <span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>)=&gt;</span>&#123;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">'logger'</span>);  </span><br><span class="line">          resolve();</span><br><span class="line">        &#125;, <span class="number">1000</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">app.use(<span class="keyword">async</span> (ctx,next) =&gt; &#123;</span><br><span class="line">    ctx.body = <span class="string">'hello'</span>;</span><br><span class="line">    <span class="comment">// await next();</span></span><br><span class="line">    <span class="keyword">return</span> next(); <span class="comment">// 也可以这样写 这里next()返回一个promise, 会等待promise执行完，和await的区别是await后面还是执行代码，return不行</span></span><br><span class="line">    <span class="comment">// 如果上面是写的await  这里还可以有其他的todo...</span></span><br><span class="line">&#125;);</span><br><span class="line">app.use(<span class="keyword">async</span> (ctx,next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">await</span> logger();</span><br><span class="line">    <span class="comment">// ctx.body = '500';</span></span><br><span class="line">    <span class="keyword">return</span> next(); <span class="comment">// 这里如上 也可以用return</span></span><br><span class="line">&#125;);</span><br><span class="line">app.use(<span class="keyword">async</span> (ctx,next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> next();  <span class="comment">// 这里是最后一个next()前面可以不用加，但是不一定是最后一个，所以都加上</span></span><br><span class="line">&#125;);</span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 现在上面的方法是等所有都执行完再返回  所以当line21注释打开的话，服务端返回的是500</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在使用koas时如果遇到next 前面就可以加 return 或者await<br>koa里面有个compose方法 会将所有方法组合成一个大的promise 如果没有加如上的return 或者async await 代码可能没有执行完就返回了</p>
+</blockquote>
+<h4 id="6】"><a href="#6】" class="headerlink" title="6】"></a>6】</h4><p>计算执行的时间</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 3.helloword.js</span></span><br><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"><span class="keyword">const</span> logger = <span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>)=&gt;</span>&#123;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">'logger'</span>);  </span><br><span class="line">          resolve();</span><br><span class="line">        &#125;, <span class="number">1000</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">app.use(<span class="keyword">async</span> (ctx,next) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.time(<span class="string">'start'</span>); <span class="comment">// *** </span></span><br><span class="line">    ctx.body = <span class="string">'hello'</span>;</span><br><span class="line">    <span class="keyword">await</span> next(); </span><br><span class="line">    <span class="built_in">console</span>.timeEnd(<span class="string">'start'</span>); <span class="comment">// ***</span></span><br><span class="line">&#125;);</span><br><span class="line">app.use(<span class="keyword">async</span> (ctx,next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">await</span> logger();</span><br><span class="line">    <span class="keyword">return</span> next();</span><br><span class="line">&#125;);</span><br><span class="line">app.use(<span class="keyword">async</span> (ctx,next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> next();</span><br><span class="line">&#125;);</span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br><span class="line"><span class="comment">// 执行 可以看到命令行打印出时间  start: 1007.369ms</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="完善"><a href="#完善" class="headerlink" title="完善"></a>完善</h2><p>现在看 ./koa/application   方法整合<br>手写compose方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 4.helloword.js  引入自己的application.js</span></span><br><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'./koa/application'</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"><span class="keyword">const</span> logger = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"logger"</span>);</span><br><span class="line">        resolve();</span><br><span class="line">      &#125;, <span class="number">1000</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">await</span> next();</span><br><span class="line">&#125;);</span><br><span class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    <span class="comment">// 上下文</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">    <span class="keyword">await</span> logger();</span><br><span class="line">    <span class="keyword">return</span> next();</span><br><span class="line">&#125;);</span><br><span class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line"><span class="comment">// 上下文</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>);</span><br><span class="line">    <span class="keyword">await</span> next();</span><br><span class="line">    <span class="comment">// 如果返回的是个文件</span></span><br><span class="line">    ctx.body = fs.createReadStream(<span class="string">'2.server.js'</span>);</span><br><span class="line">    <span class="comment">// 如果返回的是个对象</span></span><br><span class="line">    ctx.body = &#123;<span class="attr">name</span>: <span class="string">'jf'</span>&#125;;</span><br><span class="line">&#125;);</span><br><span class="line">app.on(<span class="string">'error'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123; <span class="comment">// 当任何一个中间件出错的时候都能捕获</span></span><br><span class="line">	<span class="built_in">console</span>.log(err);</span><br><span class="line">&#125;)</span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// application.js</span></span><br><span class="line"><span class="keyword">let</span> context = <span class="built_in">require</span>(<span class="string">'./context'</span>);</span><br><span class="line"><span class="keyword">let</span> request = <span class="built_in">require</span>(<span class="string">'./request'</span>);</span><br><span class="line"><span class="keyword">let</span> response = <span class="built_in">require</span>(<span class="string">'./response'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="keyword">const</span> Events = <span class="built_in">require</span>(<span class="string">'events'</span>);</span><br><span class="line"><span class="keyword">const</span> Stream = <span class="built_in">require</span>(<span class="string">'stream'</span>);</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Application</span> <span class="keyword">extends</span> <span class="title">Events</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123;</span><br><span class="line">		<span class="keyword">super</span>(); <span class="comment">// ***这个不要忘记了</span></span><br><span class="line">        <span class="keyword">this</span>.context = context;</span><br><span class="line">        <span class="keyword">this</span>.request = request;</span><br><span class="line">        <span class="keyword">this</span>.response = response;</span><br><span class="line">        <span class="keyword">this</span>.middleware = [];</span><br><span class="line">    &#125;</span><br><span class="line">    use(fn)&#123;</span><br><span class="line">        <span class="comment">// this.fn = fn;</span></span><br><span class="line">        <span class="keyword">this</span>.middleware.push(fn);</span><br><span class="line">    &#125;</span><br><span class="line">    createContext(req, res)&#123;</span><br><span class="line">        <span class="keyword">let</span> context = <span class="built_in">Object</span>.create(<span class="keyword">this</span>.context);</span><br><span class="line">        context.request = <span class="built_in">Object</span>.create(<span class="keyword">this</span>.request);</span><br><span class="line">        context.response = <span class="built_in">Object</span>.create(<span class="keyword">this</span>.response);</span><br><span class="line">        context.req = context.request.req = req;</span><br><span class="line">        context.res = context.response.res = res;</span><br><span class="line">        <span class="keyword">return</span> context;</span><br><span class="line">    &#125;</span><br><span class="line">    compose(ctx)&#123; <span class="comment">// 返回的是个promise   这里看下源码 koa/lib/application</span></span><br><span class="line">        <span class="comment">// [fn, fn, fn]</span></span><br><span class="line">        <span class="keyword">let</span> dispatch = <span class="function">(<span class="params">index</span>) =&gt;</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(index === <span class="keyword">this</span>.middleware.length) <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve();</span><br><span class="line">            <span class="keyword">let</span> middle = <span class="keyword">this</span>.middleware[index];</span><br><span class="line">            <span class="comment">// 拿出第一个中间件让其执行，执行的时候传递ctx，next方法，有可能这个方法是个普通函数，那么就把他变成一个promise</span></span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(middle(ctx, ()=&gt;dispatch(index+<span class="number">1</span>)));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dispatch(<span class="number">0</span>);</span><br><span class="line">        <span class="comment">// 这里写完之后 新建4.helloword.js 引入当前文件验证  1 2 logger 3</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    handleRequest(req, res)&#123;</span><br><span class="line">        <span class="keyword">let</span> ctx = <span class="keyword">this</span>.createContext(req, res);</span><br><span class="line">        <span class="comment">// this.fn(ctx);</span></span><br><span class="line">        <span class="keyword">this</span>.compose(ctx).then(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">            <span class="keyword">let</span> _body = ctx.body;</span><br><span class="line">            <span class="keyword">if</span>(_body <span class="keyword">instanceof</span> Stream)&#123;</span><br><span class="line">                <span class="keyword">return</span> _body.pipe(res);</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">typeof</span> _body === <span class="string">'object'</span>)&#123; <span class="comment">//如果是对象 </span></span><br><span class="line">                <span class="keyword">return</span> res.end(<span class="built_in">JSON</span>.stringify(_body));</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123; <span class="comment">// 普通字符串</span></span><br><span class="line">                <span class="keyword">return</span> res.end(_body);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).catch(<span class="function"><span class="params">err</span>=&gt;</span>&#123; <span class="comment">// 这里捕获错误 触发 `4.helloword.js`</span></span><br><span class="line">            <span class="comment">// 继承events</span></span><br><span class="line">            <span class="keyword">this</span>.emit(<span class="string">'error'</span>,err);</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    listen(...args)&#123;</span><br><span class="line">        <span class="keyword">let</span> server = http.createServer(<span class="keyword">this</span>.handleRequest.bind(<span class="keyword">this</span>));</span><br><span class="line">        server.listen(...args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = Application;</span><br><span class="line"><span class="comment">// 1) compose方法 如何用async+await来重写</span></span><br><span class="line"><span class="comment">// 2) compose next方法如何 避免多次调用（连着写多个next()）</span></span><br><span class="line"><span class="comment">// 3) ctx.body 没有赋值 如何处理</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Nodejs/" rel="tag"># Nodejs</a>
+          
+            <a href="/tags/Koa/" rel="tag"># Koa</a>
+          
+            <a href="/tags/中间件/" rel="tag"># 中间件</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/09/MongoDB/" rel="next" title="MongoDB">
+                <i class="fa fa-chevron-left"></i> MongoDB
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/12/Nodejs-Koa2/" rel="prev" title="Nodejs-Koa（二）">
+                Nodejs-Koa（二） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/Prueba.gif" alt="加菲">
+            
+              <p class="site-author-name" itemprop="name">加菲</p>
+              <p class="site-description motion-element" itemprop="description">啦啦啦~~~加油码字</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Koa"><span class="nav-number">1.</span> <span class="nav-text">Koa</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">使用</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#手写Koa原理"><span class="nav-number">2.</span> <span class="nav-text">手写Koa原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#中间件"><span class="nav-number">3.</span> <span class="nav-text">中间件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#next"><span class="nav-number">3.1.</span> <span class="nav-text">next</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1】"><span class="nav-number">3.1.0.1.</span> <span class="nav-text">1】</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2】"><span class="nav-number">3.1.0.2.</span> <span class="nav-text">2】</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3】"><span class="nav-number">3.1.0.3.</span> <span class="nav-text">3】</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4】"><span class="nav-number">3.1.0.4.</span> <span class="nav-text">4】</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5】"><span class="nav-number">3.1.0.5.</span> <span class="nav-text">5】</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6】"><span class="nav-number">3.1.0.6.</span> <span class="nav-text">6】</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完善"><span class="nav-number">3.2.</span> <span class="nav-text">完善</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">加菲</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

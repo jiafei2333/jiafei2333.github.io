@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Nodejs,HTTP,反向代理,ajax 跨域,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="ajax跨域解决方案 jsonp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 2. cors&amp;nbsp;&amp;nbsp; 3. iframe&amp;nbsp;&amp;nbsp;  4. websocket&amp;nbsp;&amp;nbsp; 5. window.name&amp;nbsp;&amp;nbsp; 6. nginx">
+<meta name="keywords" content="Nodejs,HTTP,反向代理,ajax 跨域">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nodejs http （三）">
+<meta property="og:url" content="http://yoursite.com/2019/10/09/Node-http-3/index.html">
+<meta property="og:site_name" content="Hi 加菲">
+<meta property="og:description" content="ajax跨域解决方案 jsonp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 2. cors&amp;nbsp;&amp;nbsp; 3. iframe&amp;nbsp;&amp;nbsp;  4. websocket&amp;nbsp;&amp;nbsp; 5. window.name&amp;nbsp;&amp;nbsp; 6. nginx">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://jiafei2333.github.io/html/images/access-control-1.png">
+<meta property="og:image" content="https://jiafei2333.github.io/html/images/access-control-2.png">
+<meta property="og:image" content="https://jiafei2333.github.io/html/images/access-control-5.png">
+<meta property="og:image" content="https://jiafei2333.github.io/html/images/access-control-3.png">
+<meta property="og:image" content="https://jiafei2333.github.io/html/images/access-control-4.png">
+<meta property="og:image" content="https://jiafei2333.github.io/html/images/access-control-6.png">
+<meta property="og:image" content="https://jiafei2333.github.io/html/images/access-control-7.png">
+<meta property="og:image" content="https://jiafei2333.github.io/html/images/proxy-cache-cdn.png">
+<meta property="og:image" content="https://jiafei2333.github.io/html/images/accept-language.png">
+<meta property="og:updated_time" content="2019-10-09T06:09:05.127Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nodejs http （三）">
+<meta name="twitter:description" content="ajax跨域解决方案 jsonp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 2. cors&amp;nbsp;&amp;nbsp; 3. iframe&amp;nbsp;&amp;nbsp;  4. websocket&amp;nbsp;&amp;nbsp; 5. window.name&amp;nbsp;&amp;nbsp; 6. nginx">
+<meta name="twitter:image" content="https://jiafei2333.github.io/html/images/access-control-1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/09/Node-http-3/">
+
+
+
+
+
+  <title>Nodejs http （三） | Hi 加菲</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi 加菲</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每个人都在负重前行</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/09/Node-http-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="加菲">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/Prueba.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi 加菲">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Nodejs http （三）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-09T09:33:46+08:00">
+                2019-10-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nodejs/" itemprop="url" rel="index">
+                    <span itemprop="name">Nodejs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="ajax跨域解决方案"><a href="#ajax跨域解决方案" class="headerlink" title="ajax跨域解决方案"></a>ajax跨域解决方案</h3><ol>
+<li>jsonp&nbsp;&nbsp;&nbsp;&nbsp; 2. cors&nbsp;&nbsp; 3. iframe&nbsp;&nbsp;  4. websocket&nbsp;&nbsp; 5. window.name&nbsp;&nbsp; 6. nginx</li>
+</ol>
+<a id="more"></a>
+
+<p>新建index.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 跨域  域名、协议、端口号 其中任何一个不满足都是跨域--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">        <span class="comment">// axios 是基于 xhr 来实现 支持promise， axios自带拦截器</span></span></span><br><span class="line"><span class="javascript">        <span class="comment">// fetch 不是基于xhr的，发请求就只有一个fetch请求，并且api很底层，不能终止fetch,因为它是一个promise</span></span></span><br><span class="line"></span><br><span class="line"><span class="javascript">        fetch(<span class="string">'http://localhost:3000/api'</span>,&#123;</span></span><br><span class="line"><span class="javascript">            method: <span class="string">'get'</span>,</span></span><br><span class="line"><span class="javascript">        &#125;).then(<span class="function"><span class="params">res</span>=&gt;</span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> res.json(); </span></span><br><span class="line"><span class="javascript">	<span class="comment">// res.json表示将1.core.js服务器返回的结果转化成json； return res.json() 返回的是一个promise 走下面这个then</span></span></span><br><span class="line"><span class="javascript">        &#125;).then(<span class="function"><span class="params">json</span>=&gt;</span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="built_in">console</span>.log(<span class="string">'打印：'</span>, json);</span></span><br><span class="line">        &#125;)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>1.core.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"></span><br><span class="line">http.createServer(<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(req.url === <span class="string">'/api'</span>)&#123;</span><br><span class="line">        res.end(<span class="built_in">JSON</span>.stringify(&#123;<span class="attr">name</span>: <span class="string">'jf'</span>&#125;));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).listen(<span class="number">3000</span>);</span><br><span class="line"><span class="comment">// 当前为服务器端 启动服务 nodemon 1.core.js</span></span><br><span class="line"><span class="comment">// 客户端 Open with Live Serve index.html  如下图报跨域错误</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://jiafei2333.github.io/html/images/access-control-1.png" alt></p>
+<h4 id="配置简单跨域设置"><a href="#配置简单跨域设置" class="headerlink" title="配置简单跨域设置"></a>配置简单跨域设置</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1.core.js</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line">http.createServer(<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">    res.setHeader(<span class="string">'Access-Control-Allow-Origin'</span>,<span class="string">'*'</span>);</span><br><span class="line">    <span class="keyword">if</span>(req.url === <span class="string">'/api'</span>)&#123;</span><br><span class="line">        res.end(<span class="built_in">JSON</span>.stringify(&#123;<span class="attr">name</span>: <span class="string">'jf'</span>&#125;));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).listen(<span class="number">3000</span>);</span><br><span class="line"><span class="comment">// 浏览器访问index.html  打印： &#123;name: "jf"&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="OPTIONS请求"><a href="#OPTIONS请求" class="headerlink" title="OPTIONS请求"></a>OPTIONS请求</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--index.html--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 如果用户发送了OPTIONS请求，就是试探能不能访问服务器</span></span></span><br><span class="line"><span class="javascript">    fetch(<span class="string">'http://localhost:3000/api'</span>,&#123;</span></span><br><span class="line"><span class="javascript">        method: <span class="string">'get'</span>,</span></span><br><span class="line">        headers:&#123;</span><br><span class="line"><span class="javascript">            token: <span class="string">'xxxx...'</span>, <span class="comment">// 自定义header</span></span></span><br><span class="line">        &#125;</span><br><span class="line"><span class="javascript">    &#125;).then(<span class="function"><span class="params">res</span>=&gt;</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> res.json(); </span></span><br><span class="line"><span class="javascript">    &#125;).then(<span class="function"><span class="params">json</span>=&gt;</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'打印：'</span>, json);</span></span><br><span class="line">    &#125;)</span><br><span class="line"><span class="javascript">    <span class="comment">// 自定义header加上任何请求(get、post...),都是复杂请求 运行</span></span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://jiafei2333.github.io/html/images/access-control-2.png" alt></p>
+<p>允许访问，但是header需要设置一下，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1.core.js</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line">http.createServer(<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">    res.setHeader(<span class="string">'Access-Control-Allow-Origin'</span>,<span class="string">'*'</span>);</span><br><span class="line">    <span class="comment">// 如果发送的是其他header 需要这里进行设置允许</span></span><br><span class="line">    res.setHeader(<span class="string">'Access-Control-Allow-Headers'</span>, <span class="string">'token,...'</span>);</span><br><span class="line">    <span class="keyword">if</span>(req.method === <span class="string">'OPTIONS'</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> res.end();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(req.url === <span class="string">'/api'</span>)&#123;</span><br><span class="line">        res.end(<span class="built_in">JSON</span>.stringify(&#123;<span class="attr">name</span>: <span class="string">'jf'</span>&#125;));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+
+<p>设置了header里面的token之后</p>
+<p><img src="https://jiafei2333.github.io/html/images/access-control-5.png" alt></p>
+<p>第一次是OPTIONS，发送了一个试探请求</p>
+<p><img src="https://jiafei2333.github.io/html/images/access-control-3.png" alt></p>
+<p>第二次是GET，能够获取到res返回的值</p>
+<p><img src="https://jiafei2333.github.io/html/images/access-control-4.png" alt></p>
+<hr>
+<h4 id="发送复杂请求"><a href="#发送复杂请求" class="headerlink" title="发送复杂请求"></a>发送复杂请求</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--index.html--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    fetch(<span class="string">'http://localhost:3000/api'</span>,&#123;</span></span><br><span class="line"><span class="javascript">        method: <span class="string">'delete'</span>, <span class="comment">// 发送的是复杂请求</span></span></span><br><span class="line">        headers:&#123;</span><br><span class="line"><span class="javascript">            token: <span class="string">'xxxx'</span>,</span></span><br><span class="line">        &#125;</span><br><span class="line"><span class="javascript">    &#125;).then(<span class="function"><span class="params">res</span>=&gt;</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> res.json(); </span></span><br><span class="line"><span class="javascript">    &#125;).then(<span class="function"><span class="params">json</span>=&gt;</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'打印：'</span>, json);</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1.core.js</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line">http.createServer(<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">    res.setHeader(<span class="string">'Access-Control-Allow-Origin'</span>,<span class="string">'*'</span>);</span><br><span class="line">    res.setHeader(<span class="string">'Access-Control-Allow-Headers'</span>, <span class="string">'token,xxx'</span>);</span><br><span class="line">    <span class="comment">// 我允许哪个方法来访问我 默认是支持get、post的</span></span><br><span class="line">    res.setHeader(<span class="string">'Access-Control-Allow-Methods'</span>, <span class="string">'PUT,DELETE'</span>);</span><br><span class="line">    <span class="comment">// 30分钟 发一次options  prefight 这个叫预检请求</span></span><br><span class="line">    res.setHeader(<span class="string">'Access-Control-Max-Age'</span>, <span class="string">'1800'</span>);</span><br><span class="line">    <span class="keyword">if</span>(req.method === <span class="string">'OPTIONS'</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> res.end();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(req.url === <span class="string">'/api'</span>)&#123;</span><br><span class="line">        res.end(<span class="built_in">JSON</span>.stringify(&#123;<span class="attr">name</span>: <span class="string">'jf'</span>&#125;));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="设置Cookie"><a href="#设置Cookie" class="headerlink" title="设置Cookie"></a>设置Cookie</h4><blockquote>
+<p>http 无状态的 没法记住状态 一般会借助cookie 通过服务器设置cookie 每次请求的时候会带上cookie</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--index.html--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 设置cookie</span></span></span><br><span class="line"><span class="javascript">    <span class="comment">// 默认情况下 cookie是不允许跨域设置的</span></span></span><br><span class="line"><span class="javascript">    fetch(<span class="string">'http://localhost:3000/api'</span>,&#123;</span></span><br><span class="line"><span class="javascript">        method: <span class="string">'delete'</span>,</span></span><br><span class="line">        headers:&#123;</span><br><span class="line"><span class="javascript">            token: <span class="string">'xxxx'</span>,</span></span><br><span class="line">        &#125;,</span><br><span class="line"><span class="javascript">        credentials: <span class="string">'include'</span>, <span class="comment">// 这里可以查看mdn fetch默认不会携带或接受cookie</span></span></span><br><span class="line"><span class="javascript">    &#125;).then(<span class="function"><span class="params">res</span>=&gt;</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> res.json(); </span></span><br><span class="line"><span class="javascript">    &#125;).then(<span class="function"><span class="params">json</span>=&gt;</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'打印：'</span>, json);</span></span><br><span class="line">    &#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://jiafei2333.github.io/html/images/access-control-6.png" alt></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1.core.js</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line">http.createServer(<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res.headers);</span><br><span class="line">    <span class="comment">// res.setHeader('Access-Control-Allow-Origin','*');</span></span><br><span class="line">    <span class="comment">// 指访问的源 谁访问我就是指谁 不能写* 但是表示所有人都可以访问我</span></span><br><span class="line">    res.setHeader(<span class="string">'Access-Control-Allow-Origin'</span>,req.headers.origin);</span><br><span class="line">    res.setHeader(<span class="string">'Access-Control-Allow-Headers'</span>, <span class="string">'token,xxx'</span>);</span><br><span class="line">    res.setHeader(<span class="string">'Access-Control-Allow-Methods'</span>, <span class="string">'PUT,DELETE'</span>);</span><br><span class="line">    res.setHeader(<span class="string">'Access-Control-Max-Age'</span>, <span class="string">'1800'</span>);</span><br><span class="line">    <span class="comment">// 允许客户端携带凭证</span></span><br><span class="line">    res.setHeader(<span class="string">'Access-Control-Allow-Credentials'</span>, <span class="literal">true</span>);</span><br><span class="line">    <span class="keyword">if</span>(req.method === <span class="string">'OPTIONS'</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> res.end();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(req.url === <span class="string">'/api'</span>)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'headers:'</span>, req.headers.cookie);  <span class="comment">// name=jf</span></span><br><span class="line">        res.setHeader(<span class="string">'Set-Cookie'</span>, <span class="string">'name=jf'</span>);</span><br><span class="line">        res.end(<span class="built_in">JSON</span>.stringify(&#123;<span class="attr">name</span>: <span class="string">'jf'</span>&#125;));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).listen(<span class="number">3000</span>);</span><br><span class="line"><span class="comment">// 图这里不能写*    1这里不能写*(line5) + 2服务器允许客户端携带凭着(line12) 这2点设置</span></span><br><span class="line"><span class="comment">// 服务端设置之后每次客户端请求以后都会带上  就可以知道是否登陆过</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://jiafei2333.github.io/html/images/access-control-7.png" alt></p>
+<p> 以上为ajax跨域相关的头设置</p>
+<h3 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h3><p>nginx 反向代理 就是针对用户是透明的<br>webpack proxy 反向 代理接口 我访问的还是以前的接口 主要的功能就是缓存 cdn 也是一个反向代理，感觉用户访问的是主机，其实访问的是各个子代理站点 （缓存+反向代理）</p>
+<p><img src="https://jiafei2333.github.io/html/images/proxy-cache-cdn.png" alt title="CDN"></p>
+<h4 id="webpack-它是如何实现反向代理的，核心就是创建代理服务器"><a href="#webpack-它是如何实现反向代理的，核心就是创建代理服务器" class="headerlink" title="webpack 它是如何实现反向代理的，核心就是创建代理服务器"></a>webpack 它是如何实现反向代理的，核心就是创建代理服务器</h4><p>从 2.proxy.js 服务器 去请求 5000.js 服务器，通过访问2.proxy网站去请求5000.js, 2.proxy相当于中间层</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 2.proxy.js</span></span><br><span class="line"><span class="keyword">let</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="keyword">let</span> httpProxy = <span class="built_in">require</span>(<span class="string">'http-proxy'</span>); <span class="comment">// 用法可以看npmjs上的http-proxy</span></span><br><span class="line"><span class="keyword">var</span> proxy = httpProxy.createProxyServer(); <span class="comment">// 开启了一个服务</span></span><br><span class="line"></span><br><span class="line">http.createServer(<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="comment">// http-proxy   npmjs =&gt; 搜索=&gt; http-proxy , 安装npm install http-proxy --save </span></span><br><span class="line">    <span class="comment">// 这里进行服务的转发</span></span><br><span class="line">    proxy.web(req,res,&#123;</span><br><span class="line">        target: <span class="string">'http://localhost:5000'</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;).listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+
+<p>新建5000.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 5000.js</span></span><br><span class="line"><span class="keyword">let</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"></span><br><span class="line">http.createServer(<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">    res.end(<span class="string">'I am 5000 port'</span>);</span><br><span class="line">&#125;).listen(<span class="number">5000</span>);</span><br></pre></td></tr></table></figure>
+
+<p>开启服务: 1、node 5000.js 2、nodemon 2.proxy , 访问端口 3、localhost:3000，浏览器打印出I am 5000 port</p>
+<h5 id="能干什么？"><a href="#能干什么？" class="headerlink" title="能干什么？"></a>能干什么？</h5><p>现在希望一个服务器上可以部署多个网站 nginx<br>如果我现在要部署2个网站<br><a href="http://www.jf1.cn" target="_blank" rel="noopener">www.jf1.cn</a>  那么默认访问这个端口是80<br><a href="http://www.jf2.cn" target="_blank" rel="noopener">www.jf2.cn</a>  那么默认访问这个端口也是80<br>中间会有一个代理机 proxy 如果是<a href="http://www.jf1.cn" target="_blank" rel="noopener">www.jf1.cn</a> 会到3000端口上 ， <a href="http://www.jf2.cn会到3001端口上" target="_blank" rel="noopener">www.jf2.cn会到3001端口上</a> 感觉访问的是80 其实被分配到了其他的端口上。<br>实行：拿到当前访问的域名，根据域名来访问</p>
+<p>根据host不同返回不同的网站，主要依靠的就是反向代理</p>
+<blockquote>
+<p>反向是针对浏览器透明  正向是针对服务器透明</p>
+</blockquote>
+<h3 id="302临时重定向"><a href="#302临时重定向" class="headerlink" title="302临时重定向"></a>302临时重定向</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 根据内核跳转页面 302 临时重定向</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 手机端 移动页面</span></span><br><span class="line"><span class="comment">// pc端</span></span><br><span class="line">http.createServer(<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="comment">// 如果是手机端 跳转到百度 , 如果是pc端 跳转到知乎</span></span><br><span class="line">    <span class="comment">// 浏览器pc端模式：User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36</span></span><br><span class="line">    <span class="comment">// 浏览器手机端模式：User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1</span></span><br><span class="line">    <span class="keyword">let</span> userAgent = req.headers[<span class="string">'user-agent'</span>];</span><br><span class="line">    <span class="keyword">if</span>(userAgent.includes(<span class="string">'iPhone'</span>))&#123;</span><br><span class="line">        res.statusCode = <span class="number">302</span>;</span><br><span class="line">        res.setHeader(<span class="string">'Location'</span>, <span class="string">'http://www.baidu.com'</span>);</span><br><span class="line">        res.end(); <span class="comment">// 结束当前服务 这样才会跳转到设置的这个网站</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        res.statusCode = <span class="number">302</span>;</span><br><span class="line">        res.setHeader(<span class="string">'Location'</span>, <span class="string">'http://www.zhihu.com'</span>);</span><br><span class="line">        res.end(); </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 这就是常见的服务器重定向   redirect</span></span><br><span class="line">&#125;).listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+
+<p>运行  nodemon 4.agent.js  浏览器访问 localhost:3000</p>
+<h3 id="多语言"><a href="#多语言" class="headerlink" title="多语言"></a>多语言</h3><p>根据客户端所支持的语言返回对应的结果<br>Accept-Language: zh-CN,zh;q=0.9,en;q=0.8<br>客户端可以自行配置语言 不同的语言组成不同的网站</p>
+<p><img src="https://jiafei2333.github.io/html/images/accept-language.png" alt></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Nodejs/" rel="tag"># Nodejs</a>
+          
+            <a href="/tags/HTTP/" rel="tag"># HTTP</a>
+          
+            <a href="/tags/反向代理/" rel="tag"># 反向代理</a>
+          
+            <a href="/tags/ajax-跨域/" rel="tag"># ajax 跨域</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/30/Node-http-2/" rel="next" title="Nodejs http （二）">
+                <i class="fa fa-chevron-left"></i> Nodejs http （二）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/09/MongoDB/" rel="prev" title="MongoDB">
+                MongoDB <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/Prueba.gif" alt="加菲">
+            
+              <p class="site-author-name" itemprop="name">加菲</p>
+              <p class="site-description motion-element" itemprop="description">啦啦啦~~~加油码字</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ajax跨域解决方案"><span class="nav-number">1.</span> <span class="nav-text">ajax跨域解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置简单跨域设置"><span class="nav-number">1.1.</span> <span class="nav-text">配置简单跨域设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OPTIONS请求"><span class="nav-number">1.2.</span> <span class="nav-text">OPTIONS请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#发送复杂请求"><span class="nav-number">1.3.</span> <span class="nav-text">发送复杂请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置Cookie"><span class="nav-number">1.4.</span> <span class="nav-text">设置Cookie</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反向代理"><span class="nav-number">2.</span> <span class="nav-text">反向代理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#webpack-它是如何实现反向代理的，核心就是创建代理服务器"><span class="nav-number">2.1.</span> <span class="nav-text">webpack 它是如何实现反向代理的，核心就是创建代理服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#能干什么？"><span class="nav-number">2.1.1.</span> <span class="nav-text">能干什么？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#302临时重定向"><span class="nav-number">3.</span> <span class="nav-text">302临时重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多语言"><span class="nav-number">4.</span> <span class="nav-text">多语言</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">加菲</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Nodejs,HTTP,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="知识点Http 状态码 101 websocket 双向通信 200 成功 204 没有响应体 206 断点续传 301(永久重定向) 302(临时重向) 304（缓存）只能服务端设置 401 （没登录没有权限） 403 （登录了没权限） 404  405（请求方法不存在、不支持，比如说发请求，服务器只支持get、post，但是我发了一个delete） 502 负载均衡挂了  500服务器挂  请">
+<meta name="keywords" content="Nodejs,HTTP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nodejs http （一）">
+<meta property="og:url" content="http://yoursite.com/2019/09/29/Node-http-1/index.html">
+<meta property="og:site_name" content="Hi 加菲">
+<meta property="og:description" content="知识点Http 状态码 101 websocket 双向通信 200 成功 204 没有响应体 206 断点续传 301(永久重定向) 302(临时重向) 304（缓存）只能服务端设置 401 （没登录没有权限） 403 （登录了没权限） 404  405（请求方法不存在、不支持，比如说发请求，服务器只支持get、post，但是我发了一个delete） 502 负载均衡挂了  500服务器挂  请">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://jiafei2333.github.io/html/images/HTTP-req.png">
+<meta property="og:updated_time" content="2019-09-30T06:07:01.914Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nodejs http （一）">
+<meta name="twitter:description" content="知识点Http 状态码 101 websocket 双向通信 200 成功 204 没有响应体 206 断点续传 301(永久重定向) 302(临时重向) 304（缓存）只能服务端设置 401 （没登录没有权限） 403 （登录了没权限） 404  405（请求方法不存在、不支持，比如说发请求，服务器只支持get、post，但是我发了一个delete） 502 负载均衡挂了  500服务器挂  请">
+<meta name="twitter:image" content="https://jiafei2333.github.io/html/images/HTTP-req.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/09/29/Node-http-1/">
+
+
+
+
+
+  <title>Nodejs http （一） | Hi 加菲</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi 加菲</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每个人都在负重前行</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/29/Node-http-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="加菲">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/Prueba.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi 加菲">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Nodejs http （一）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-29T11:26:13+08:00">
+                2019-09-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nodejs/" itemprop="url" rel="index">
+                    <span itemprop="name">Nodejs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h3><h4 id="Http-状态码"><a href="#Http-状态码" class="headerlink" title="Http 状态码"></a>Http 状态码</h4><ul>
+<li>101 websocket 双向通信</li>
+<li>200 成功 204 没有响应体 206 断点续传</li>
+<li>301(永久重定向) 302(临时重向) 304（缓存）只能服务端设置</li>
+<li>401 （没登录没有权限） 403 （登录了没权限） 404  405（请求方法不存在、不支持，比如说发请求，服务器只支持get、post，但是我发了一个delete）</li>
+<li>502 负载均衡挂了  500服务器挂</li>
+</ul>
+<h4 id="请求方法-RestfulApi"><a href="#请求方法-RestfulApi" class="headerlink" title="请求方法 RestfulApi"></a>请求方法 RestfulApi</h4><p>根据不同的动作 做对应的处理</p>
+<ul>
+<li>get 获取资源 </li>
+<li>post 新增资源 </li>
+<li>put 上传文件  修改</li>
+<li>delete  删除资源</li>
+<li>options 跨域出现 （复杂请求时出现） 只是get / post 都是简单请求 + 自定义的header</li>
+</ul>
+<h4 id="传输数据"><a href="#传输数据" class="headerlink" title="传输数据"></a>传输数据</h4><ul>
+<li><p>请求行 url</p>
+</li>
+<li><p>请求头 自定header</p>
+</li>
+<li><p>请求体 提交的数据</p>
+</li>
+<li><p>响应行 状态码</p>
+</li>
+<li><p>响应头 可以自定义</p>
+</li>
+<li><p>响应体 返还给浏览器的结果</p>
+</li>
+</ul>
+<h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><blockquote>
+<p>通过node实现一个http服务，都是通过核心模块提供（http模块）</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 服务器要有特定的ip 和端口号</span></span><br><span class="line"><span class="keyword">let</span> server = http.createServer();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 开启一个端口号</span></span><br><span class="line">server.listen(<span class="number">3000</span>, ()=&gt;&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'server start 3000'</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>每次服务端代码发生变化 都需要重启服务<br>可以安装nodemon  node的监视器 监视文件变化的</p>
+<blockquote>
+<p>sudo npm install nodemon -g    使用：  nodemon 文件名（可以增加配置文件）</p>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="server"><a href="#server" class="headerlink" title="server"></a>server</h3><p>新建文件 1.http.js</p>
+<h5 id="如果端口被占用了-自动-1"><a href="#如果端口被占用了-自动-1" class="headerlink" title="如果端口被占用了 自动+ 1"></a>如果端口被占用了 自动+ 1</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="keyword">let</span> server = http.createServer();</span><br><span class="line"><span class="keyword">let</span> port = <span class="number">3000</span>;</span><br><span class="line">server.listen(port, ()=&gt;&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'server start '</span> + port);</span><br><span class="line">&#125;);</span><br><span class="line">server.on(<span class="string">'error'</span>, (err) =&gt; &#123;</span><br><span class="line">    <span class="comment">// console.log(err);</span></span><br><span class="line">    <span class="keyword">if</span>(err.errno === <span class="string">'EADDRINUSE'</span>)&#123;</span><br><span class="line">        server.listen( ++port);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h5 id="图解"><a href="#图解" class="headerlink" title="图解"></a>图解</h5><p><img src="https://jiafei2333.github.io/html/images/HTTP-req.png" alt title="数据传输"></p>
+<h5 id="如果别人请求我，我需要去解析请求"><a href="#如果别人请求我，我需要去解析请求" class="headerlink" title="如果别人请求我，我需要去解析请求"></a>如果别人请求我，我需要去解析请求</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="keyword">const</span> url = <span class="built_in">require</span>(<span class="string">'url'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> server = http.createServer();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 监听请求事件</span></span><br><span class="line">server.on(<span class="string">'request'</span>, (req,res)=&gt;&#123;</span><br><span class="line">    <span class="comment">// req 代表的是客户端</span></span><br><span class="line">    <span class="comment">// res 代表的是服务端</span></span><br><span class="line">    <span class="comment">// 1)请求行   浏览器访问localhost:3000, nodemon运行的命令行里就会console.log出GET（我现在是服务端，所以nodemon就是服务端在接收数据，浏览器运行就是客户端在发起请求，所以现在每次需要接收到东西，都需要浏览器发起请求）</span></span><br><span class="line">    <span class="built_in">console</span>.log(req.method); <span class="comment">// GET 方法名大写</span></span><br><span class="line">    <span class="built_in">console</span>.log(req.url); <span class="comment">// 请求路径   /  表示首页 url不包含# hash</span></span><br><span class="line">    <span class="keyword">let</span> &#123;pathname, query&#125; = url.parse(req.url, <span class="literal">true</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(pathname,query);</span><br><span class="line">    <span class="comment">// 2) 请求头</span></span><br><span class="line">    <span class="built_in">console</span>.log(req.headers); <span class="comment">// 取header都是小写</span></span><br><span class="line">    <span class="comment">// 3) 请求体</span></span><br><span class="line">    <span class="keyword">let</span> arr = [];</span><br><span class="line">    req.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">chunk</span>) </span>&#123; <span class="comment">// data方法不一定触发，如果是get请求就没有请求体  流的原理 push(null) ,然后走end方法</span></span><br><span class="line">        arr.push(chunk);</span><br><span class="line">    &#125;);</span><br><span class="line">    req.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="comment">// end方法一定触发</span></span><br><span class="line">        <span class="built_in">console</span>.log(Buffer.concat(arr).toString());</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'end'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">// 这里用post请求可以 curl -v -X POST --data a=1 http://localhost:3000,运行，nodemon命令行就能打印出 a=1这个请求体</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 响应行 头 体</span></span><br><span class="line">    res.statusCode = <span class="number">404</span>; <span class="comment">// 响应状态码</span></span><br><span class="line">    <span class="comment">// res.setHeader('Content-Length', '1'); // 返回内容的长度 不写注释默然返回全部会自动计算个数</span></span><br><span class="line">    <span class="comment">//res.end('end'); // 可写流原理 end方法里面有数据会调write写入，然后再关闭，这里和write('写入数据'); end(); 这样是一样的</span></span><br><span class="line">    <span class="comment">// res.end('结束');// 直接写中文会乱码 如下</span></span><br><span class="line">    res.setHeader(<span class="string">'Content-Type'</span>,<span class="string">'text/plain;charset=utf-8'</span>); </span><br><span class="line">    <span class="comment">// 百度 Content-Type对应表，其中  文本 .txt  text/plain    .js application/x-javascript   .html text/html  后面再加上编码charset=utf-8 utf-8要加-不然ie不兼容</span></span><br><span class="line">    <span class="comment">// res.end('结束');</span></span><br><span class="line">    res.end(<span class="string">'结束'</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> port = <span class="number">3000</span>;</span><br><span class="line">server.listen(port, ()=&gt;&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'server start '</span> + port);</span><br><span class="line">&#125;);</span><br><span class="line">server.on(<span class="string">'error'</span>, (err) =&gt; &#123;</span><br><span class="line">    <span class="comment">// console.log(err);</span></span><br><span class="line">    <span class="keyword">if</span>(err.errno === <span class="string">'EADDRINUSE'</span>)&#123;</span><br><span class="line">        server.listen( ++port);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">// 一个完整的url</span><br><span class="line">const requestUrl = `http://username:password@www.baidu.com:80/s?offset=1&amp;limit=30#app`</span><br><span class="line"></span><br><span class="line">let result = url.parse(requestUrl,true);</span><br><span class="line">console.log(result)</span><br><span class="line">&#123;</span><br><span class="line">    protocol: &apos;http:&apos;,</span><br><span class="line">    slashes: true,  是否有/</span><br><span class="line">    auth: &apos;username:password&apos;, 用户信息</span><br><span class="line">    host: &apos;www.baidu.com:80&apos;,</span><br><span class="line">    port: &apos;80&apos;,</span><br><span class="line">    hostname: &apos;www.baidu.com&apos;, // 主机名</span><br><span class="line">    hash: &apos;#app&apos;,</span><br><span class="line">    search: &apos;?offset=1&amp;limit=30&apos;,</span><br><span class="line">    query: [Object: null prototype] &#123; offset: &apos;1&apos;, limit: &apos;30&apos; &#125;, // line4 true</span><br><span class="line">    query: &apos;offset=1&amp;limit=30&apos;, // 不填输出这个</span><br><span class="line">    pathname: &apos;/s&apos;,  请求路径 资源路由</span><br><span class="line">    path: &apos;/s?offset=1&amp;limit=30&apos;,</span><br><span class="line">    href:</span><br><span class="line">     &apos;http://username:password@www.baidu.com:80/s?offset=1&amp;limit=30#app&apos; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="client"><a href="#client" class="headerlink" title="client"></a>client</h3><p>新建文件 2.client.js<br>中间层<br>这里相当于是服务端，向1.http.js中的 localhost:3000发送请求</p>
+<h3 id="request"><a href="#request" class="headerlink" title="request"></a>request</h3><h4 id="get"><a href="#get" class="headerlink" title="get"></a>get</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</span><br><span class="line">http.get(<span class="string">'http://localhost:3000'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;<span class="comment">// 这样发送请求是不会有跨域问题的，因为这是服务器</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'发送成功'</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>Run Code运行 发送成功 在3000端口看到接收请求<br>get方法没有请求体</p>
+<h4 id="request-发送请求体"><a href="#request-发送请求体" class="headerlink" title="request 发送请求体"></a>request 发送请求体</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1.http.js</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="keyword">const</span> url = <span class="built_in">require</span>(<span class="string">'url'</span>);</span><br><span class="line"><span class="keyword">let</span> server = http.createServer();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 监听请求事件</span></span><br><span class="line">server.on(<span class="string">'request'</span>, (req,res)=&gt;&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(req.method); <span class="comment">// POST</span></span><br><span class="line">    <span class="built_in">console</span>.log(req.url); <span class="comment">// /</span></span><br><span class="line">    <span class="keyword">let</span> &#123;pathname, query&#125; = url.parse(req.url, <span class="literal">true</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(pathname,query); <span class="comment">// / [Object: null prototype] &#123;&#125;</span></span><br><span class="line">    <span class="built_in">console</span>.log(req.headers); <span class="comment">// &#123; host: 'localhost:3000', connection: 'close' &#125;</span></span><br><span class="line">    <span class="keyword">let</span> arr = [];</span><br><span class="line">    req.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">chunk</span>) </span>&#123; </span><br><span class="line">        arr.push(chunk);</span><br><span class="line">    &#125;);</span><br><span class="line">    req.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </span><br><span class="line">        <span class="built_in">console</span>.log(Buffer.concat(arr).toString());</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'end'</span>);</span><br><span class="line">        res.statusCode = <span class="number">404</span>; </span><br><span class="line">        res.setHeader(<span class="string">'Content-Type'</span>,<span class="string">'text/plain;charset=utf-8'</span>);</span><br><span class="line">        res.end(Buffer.concat(arr)); <span class="comment">// 将你发给我的数据再发送给你，因为on 'data' 'end' 都是异步的，所以这里把line20-22放到end里面</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> port = <span class="number">3000</span>;</span><br><span class="line">server.listen(port, ()=&gt;&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'server start '</span> + port);</span><br><span class="line">&#125;);</span><br><span class="line">server.on(<span class="string">'error'</span>, (err) =&gt; &#123;</span><br><span class="line">    <span class="comment">// console.log(err);</span></span><br><span class="line">    <span class="keyword">if</span>(err.errno === <span class="string">'EADDRINUSE'</span>)&#123;</span><br><span class="line">        server.listen( ++port);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1.client.js</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="keyword">let</span> config =&#123;</span><br><span class="line">    port: <span class="number">3000</span>,</span><br><span class="line">    hostname: <span class="string">'localhost'</span>,</span><br><span class="line">    headers:&#123;</span><br><span class="line">        a: <span class="number">1</span></span><br><span class="line">    &#125;,</span><br><span class="line">    method: <span class="string">'POST'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 请求后 会将响应的结果放到函数中</span></span><br><span class="line"><span class="keyword">let</span> client = http.request(config, <span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</span><br><span class="line">    res.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">chunk</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'接收到服务端返回的数据：'</span>, chunk.toString()); <span class="comment">// 接收到服务端返回的数据： a=2</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line">client.end(<span class="string">'a=2'</span>);</span><br><span class="line"><span class="comment">// 或者 client.write(....);client.end();</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="数据传输"><a href="#数据传输" class="headerlink" title="数据传输"></a>数据传输</h3><blockquote>
+<p>常见格式</p>
+</blockquote>
+<p>1) json字符串  {a:1}<br>2) 表单格式 a=1&amp;b=2  如test.form.html文件<br>3) 文件格式 图片 formData<br>4) 传递是字符串</p>
+<p>所以需要告诉服务端传过去的数据类型，在header里设置</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1.client.js</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> config =&#123;</span><br><span class="line">    port: <span class="number">3000</span>,</span><br><span class="line">    hostname: <span class="string">'localhost'</span>,</span><br><span class="line">    headers:&#123;<span class="comment">// 请求头 规范</span></span><br><span class="line">        <span class="string">'Content-Type'</span>: <span class="string">'application/x-www-form-urlencoded'</span>, <span class="comment">// 表单格式</span></span><br><span class="line">        <span class="comment">// 'Content-Type': 'application/json'  json类型</span></span><br><span class="line">    &#125;,</span><br><span class="line">    method: <span class="string">'POST'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 请求后 会将响应的结果放到函数中</span></span><br><span class="line"><span class="keyword">let</span> client = http.request(config, <span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</span><br><span class="line">    res.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">chunk</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'接收到服务端返回的数据：'</span>, chunk.toString());</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line">client.end(<span class="string">'a=2'</span>); <span class="comment">// 写响应体 ajax的data数据</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1.server.js</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="keyword">const</span> url = <span class="built_in">require</span>(<span class="string">'url'</span>);</span><br><span class="line"><span class="keyword">const</span> querystring = <span class="built_in">require</span>(<span class="string">'querystring'</span>); <span class="comment">// 查询字符串</span></span><br><span class="line"><span class="keyword">let</span> server = http.createServer();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 监听请求事件</span></span><br><span class="line">server.on(<span class="string">'request'</span>, (req,res)=&gt;&#123;</span><br><span class="line">    <span class="keyword">let</span> &#123;pathname, query&#125; = url.parse(req.url, <span class="literal">true</span>);</span><br><span class="line">    <span class="keyword">let</span> arr = [];</span><br><span class="line">    req.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">chunk</span>) </span>&#123; </span><br><span class="line">        arr.push(chunk);</span><br><span class="line">    &#125;);</span><br><span class="line">    req.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </span><br><span class="line">        res.statusCode = <span class="number">404</span>; </span><br><span class="line">        res.setHeader(<span class="string">'Content-Type'</span>,<span class="string">'text/plain;charset=utf-8'</span>);</span><br><span class="line">        <span class="keyword">let</span> content = Buffer.concat(arr).toString();</span><br><span class="line">        <span class="keyword">let</span> type = req.headers[<span class="string">'content-type'</span>]</span><br><span class="line">        <span class="keyword">if</span>(type === <span class="string">'application/json'</span>)&#123;</span><br><span class="line">            <span class="keyword">let</span> obj = <span class="built_in">JSON</span>.parse(content)</span><br><span class="line">            <span class="keyword">return</span> res.end(obj.a+<span class="string">''</span>); <span class="comment">// 为了保证是个字符串加''</span></span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(type === <span class="string">'application/x-www-form-urlencoded'</span>)&#123;</span><br><span class="line">            <span class="comment">// 第二个参数 字段间的分隔符 第三个参数 是key value分隔符</span></span><br><span class="line">            <span class="keyword">let</span> obj = querystring.parse(content,<span class="string">'&amp;'</span>, <span class="string">'='</span>); <span class="comment">// 默认可以不传</span></span><br><span class="line">            <span class="keyword">return</span> res.end(obj.a+<span class="string">''</span>);</span><br><span class="line">			</span><br><span class="line">            <span class="comment">//  let str = 'a=1&amp;b=2'; //如果是这样的字符串，也可以用下面的正则取到</span></span><br><span class="line">            <span class="comment">//  str.replace(/([^=&amp;])=([^&amp;=])/g,function()&#123;</span></span><br><span class="line">            <span class="comment">//      console.log(arguments[1],arguments[2])</span></span><br><span class="line">            <span class="comment">//  &#125;)</span></span><br><span class="line">        &#125;<span class="keyword">else</span>&#123; <span class="comment">//  如果不支持的就默认返回</span></span><br><span class="line">            <span class="keyword">return</span> res.end(content);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> port = <span class="number">3000</span>;</span><br><span class="line">server.listen(port, ()=&gt;&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'server start '</span> + port);</span><br><span class="line">&#125;);</span><br><span class="line">server.on(<span class="string">'error'</span>, (err) =&gt; &#123;</span><br><span class="line">    <span class="comment">// console.log(err);</span></span><br><span class="line">    <span class="keyword">if</span>(err.errno === <span class="string">'EADDRINUSE'</span>)&#123;</span><br><span class="line">        server.listen( ++port);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="表单格式"><a href="#表单格式" class="headerlink" title="表单格式"></a>表单格式</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- test.form.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"http://localhost:3000"</span> <span class="attr">method</span>=<span class="string">"POST"</span> <span class="attr">enctype</span>=<span class="string">"application/x-www-form-urlencoded"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"username"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"password"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span>&gt;</span>提交<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">        form没有跨域问题 action可以直接跳转  method只有post、get</span></span><br><span class="line"><span class="comment">        用VS安装的插件 Open with Live Server运行该文件</span></span><br><span class="line"><span class="comment">    --&gt;</span></span><br><span class="line">    localhost:3000 服务器返回 username=123&amp;password=456  格式</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 步骤：输入框输入123 456 点击提交，跳转到localhost:3000 页面上打印出 username=123&amp;password=456 --&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面讲的都是怎么去通信，但实际上不可能你发送给服务器什么，服务器就返还给你<br>客户端访问服务器有2种情况 1、请求别人的服务器 自己写个文件去访问别人服务器；2、我去对服务器要资源（静态资源）</p>
+<p>node 适合 I/O 密集  像web 的网站，主要是 想要html服务器返回给你html，想要js，服务器返回给你js，它主要的操作就是I/O,所以这样的功能，node的性能比较高<br>别人客户端访问我 我服务器可以返回什么：</p>
+<p>1) 服务器可以返回静态资源   3.static.js<br>2) 我的服务器可以返回动态的资源 接口<br>3) 访问别人的服务器 把别人的服务的结果格式化后返回去 这就是所谓的中间层 或者爬虫</p>
+<h3 id="静态资源"><a href="#静态资源" class="headerlink" title="静态资源"></a>静态资源</h3><p>新建 index.html 、style.css、3.static.js</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--index.html --&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"/style.css"</span>&gt;</span></span><br><span class="line">    hello</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// style.css</span></span><br><span class="line">body&#123;</span><br><span class="line">    background: red</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 3.static.js</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="keyword">const</span> url = <span class="built_in">require</span>(<span class="string">'url'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> server = http.createServer(<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="comment">// fs操作 绝对路径</span></span><br><span class="line">    <span class="comment">// localhost:3000/index.html</span></span><br><span class="line">    <span class="keyword">let</span> &#123;pathname&#125; = url.parse(req.url); <span class="comment">//    /index.html</span></span><br><span class="line">    <span class="comment">// 上面的pathname有/ 所以这里绝对路径用join</span></span><br><span class="line">    <span class="keyword">let</span> filePath = path.join(__dirname, pathname);</span><br><span class="line">    <span class="comment">// /Users/jiafei/Desktop/Architecture-Course/16.http/index.html</span></span><br><span class="line">    <span class="comment">// 判断文件是否存在  existsSync  access stat</span></span><br><span class="line">    fs.stat(filePath, (err, statObj)=&gt;&#123;</span><br><span class="line">        <span class="keyword">if</span>(err)&#123;</span><br><span class="line">            res.statusCode = <span class="number">404</span>;</span><br><span class="line">            <span class="keyword">return</span> res.end(<span class="string">'Not Found'</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (statObj.isDirectory()) &#123;</span><br><span class="line">                <span class="comment">// 如果是文件夹 需要读取文件中的index.html</span></span><br><span class="line">                filePath = path.join(filePath, <span class="string">"index.html"</span>);</span><br><span class="line">                fs.access(filePath, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">                  <span class="keyword">if</span> (err) &#123;</span><br><span class="line">                    res.statusCode = <span class="number">404</span>;</span><br><span class="line">                    res.end(<span class="string">`Not Found`</span>);</span><br><span class="line">                  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="comment">// readFile writeFile  pipe</span></span><br><span class="line">                    res.setHeader(<span class="string">"Content-Type"</span>, <span class="string">"text/html;charset=utf-8"</span>);</span><br><span class="line">                    fs.createReadStream(filePath).pipe(res);</span><br><span class="line">                    <span class="comment">// 可读流                           可写流</span></span><br><span class="line">                  &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">              &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 如果是文件读取出来写回去就ok</span></span><br><span class="line">                <span class="keyword">let</span> t = <span class="built_in">require</span>(<span class="string">"mime"</span>).getType(filePath);</span><br><span class="line">                res.setHeader(<span class="string">"Content-Type"</span>, t + <span class="string">";charset=utf-8"</span>);</span><br><span class="line">                fs.createReadStream(filePath).pipe(res);</span><br><span class="line">              &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="built_in">console</span>.log(filePath);</span><br><span class="line">&#125;);</span><br><span class="line">server.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+
+<p>分析：浏览器 访问index.html（html加载css）  -&gt; style.css，客户端访问服务器 想要html 服务器就把html读出来，返回去，fs的读取操作。<br>服务端 nodemon 3.static.js<br>客户端：浏览器 <a href="http://localhost:3000/index.html" target="_blank" rel="noopener">http://localhost:3000/index.html</a></p>
+<h4 id="优化-4-static-js"><a href="#优化-4-static-js" class="headerlink" title="优化 4.static.js"></a>优化 4.static.js</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="keyword">const</span> url = <span class="built_in">require</span>(<span class="string">'url'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>).promises;</span><br><span class="line"><span class="keyword">const</span> &#123; createReadStream &#125; = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"><span class="keyword">const</span> mime = <span class="built_in">require</span>(<span class="string">"mime"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 提供一个静态服务</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HttpServer</span></span>&#123;</span><br><span class="line">    <span class="keyword">async</span> handleRequest(req,res)&#123; <span class="comment">// 处理请求</span></span><br><span class="line">        <span class="comment">// this =&gt; HttpServer 指向当前类的实例</span></span><br><span class="line">        <span class="comment">// console.log(this);</span></span><br><span class="line">        <span class="keyword">let</span> &#123; pathname, query &#125; = url.parse(req.url, <span class="literal">true</span>);</span><br><span class="line">        <span class="keyword">let</span> filePath = path.join(__dirname, pathname);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> statObj = <span class="keyword">await</span> fs.stat(filePath); <span class="comment">// 文件是否存在</span></span><br><span class="line">            <span class="keyword">this</span>.sendFile(statObj, filePath, req, res); <span class="comment">// 就把文件发回去</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">            <span class="keyword">this</span>.sendError(e, res);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">async</span> sendFile(statObj, filePath, req, res) &#123; <span class="comment">// 发送文件需要判断是不是目录</span></span><br><span class="line">        <span class="keyword">if</span> (statObj.isDirectory()) &#123;</span><br><span class="line">          filePath = path.join(filePath, <span class="string">"index.html"</span>); <span class="comment">// 增加index.html</span></span><br><span class="line">          <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">await</span> fs.access(filePath); <span class="comment">// 如果有就继续</span></span><br><span class="line">          &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.sendError(e, res); <span class="comment">// 如果没有 就直接报错</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 返回文件的逻辑</span></span><br><span class="line">        res.setHeader(<span class="string">"Content-Type"</span>, mime.getType(filePath) + <span class="string">";charset=utf-8"</span>);</span><br><span class="line">        createReadStream(filePath).pipe(res); <span class="comment">// res.write() res.end()</span></span><br><span class="line">    &#125;</span><br><span class="line">    sendError(e,res) &#123; <span class="comment">// 发送错误</span></span><br><span class="line">        <span class="built_in">console</span>.log(e);</span><br><span class="line">        res.statusCode = <span class="number">404</span>;</span><br><span class="line">        res.end(<span class="string">`Not Found`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 开启一个服务</span></span><br><span class="line">    start(...args)&#123;</span><br><span class="line">        <span class="comment">// 1) 保证this指向正确  this.handleRequest.bind(this)</span></span><br><span class="line">        <span class="keyword">let</span> server = http.createServer(<span class="keyword">this</span>.handleRequest.bind(<span class="keyword">this</span>));</span><br><span class="line">        server.listen(...args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> hs = <span class="keyword">new</span> HttpServer();</span><br><span class="line">hs.start(<span class="number">3000</span>, ()=&gt;&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'server start~~'</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Nodejs/" rel="tag"># Nodejs</a>
+          
+            <a href="/tags/HTTP/" rel="tag"># HTTP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/29/Node-stream-pipe/" rel="next" title="Nodejs 流(stream) Readable、Writable">
+                <i class="fa fa-chevron-left"></i> Nodejs 流(stream) Readable、Writable
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/29/RegExp/" rel="prev" title="正则">
+                正则 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/Prueba.gif" alt="加菲">
+            
+              <p class="site-author-name" itemprop="name">加菲</p>
+              <p class="site-description motion-element" itemprop="description">啦啦啦~~~加油码字</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#知识点"><span class="nav-number">1.</span> <span class="nav-text">知识点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Http-状态码"><span class="nav-number">1.1.</span> <span class="nav-text">Http 状态码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#请求方法-RestfulApi"><span class="nav-number">1.2.</span> <span class="nav-text">请求方法 RestfulApi</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#传输数据"><span class="nav-number">1.3.</span> <span class="nav-text">传输数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#概念"><span class="nav-number">2.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#server"><span class="nav-number">3.</span> <span class="nav-text">server</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#如果端口被占用了-自动-1"><span class="nav-number">3.0.1.</span> <span class="nav-text">如果端口被占用了 自动+ 1</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#图解"><span class="nav-number">3.0.2.</span> <span class="nav-text">图解</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#如果别人请求我，我需要去解析请求"><span class="nav-number">3.0.3.</span> <span class="nav-text">如果别人请求我，我需要去解析请求</span></a></li></ol></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#client"><span class="nav-number">4.</span> <span class="nav-text">client</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#request"><span class="nav-number">5.</span> <span class="nav-text">request</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#get"><span class="nav-number">5.1.</span> <span class="nav-text">get</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#request-发送请求体"><span class="nav-number">5.2.</span> <span class="nav-text">request 发送请求体</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据传输"><span class="nav-number">6.</span> <span class="nav-text">数据传输</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#表单格式"><span class="nav-number">6.1.</span> <span class="nav-text">表单格式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态资源"><span class="nav-number">7.</span> <span class="nav-text">静态资源</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#优化-4-static-js"><span class="nav-number">7.1.</span> <span class="nav-text">优化 4.static.js</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">加菲</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

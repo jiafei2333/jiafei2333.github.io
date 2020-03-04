@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Webpack,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1.什么是Webpack？webpack 是一个现代 JavaScript 应用程序的静态模块打包器(module bundler),当 webpack 处理应用程序时，它会递归地构建一个依赖关系图(dependency graph)，其中包含应用程序需要的每个模块，然后将所有这些模块打包成一个或多个 bundle 使用Webpack作为前端构建工具：  代码转换：TypeScript 编译成 J">
+<meta name="keywords" content="Webpack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack 基础篇（一）">
+<meta property="og:url" content="http://yoursite.com/2019/10/12/Webpack-base/index.html">
+<meta property="og:site_name" content="Hi 加菲">
+<meta property="og:description" content="1.什么是Webpack？webpack 是一个现代 JavaScript 应用程序的静态模块打包器(module bundler),当 webpack 处理应用程序时，它会递归地构建一个依赖关系图(dependency graph)，其中包含应用程序需要的每个模块，然后将所有这些模块打包成一个或多个 bundle 使用Webpack作为前端构建工具：  代码转换：TypeScript 编译成 J">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.zhufengpeixun.cn/webpack.jpeg">
+<meta property="og:image" content="http://img.fullstackjavascript.cn/webpack1.png">
+<meta property="og:image" content="http://img.fullstackjavascript.cn/webpack2.png">
+<meta property="og:updated_time" content="2019-11-15T06:33:01.859Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="webpack 基础篇（一）">
+<meta name="twitter:description" content="1.什么是Webpack？webpack 是一个现代 JavaScript 应用程序的静态模块打包器(module bundler),当 webpack 处理应用程序时，它会递归地构建一个依赖关系图(dependency graph)，其中包含应用程序需要的每个模块，然后将所有这些模块打包成一个或多个 bundle 使用Webpack作为前端构建工具：  代码转换：TypeScript 编译成 J">
+<meta name="twitter:image" content="http://img.zhufengpeixun.cn/webpack.jpeg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/12/Webpack-base/">
+
+
+
+
+
+  <title>webpack 基础篇（一） | Hi 加菲</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi 加菲</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每个人都在负重前行</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/12/Webpack-base/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="加菲">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/Prueba.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi 加菲">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">webpack 基础篇（一）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-12T15:30:08+08:00">
+                2019-10-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Webpack/" itemprop="url" rel="index">
+                    <span itemprop="name">Webpack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-什么是Webpack？"><a href="#1-什么是Webpack？" class="headerlink" title="1.什么是Webpack？"></a>1.什么是Webpack？</h2><p>webpack 是一个现代 JavaScript 应用程序的静态模块打包器(module bundler),当 webpack 处理应用程序时，它会递归地构建一个依赖关系图(dependency graph)，其中包含应用程序需要的每个模块，然后将所有这些模块打包成一个或多个 bundle<br><img src="http://img.zhufengpeixun.cn/webpack.jpeg" alt></p>
+<p>使用Webpack作为前端构建工具：</p>
+<ul>
+<li>代码转换：TypeScript 编译成 JavaScript、SCSS 编译成 CSS 等。</li>
+<li>文件优化：压缩 JavaScript、CSS、HTML 代码，压缩合并图片等。</li>
+<li>代码分割：提取多个页面的公共代码、提取首屏不需要执行部分的代码让其异步加载。</li>
+<li>模块合并：在采用模块化的项目里会有很多个模块和文件，需要构建功能把模块分类合并成一个文件。</li>
+<li>自动刷新：监听本地源代码的变化，自动重新构建、刷新浏览器。</li>
+<li>代码校验：在代码被提交到仓库前需要校验代码是否符合规范，以及单元测试是否通过。</li>
+<li>自动发布：更新完代码后，自动构建出线上发布代码并传输给发布系统。</li>
+</ul>
+<p><strong>在<code>webpack</code>应用中有两个核心</strong>:</p>
+<ul>
+<li>1) 模块转换器，用于把模块原内容按照需求转换成新内容，可以加载非 JS 模块</li>
+<li>2) 扩展插件，在 Webpack 构建流程中的特定时机注入扩展逻辑来改变构建结果或做你想要的事情。</li>
+</ul>
+<h2 id="2-webpack快速上手"><a href="#2-webpack快速上手" class="headerlink" title="2.webpack快速上手"></a>2.webpack快速上手</h2><h3 id="2-1-安装（4-X）"><a href="#2-1-安装（4-X）" class="headerlink" title="2.1 安装（4.X）"></a>2.1 安装（4.X）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br><span class="line">npm install webpack webpack-cli --save-dev  (--save-dev表示是一个开发环境)</span><br></pre></td></tr></table></figure>
+
+<p>这里webpack-cli的作用是 可以解析用户传递的参数，将解析好的参数传递给webpack来进行打包。</p>
+<h3 id="2-2-初始化项目"><a href="#2-2-初始化项目" class="headerlink" title="2.2 初始化项目"></a>2.2 初始化项目</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">├── src   <span class="comment"># 源码目录</span></span><br><span class="line">│   ├── a-module.js</span><br><span class="line">│   └── index.js</span><br></pre></td></tr></table></figure>
+
+<p>编写 <em>a-module.js</em></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="string">'hello'</span>;</span><br></pre></td></tr></table></figure>
+
+<p>编写 <em>index.js</em> </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack 默认支持 模块的写法：</span></span><br><span class="line"><span class="comment">// commonjs规范 node     esmodule规范 es6</span></span><br><span class="line"><span class="keyword">let</span> a = <span class="built_in">require</span>(<span class="string">'./a-module'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(a);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这里我们使用<code>CommonJS</code>模块的方式引入，这种方式（在node中可以直接运行）默认在浏览器上是无法运行的，所以我们希望通过 <code>webpack</code> 来进行打包！</p>
+</blockquote>
+<h3 id="2-3-打包配置"><a href="#2-3-打包配置" class="headerlink" title="2.3 打包配置"></a>2.3 打包配置</h3><blockquote>
+<p>这里可以使用<code>npx webpack</code>,<code>npx</code> 是 5.2版本之后<code>npm</code>提供的命令可以执行<code>/module/.bin</code>下的(命令)可执行文件</p>
+</blockquote>
+<p><img src="http://img.fullstackjavascript.cn/webpack1.png" alt></p>
+<p>我们可以发现已经产生了<code>dist</code>目录，此目录为最终打包出的结果。<code>dist/main.js</code>可以在html中直接引用,这里还提示我们默认<code>mode</code> 为<code>production</code><br>npx webpack –mode development | npx webpack –mode production</p>
+<blockquote>
+<p>也可以配置 script 脚本</p>
+</blockquote>
+<p><code>webpack</code>默认支持0配置,配置<code>scripts</code>脚本</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">"scripts": &#123;</span><br><span class="line">  "build": "webpack"</span><br><span class="line">&#125;</span><br><span class="line">// 或者</span><br><span class="line">"scripts": &#123;</span><br><span class="line">  "build": "webpack --mode production"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>npm run</code> 会执行 script中的命令， 执行<code>npm run build</code>,默认会调用 <code>node_modules/.bin</code>下的<code>webpack</code>命令，内部会调用<code>webpack-cli</code>解析用户参数进行打包。默认会以 <code>src/index.js</code> 作为入口文件。</p>
+<h3 id="2-4-webpack-config-js"><a href="#2-4-webpack-config-js" class="headerlink" title="2.4 webpack.config.js"></a>2.4 webpack.config.js</h3><p>我们打包时一般不会采用0配置，<code>webpack</code>在打包时默认会查找当前目录下的 <code>webpack.config.js or webpack.file.js</code> 文件。</p>
+<p>通过配置文件进行打包<br>新建 webpack.config.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack 是基于nodejs（所以可以用node的所有模块） 所以语法规范是commonjs</span></span><br><span class="line"><span class="comment">// 默认导出的是配置对象</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    mode: <span class="string">'development'</span>, <span class="comment">// 当前是开发模式，在这里配置就不需要在script中配置了</span></span><br><span class="line">    <span class="comment">// 入口 出口</span></span><br><span class="line">    entry: path.resolve(__dirname,<span class="string">'./src/index.js'</span>), <span class="comment">// 写路径都采用绝对路径</span></span><br><span class="line">    output:&#123; <span class="comment">// 出口的配置</span></span><br><span class="line">        filename: <span class="string">'bundle.js'</span>,</span><br><span class="line">        path: path.resolve(__dirname,<span class="string">'dist'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-配置打包的mode"><a href="#2-5-配置打包的mode" class="headerlink" title="2.5 配置打包的mode"></a>2.5 配置打包的mode</h3><p>我们需要在打包时提供<code>mode</code>属性来区分是开发环境还是生产环境,来实现配置文件的拆分</p>
+<p>新建build/ 文件夹</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">├── build</span><br><span class="line">│   ├── webpack.base.js</span><br><span class="line">│   ├── webpack.dev.js</span><br><span class="line">│   └── webpack.prod.js</span><br></pre></td></tr></table></figure>
+
+<p><strong>我们可以通过指定不同的文件来进行打包</strong></p>
+<p>配置<code>scripts</code>脚本</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">"scripts": &#123;</span><br><span class="line">  "build": "webpack --config ./build/webpack.prod",</span><br><span class="line">  "dev": "webpack --config ./build/webpack.dev"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以通过 <code>--config</code> 参数指定,使用哪个配置文件来进行打包 </p>
+<p><strong>通过env参数区分</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">"scripts": &#123;</span><br><span class="line">    "build": "webpack --env.production --config ./build/webpack.base",</span><br><span class="line">    "dev": "webpack --env.development --config ./build/webpack.base"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>改造<code>webpack.base</code>文件默认导出函数，会将环境变量传入到函数的参数中</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function">(<span class="params">env</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(env); <span class="comment">// &#123; development: true &#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>合并配置文件</strong></p>
+<p>我们可以判断当前环境是否是开发环境来加载不同的配置,这里我们需要做配置合并<br>安装<code>webpack-merge</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install webpack-merge --save-dev</span><br></pre></td></tr></table></figure>
+
+<p><code>webpack.dev</code>配置</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    mode:<span class="string">'development'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>webpack.prod</code>配置</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    mode:<span class="string">'production'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>webpack.base</code>配置</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> merge = <span class="built_in">require</span>(<span class="string">'webpack-merge'</span>);</span><br><span class="line"><span class="comment">// 开发环境</span></span><br><span class="line"><span class="keyword">const</span> dev = <span class="built_in">require</span>(<span class="string">'./webpack.dev'</span>);</span><br><span class="line"><span class="comment">// 生产环境</span></span><br><span class="line"><span class="keyword">const</span> prod = <span class="built_in">require</span>(<span class="string">'./webpack.prod'</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function">(<span class="params">env</span>) =&gt;</span>&#123;</span><br><span class="line">	<span class="keyword">const</span> base = &#123; <span class="comment">// 基础配置</span></span><br><span class="line">		entry:<span class="string">'./src/index.js'</span>,</span><br><span class="line">		output:&#123;</span><br><span class="line">			filename:<span class="string">'bundle.js'</span>,</span><br><span class="line">			path:path.resolve(__dirname,<span class="string">'../dist'</span>)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="keyword">if</span>(env.development)&#123;</span><br><span class="line">        <span class="keyword">return</span> merge(base,dev);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> merge(base,prod)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 函数会返回配置文件，没返回会采用默认配置</span></span><br></pre></td></tr></table></figure>
+
+<p>后续的开发中，我们会将公共的逻辑放到<code>base</code>中,开发和生产对的配置也分别进行存放！</p>
+<h2 id="3-webpack-dev-server"><a href="#3-webpack-dev-server" class="headerlink" title="3.webpack-dev-server"></a>3.webpack-dev-server</h2><p>配置开发服务器，它是在内存中打包的，不会产生实体文件，并且自动启动服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install webpack-dev-server --save-dev</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">"scripts": &#123;</span><br><span class="line">    "build": "webpack --env.production --config ./build/webpack.base",</span><br><span class="line">    "dev": "webpack-dev-server --env.development --config ./build/webpack.base"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过执行<code>npm run dev</code>来启启动开发环境</p>
+<p><img src="http://img.fullstackjavascript.cn/webpack2.png" alt></p>
+<p>默认会在当前根目录下启动服务</p>
+<p><strong>配置开发服务的配置</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    mode:<span class="string">'development'</span>,</span><br><span class="line">    devServer:&#123;</span><br><span class="line">        <span class="comment">// 更改静态文件目录位置（默认是放在根目录下）</span></span><br><span class="line">        contentBase:path.resolve(__dirname,<span class="string">'../dist'</span>), <span class="comment">// 表示webpack启动服务会在dist目录下</span></span><br><span class="line">        compress:<span class="literal">true</span>, <span class="comment">// 开启gzip  可以提升页面返回的速度</span></span><br><span class="line">        port:<span class="number">3000</span>, <span class="comment">// 更改端口号</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-打包Html插件"><a href="#4-打包Html插件" class="headerlink" title="4.打包Html插件"></a>4.打包Html插件</h2><h3 id="4-1-单入口打包"><a href="#4-1-单入口打包" class="headerlink" title="4.1 单入口打包"></a>4.1 单入口打包</h3><blockquote>
+<p>自动产生html，并引入打包后的js文件</p>
+</blockquote>
+<p>新建 /public/index.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"root"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>配置插件，在打包结束后会将打包的结果自动引进来 并且产生文件到当前的dist/下</p>
+<p>编辑<code>webpack.base</code>文件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> merge = <span class="built_in">require</span>(<span class="string">'webpack-merge'</span>);</span><br><span class="line"><span class="keyword">const</span> dev = <span class="built_in">require</span>(<span class="string">'./webpack.dev'</span>);</span><br><span class="line"><span class="keyword">const</span> prod = <span class="built_in">require</span>(<span class="string">'./webpack.prod'</span>);</span><br><span class="line"><span class="comment">// html插件</span></span><br><span class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function">(<span class="params">env</span>) =&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> isDev = env.development;</span><br><span class="line">    <span class="keyword">const</span> base = &#123;</span><br><span class="line">        entry:<span class="string">'./src/index.js'</span>,</span><br><span class="line">        output:&#123;</span><br><span class="line">            filename:<span class="string">'bundle.js'</span>,</span><br><span class="line">            path:path.resolve(__dirname,<span class="string">'../dist'</span>)</span><br><span class="line">        &#125;,</span><br><span class="line">        plugins:[</span><br><span class="line">            <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">                filename:<span class="string">'index.html'</span>, <span class="comment">// 打包出来的文件名</span></span><br><span class="line">                template:path.resolve(__dirname,<span class="string">'../public/index.html'</span>),<span class="comment">// 以这个文件为模板</span></span><br><span class="line">                minify: !isDev &amp;&amp; &#123; <span class="comment">// 压缩</span></span><br><span class="line">                    removeAttributeQuotes: <span class="literal">true</span>, <span class="comment">// 双引号都去掉</span></span><br><span class="line">                    collapseWhitespace: <span class="literal">true</span>, <span class="comment">// dist下产生的html 折叠 显示一行</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(isDev)&#123;</span><br><span class="line">        <span class="keyword">return</span> merge(base,dev);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> merge(base,prod)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>运行 <code>npm run dev</code> 可以看到生成了一个index.html文件，但是是在内存中的看不到，可以访问 <a href="http://localhost:3000/" target="_blank" rel="noopener">http://localhost:3000/</a> 看到有上面的console.log打印 a-module.js中的内容。</p>
+</li>
+<li><p>运行 <code>npm run build</code> 可以看到dist/下生成了 index.html 、bundle.js，并且 html中自动引入了这个打包后的文件。</p>
+</li>
+</ul>
+<h3 id="4-2-多入口打包"><a href="#4-2-多入口打包" class="headerlink" title="4.2 多入口打包"></a>4.2 多入口打包</h3><p>根据不同入口 生成多个js文件，引入到不同html中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">── src</span><br><span class="line">    ├── entry-1.js</span><br><span class="line">    └── entry-2.js</span><br></pre></td></tr></table></figure>
+
+<p>多入口需要配置多个entry</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// entry有三种写法 字符串 数组 对象</span></span><br><span class="line">entry:&#123;</span><br><span class="line">    jquery:[<span class="string">'jquery'</span>], <span class="comment">// 打包jquery</span></span><br><span class="line">    entry1:path.resolve(__dirname,<span class="string">'../src/entry-1.js'</span>),</span><br><span class="line">    entry2:path.resolve(__dirname,<span class="string">'../src/entry-2.js'</span>)</span><br><span class="line">&#125;,</span><br><span class="line">output:&#123;</span><br><span class="line">    filename:<span class="string">'[name].js'</span>, <span class="comment">// 这里也要改成动态的名字，多出口，生成jquery.js， entry1.js，entry2.js</span></span><br><span class="line">    path:path.resolve(__dirname,<span class="string">'../dist'</span>)</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>产生多个Html文件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">    filename:<span class="string">'index.html'</span>, </span><br><span class="line">    template:path.resolve(__dirname,<span class="string">'../public/template.html'</span>),</span><br><span class="line">    hash:<span class="literal">true</span>, </span><br><span class="line">    minify:&#123;</span><br><span class="line">        removeAttributeQuotes:<span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    chunks:[<span class="string">'jquery'</span>,<span class="string">'entry1'</span>], <span class="comment">// 引入的代码块chunk 有jquery,entry</span></span><br><span class="line">&#125;),</span><br><span class="line"><span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">    filename:<span class="string">'login.html'</span>,</span><br><span class="line">    template:path.resolve(__dirname,<span class="string">'../public/template.html'</span>),</span><br><span class="line">    hash:<span class="literal">true</span>,</span><br><span class="line">    minify:&#123;</span><br><span class="line">        removeAttributeQuotes:<span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    inject:<span class="literal">false</span>, <span class="comment">// inject 为false表示不注入js文件</span></span><br><span class="line">    chunksSortMode:<span class="string">'manual'</span>, <span class="comment">// 代码块顺序：手动配置</span></span><br><span class="line">    chunks:[<span class="string">'entry2'</span>,<span class="string">'jquery'</span>] <span class="comment">// 这样打包生成的页面中引入的模块的顺序就是这个数组里写的顺序</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>以上的方式不是很优雅，每次都需要手动添加<code>HtmlPlugin</code>应该动态产生<code>html</code>文件，像这样:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> htmlPlugins = [</span><br><span class="line">  &#123;</span><br><span class="line">    entry: <span class="string">"entry1"</span>,</span><br><span class="line">    html: <span class="string">"index.html"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    entry: <span class="string">"entry2"</span>,</span><br><span class="line">    html: <span class="string">"login.html"</span></span><br><span class="line">  &#125;</span><br><span class="line">].map(</span><br><span class="line">  item =&gt;</span><br><span class="line">    <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">      filename: item.html,</span><br><span class="line">      template: path.resolve(__dirname, <span class="string">"../public/template.html"</span>),</span><br><span class="line">      hash: <span class="literal">true</span>,</span><br><span class="line">      minify: &#123;</span><br><span class="line">        removeAttributeQuotes: <span class="literal">true</span></span><br><span class="line">      &#125;,</span><br><span class="line">      chunks: [<span class="string">"jquery"</span>, item.entry]</span><br><span class="line">    &#125;)</span><br><span class="line">);</span><br><span class="line">plugins: [...htmlPlugins]</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-清空打包结果"><a href="#5-清空打包结果" class="headerlink" title="5.清空打包结果"></a>5.清空打包结果</h2><p>可以使用<code>clean-webpack-plugin</code>手动清除某个文件夹内容:</p>
+<p><strong>安装</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev clean-webpack-plugin</span><br></pre></td></tr></table></figure>
+
+<p>放到 webpack.prod.js 中</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; CleanWebpackPlugin &#125; = <span class="built_in">require</span>(<span class="string">'clean-webpack-plugin'</span>);</span><br><span class="line"><span class="comment">// 每次打包之前 先清空dist目录下的文件</span></span><br><span class="line"><span class="keyword">new</span> CleanWebpackPlugin()</span><br></pre></td></tr></table></figure>
+
+<p>这样就可以清空指定的目录了,我们可以看到<code>webpack</code>插件的基本用法就是 <code>new Plugin</code>并且放到<code>plugins</code>中</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Webpack/" rel="tag"># Webpack</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/12/Nodejs-Koa2/" rel="next" title="Nodejs-Koa（二）">
+                <i class="fa fa-chevron-left"></i> Nodejs-Koa（二）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/16/Review-1/" rel="prev" title="Review（一）">
+                Review（一） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/Prueba.gif" alt="加菲">
+            
+              <p class="site-author-name" itemprop="name">加菲</p>
+              <p class="site-description motion-element" itemprop="description">啦啦啦~~~加油码字</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-什么是Webpack？"><span class="nav-number">1.</span> <span class="nav-text">1.什么是Webpack？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-webpack快速上手"><span class="nav-number">2.</span> <span class="nav-text">2.webpack快速上手</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-安装（4-X）"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 安装（4.X）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-初始化项目"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 初始化项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-打包配置"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 打包配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-webpack-config-js"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 webpack.config.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-配置打包的mode"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 配置打包的mode</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-webpack-dev-server"><span class="nav-number">3.</span> <span class="nav-text">3.webpack-dev-server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-打包Html插件"><span class="nav-number">4.</span> <span class="nav-text">4.打包Html插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-单入口打包"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 单入口打包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-多入口打包"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 多入口打包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-清空打包结果"><span class="nav-number">5.</span> <span class="nav-text">5.清空打包结果</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">加菲</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="知识点 es模块、commonjs模块   它们的特点都是一样的 每个文件都是一个模块commonjs只是一个规范1)每个文件都是一个模块2)如果要使用 就需要require3)如果要给别人用 就需要module.exports  怎么实现模块化？  防止命名冲突命名空间  无法彻底解决命名问题自执行函数  node让js拥有了在服务端执行的能力，可以读写文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nodejs 模块 （一）">
+<meta property="og:url" content="http://yoursite.com/2019/09/23/Node-Module/index.html">
+<meta property="og:site_name" content="Hi 加菲">
+<meta property="og:description" content="知识点 es模块、commonjs模块   它们的特点都是一样的 每个文件都是一个模块commonjs只是一个规范1)每个文件都是一个模块2)如果要使用 就需要require3)如果要给别人用 就需要module.exports  怎么实现模块化？  防止命名冲突命名空间  无法彻底解决命名问题自执行函数  node让js拥有了在服务端执行的能力，可以读写文件">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-23T08:41:01.417Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nodejs 模块 （一）">
+<meta name="twitter:description" content="知识点 es模块、commonjs模块   它们的特点都是一样的 每个文件都是一个模块commonjs只是一个规范1)每个文件都是一个模块2)如果要使用 就需要require3)如果要给别人用 就需要module.exports  怎么实现模块化？  防止命名冲突命名空间  无法彻底解决命名问题自执行函数  node让js拥有了在服务端执行的能力，可以读写文件">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/09/23/Node-Module/">
+
+
+
+
+
+  <title>Nodejs 模块 （一） | Hi 加菲</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi 加菲</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每个人都在负重前行</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/23/Node-Module/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="加菲">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/Prueba.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi 加菲">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Nodejs 模块 （一）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-23T09:36:39+08:00">
+                2019-09-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nodejs/" itemprop="url" rel="index">
+                    <span itemprop="name">Nodejs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h3><blockquote>
+<p>es模块、commonjs模块</p>
+</blockquote>
+<ul>
+<li>它们的特点都是一样的 每个文件都是一个模块<br>commonjs只是一个规范<br>1)每个文件都是一个模块<br>2)如果要使用 就需要require<br>3)如果要给别人用 就需要module.exports</li>
+</ul>
+<p>怎么实现模块化？  防止命名冲突<br>命名空间  无法彻底解决命名问题<br>自执行函数  node让js拥有了在服务端执行的能力，可以读写文件</p>
+<hr>
+<a id="more"></a>
+<h3 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h3><p>新建usea.js、 a.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// a.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="string">'hello'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">(function()&#123;</span></span><br><span class="line"><span class="comment">    module.exports = 'hello';</span></span><br><span class="line"><span class="comment">    return module.exports;</span></span><br><span class="line"><span class="comment">&#125;)</span></span><br><span class="line"><span class="comment">// 虽然只写了line1，但是node内部会包装成line5-8自执行函数</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// usea.js</span><br><span class="line">let a = require(&apos;./a&apos;);</span><br></pre></td></tr></table></figure>
+
+<p>这里require进来a文件相当于如下:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">module</span>.exports = <span class="string">'hello'</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">module</span>.exports;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>怎么实现模块化的 传进来一个匿名函数，让函数执行，拿到它导出来的结果 就可以了</p>
+</blockquote>
+<p>node之所以能实现CommonJS规范，靠的是文件读写，将a文件读出来，加上自执行这个函数 一执行就好了。</p>
+<h3 id="fs模块"><a href="#fs模块" class="headerlink" title="fs模块"></a>fs模块</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line">fs.readFileSync</span><br><span class="line"><span class="comment">// 判断文件是否存在</span></span><br><span class="line">fs.accessSync(<span class="string">'.gitgore'</span>); <span class="comment">// 如果不存在抛出异常</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="path模块"><a href="#path模块" class="headerlink" title="path模块"></a>path模块</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>); <span class="comment">// 专门处理路径的模块</span></span><br><span class="line"><span class="built_in">console</span>.log(path.resolve(<span class="string">'./a.js'</span>)); <span class="comment">// Users/jiafei/Desktop/node-test/a.js</span></span><br><span class="line"><span class="comment">// 它会从当前的跟路径下查找</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(__dirname); <span class="comment">// /Users/jiafei/Desktop/node-test/8.eventLoop </span></span><br><span class="line"><span class="comment">// 当前路径</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(path.resolve(__dirname, <span class="string">'./a.js'</span>)); <span class="comment">// /Users/jiafei/Desktop/node-test/8.eventLoop/a.js</span></span><br><span class="line"><span class="comment">//这样就能获取到当前路径下</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(path.resolve(__dirname, <span class="string">'./a.js'</span>, <span class="string">'b.js'</span>));<span class="comment">// /Users/jiafei/Desktop/node-test/8.eventLoop/a.js/b.js</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="resolve-amp-join"><a href="#resolve-amp-join" class="headerlink" title="resolve &amp; join"></a>resolve &amp; join</h4><p>join 就是单纯的拼路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">console.log(path.resolve(&apos;a&apos;, &apos;b&apos;)); //  /Users/jiafei/Desktop/node-test/a/b</span><br><span class="line">console.log(path.join(&apos;a&apos;, &apos;b&apos;)); // a/b</span><br></pre></td></tr></table></figure>
+
+<p>加 __dirname</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(path.resolve(__dirname, <span class="string">'a'</span>, <span class="string">'b'</span>)); </span><br><span class="line"><span class="comment">// /Users/jiafei/Desktop/node-test/8.eventLoop/a/b</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(path.join(__dirname, <span class="string">'a'</span>, <span class="string">'b'</span>));</span><br><span class="line"><span class="comment">// /Users/jiafei/Desktop/node-test/8.eventLoop/a/b</span></span><br></pre></td></tr></table></figure>
+
+<p>加 /</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// resolve出来的肯定是个绝对路径   join就是以/拼接</span></span><br><span class="line"><span class="built_in">console</span>.log(path.resolve(__dirname, <span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'/'</span>)); </span><br><span class="line"><span class="comment">// /Users/jiafei/Desktop/node-test/8.eventLoop/a/b</span></span><br><span class="line"><span class="comment">// /</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(path.join(__dirname, <span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'/'</span>));</span><br><span class="line"><span class="comment">// /Users/jiafei/Desktop/node-test/8.eventLoop/a/b/</span></span><br><span class="line"><span class="comment">// 有/ 只能用join</span></span><br></pre></td></tr></table></figure>
+
+<p>其他</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(path.extname(<span class="string">'main.js'</span>));<span class="comment">// .js</span></span><br><span class="line"><span class="built_in">console</span>.log(path.basename(<span class="string">'main.js'</span>, <span class="string">'.js'</span>)); <span class="comment">// main</span></span><br><span class="line"><span class="built_in">console</span>.log(path.dirname(__dirname)); <span class="comment">// /Users/jiafei/Desktop/ zhufeng 获取父路径</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="vm模块"><a href="#vm模块" class="headerlink" title="vm模块"></a>vm模块</h3><p>它提供了一个沙箱环境(一个安全的环境，不会影响其它)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">'vm'</span>); <span class="comment">// 虚拟机模块</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*这里 引入a</span></span><br><span class="line"><span class="comment">let a = require('./a');</span></span><br><span class="line"><span class="comment">其实就是把 module.exports = 'hello';这段代码拿过来 ，套一个函数 </span></span><br><span class="line"><span class="comment">(function()&#123;</span></span><br><span class="line"><span class="comment">    module.exports = 'hello';</span></span><br><span class="line"><span class="comment">    return module.exports;</span></span><br><span class="line"><span class="comment">&#125;)</span></span><br><span class="line"><span class="comment">其实套完函数 它还是一个字符串 让一个字符串执行 </span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<p>让字符串执行 new Function \ eval \ vm</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="built_in">eval</span>(<span class="string">'console.log(a)'</span>);  <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+
+<p>这时a.js中的代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 供沙箱示例</span></span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="string">'hello'</span>;</span><br></pre></td></tr></table></figure>
+
+<p>usea.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// let b = XX；</span></span><br><span class="line"><span class="comment">// q这里的值就是引入的a.js中沙箱实例的代码</span></span><br><span class="line"><span class="keyword">let</span> q = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(b);</span><br><span class="line">    <span class="built_in">module</span>.exports = <span class="string">'hello'</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">module</span>.exports;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 如果这时usea模块line1 有 let b = XX；那就是line3-7这个模块拿到了usea模块的b的值，那乱了，希望的是a模块不能拿到外部的值</span></span><br><span class="line"><span class="keyword">let</span> vm = <span class="built_in">require</span>(<span class="string">'vm'</span>);</span><br><span class="line">vm.runInThisContext(<span class="string">'console.log(b)'</span>); <span class="comment">// ReferenceError: b is not defined</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="文件读写"><a href="#文件读写" class="headerlink" title="文件读写"></a>文件读写</h3><p>手写require模块</p>
+<p>a.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// (function(exports,module,require)&#123;</span></span><br><span class="line">    <span class="built_in">module</span>.exports = <span class="string">'hello'</span>;</span><br><span class="line"><span class="comment">//&#125;)</span></span><br><span class="line"><span class="comment">// 这里其实内部是这样的</span></span><br></pre></td></tr></table></figure>
+
+<p>usea.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> vm = <span class="built_in">require</span>(<span class="string">'vm'</span>);</span><br><span class="line"><span class="keyword">const</span> wrapper = [ <span class="comment">// module 和exports是什么关系   export是module的属性</span></span><br><span class="line">    <span class="string">'(function(exports,module,require)&#123;'</span>,</span><br><span class="line">    <span class="string">'&#125;)'</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Module</span>(<span class="params">absPath</span>)</span>&#123; <span class="comment">// 创建模块</span></span><br><span class="line">    <span class="keyword">this</span>.id = absPath;</span><br><span class="line">    <span class="keyword">this</span>.exports = &#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line">Module.prototype.load = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// console.log(this.id); // 文件路径</span></span><br><span class="line">    <span class="keyword">let</span> script = fs.readFileSync(<span class="keyword">this</span>.id, <span class="string">'utf8'</span>);</span><br><span class="line">    <span class="comment">// module.exports = 'hello';</span></span><br><span class="line">    <span class="comment">// 现在取到内容了在外面加自执行函数</span></span><br><span class="line">    <span class="keyword">let</span> fnStr = wrapper[<span class="number">0</span>] + script + wrapper[<span class="number">1</span>];</span><br><span class="line">    <span class="comment">// 让字符串执行</span></span><br><span class="line">    <span class="keyword">let</span> fn = vm.runInThisContext(fnStr);</span><br><span class="line">    fn(<span class="keyword">this</span>.exports, <span class="keyword">this</span>, req); <span class="comment">// 让拼出的函数执行</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.exports); <span class="comment">// 上面这行fn函数执行了，那就是a文件里把值传给了exports 打印</span></span><br><span class="line">    <span class="comment">// hello</span></span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">req</span>(<span class="params">file</span>) </span>&#123;  <span class="comment">// ./a.js</span></span><br><span class="line">    <span class="comment">// 1) 把当前这个文件读取出来  把相对路径转化成绝对路径</span></span><br><span class="line">    <span class="keyword">let</span> absPath = path.resolve(__dirname, file);</span><br><span class="line">    <span class="comment">// /Users/jiafei/Desktop/node-test/8.eventLoop/a2</span></span><br><span class="line">    <span class="comment">// 加载一个模块 模块就是要有一个exports属性</span></span><br><span class="line">    <span class="comment">// 2) 创建一个模块</span></span><br><span class="line">    <span class="keyword">let</span> <span class="built_in">module</span> = <span class="keyword">new</span> Module(absPath); <span class="comment">// 创建了一个模块</span></span><br><span class="line">    <span class="comment">// 3）加载模块</span></span><br><span class="line">    <span class="built_in">module</span>.load();</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">module</span>.exports;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> a = req(<span class="string">'./a2.js'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"a:"</span>, a); <span class="comment">// a: hello</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>源码 require() 核心逻辑</p>
+</blockquote>
+<ul>
+<li>Module._resolveFilename 解析文件名字  获取文件绝对路径</li>
+<li>module.load(filename); 加载模块</li>
+<li>fs.readFileSync(filename, ‘utf8’); 同步的读取文件内容</li>
+<li>加函数</li>
+<li>让函数执行 module.exports 传入给用户  用户会给module.exports赋值</li>
+<li>把module.exports返回</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/17/Points/" rel="next" title="JavaScript基础知识梳理">
+                <i class="fa fa-chevron-left"></i> JavaScript基础知识梳理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/23/Nodejs/" rel="prev" title="Nodejs 知识梳理">
+                Nodejs 知识梳理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/Prueba.gif" alt="加菲">
+            
+              <p class="site-author-name" itemprop="name">加菲</p>
+              <p class="site-description motion-element" itemprop="description">啦啦啦~~~加油码字</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#知识点"><span class="nav-number">1.</span> <span class="nav-text">知识点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块"><span class="nav-number">2.</span> <span class="nav-text">模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fs模块"><span class="nav-number">3.</span> <span class="nav-text">fs模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#path模块"><span class="nav-number">4.</span> <span class="nav-text">path模块</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#resolve-amp-join"><span class="nav-number">4.1.</span> <span class="nav-text">resolve &amp; join</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vm模块"><span class="nav-number">5.</span> <span class="nav-text">vm模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件读写"><span class="nav-number">6.</span> <span class="nav-text">文件读写</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">加菲</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

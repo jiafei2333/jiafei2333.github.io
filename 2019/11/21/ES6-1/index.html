@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="17. Iteratorhttps://jiafei2333.github.io/2019/09/16/Generator/  是一种接口，为各种不同的数据结构（Array、Object、Map、Set 等）提供统一的访问机制。任何数据结构只要部署 Iterator 接口，就可以完成遍历操作。ES6 创造了一种新的遍历命令for…of循环，Iterator 接口主要供for…of消费。  一刷：h">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES6 之 阅读理解">
+<meta property="og:url" content="http://yoursite.com/2019/11/21/ES6-1/index.html">
+<meta property="og:site_name" content="Hi 加菲">
+<meta property="og:description" content="17. Iteratorhttps://jiafei2333.github.io/2019/09/16/Generator/  是一种接口，为各种不同的数据结构（Array、Object、Map、Set 等）提供统一的访问机制。任何数据结构只要部署 Iterator 接口，就可以完成遍历操作。ES6 创造了一种新的遍历命令for…of循环，Iterator 接口主要供for…of消费。  一刷：h">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-12-31T09:08:50.513Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ES6 之 阅读理解">
+<meta name="twitter:description" content="17. Iteratorhttps://jiafei2333.github.io/2019/09/16/Generator/  是一种接口，为各种不同的数据结构（Array、Object、Map、Set 等）提供统一的访问机制。任何数据结构只要部署 Iterator 接口，就可以完成遍历操作。ES6 创造了一种新的遍历命令for…of循环，Iterator 接口主要供for…of消费。  一刷：h">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/11/21/ES6-1/">
+
+
+
+
+
+  <title>ES6 之 阅读理解 | Hi 加菲</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi 加菲</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每个人都在负重前行</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/21/ES6-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="加菲">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/Prueba.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi 加菲">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ES6 之 阅读理解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-21T14:16:29+08:00">
+                2019-11-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/个人/" itemprop="url" rel="index">
+                    <span itemprop="name">个人</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="17-Iterator"><a href="#17-Iterator" class="headerlink" title="17. Iterator"></a>17. Iterator</h2><p><a href="https://jiafei2333.github.io/2019/09/16/Generator/" target="_blank" rel="noopener">https://jiafei2333.github.io/2019/09/16/Generator/</a></p>
+<blockquote>
+<p>是一种接口，为各种不同的数据结构（Array、Object、Map、Set 等）提供统一的访问机制。任何数据结构只要部署 Iterator 接口，就可以完成遍历操作。<br>ES6 创造了一种新的遍历命令for…of循环，Iterator 接口主要供for…of消费。</p>
+</blockquote>
+<p>一刷：<br><a href="http://es6.ruanyifeng.com/#docs/iterator" target="_blank" rel="noopener">http://es6.ruanyifeng.com/#docs/iterator</a></p>
+<h2 id="18-Generator"><a href="#18-Generator" class="headerlink" title="18. Generator"></a>18. Generator</h2><p><a href="https://jiafei2333.github.io/2019/09/16/Generator/" target="_blank" rel="noopener">https://jiafei2333.github.io/2019/09/16/Generator/</a></p>
+<blockquote>
+<p>调用 Generator 函数，返回一个遍历器对象，代表 Generator 函数的内部指针。以后，每次调用遍历器对象的next方法，就会返回一个有着value和done两个属性的对象。</p>
+</blockquote>
+<p>1、一个对象如果要具备可被for…of循环调用的 Iterator 接口，就必须在Symbol.iterator的属性上部署遍历器生成方法（原型链上的对象具有该方法也可）。</p>
+<p>1/2刷：<br><a href="http://es6.ruanyifeng.com/#docs/generator" target="_blank" rel="noopener">http://es6.ruanyifeng.com/#docs/generator</a></p>
+<h2 id="19-Generator-函数的异步应用"><a href="#19-Generator-函数的异步应用" class="headerlink" title="19. Generator 函数的异步应用"></a>19. Generator 函数的异步应用</h2><p><a href="http://es6.ruanyifeng.com/#docs/generator-async" target="_blank" rel="noopener">http://es6.ruanyifeng.com/#docs/generator-async</a></p>
+<p>一刷，没怎么看明白，可以二刷继续研究，评论也看看。</p>
+<h2 id="20-async-函数"><a href="#20-async-函数" class="headerlink" title="20.async 函数"></a>20.async 函数</h2><p><a href="http://es6.ruanyifeng.com/#docs/async" target="_blank" rel="noopener">http://es6.ruanyifeng.com/#docs/async</a></p>
+<blockquote>
+<p>async 函数就是 Generator 函数的语法糖。</p>
+</blockquote>
+<p>1、Generator 函数的执行必须靠执行器，所以才有了co模块，而async函数自带执行器。也就是说，async函数的执行，与普通函数一模一样，只要一行。Generator 函数，需要调用next方法，或者用co模块，才能真正执行，得到最后结果。<br>2、任何一个await语句后面的 Promise 对象变为reject状态，那么整个async函数都会中断执行。<br>3、Promise 的回调函数（ .then ）都存放在一个单独的栈里面，而 await 是暂停执行，所以不完全一样。</p>
+<p>一刷</p>
+<h2 id="12-Symbol"><a href="#12-Symbol" class="headerlink" title="12. Symbol"></a>12. Symbol</h2><p><a href="https://jiafei2333.github.io/2019/09/04/Reflect-Symbol/" target="_blank" rel="noopener">https://jiafei2333.github.io/2019/09/04/Reflect-Symbol/</a></p>
+<blockquote>
+<p>Symbol函数的参数只是表示对当前 Symbol 值的描述，因此相同参数的Symbol函数的返回值是不相等的。</p>
+</blockquote>
+<p>1、Singleton 模式指的是调用一个类，任何时候返回的都是同一个实例。</p>
+<p><a href="http://es6.ruanyifeng.com/#docs/symbol" target="_blank" rel="noopener">http://es6.ruanyifeng.com/#docs/symbol</a><br>一刷：内置的 Symbol 值 这块内容太琐碎了，没怎么记得。</p>
+<h2 id="14-Proxy"><a href="#14-Proxy" class="headerlink" title="14. Proxy"></a>14. Proxy</h2><p><a href="https://jiafei2333.github.io/2019/09/04/Object.defineProperty-Proxy/" target="_blank" rel="noopener">https://jiafei2333.github.io/2019/09/04/Object.defineProperty-Proxy/</a></p>
+<blockquote>
+<p>Proxy 可以理解成，在目标对象之前架设一层“拦截”，外界对该对象的访问，都必须先通过这层拦截，因此提供了一种机制，可以对外界的访问进行过滤和改写。</p>
+</blockquote>
+<p>1、ES6 原生提供 Proxy 构造函数，用来生成 Proxy 实例。<br>2、注意，要使得Proxy起作用，必须针对Proxy实例（上例是proxy对象）进行操作，而不是针对目标对象（上例是空对象）进行操作。<br>3、虽然 Proxy 可以代理针对目标对象的访问，但它不是目标对象的透明代理，即不做任何拦截的情况下，也无法保证与目标对象的行为一致。主要原因就是在 Proxy 代理的情况下，目标对象内部的this关键字会指向 Proxy 代理。<br>4、《this 问题》  这个可以看看，其他的很多都是Proxy的属性<br>5、Proxy web服务的客户端。</p>
+<p>一刷：<br><a href="http://es6.ruanyifeng.com/#docs/proxy" target="_blank" rel="noopener">http://es6.ruanyifeng.com/#docs/proxy</a></p>
+<h2 id="15-Reflect"><a href="#15-Reflect" class="headerlink" title="15. Reflect"></a>15. Reflect</h2><p>Reflect对象与Proxy对象一样，也是 ES6 为了操作对象而提供的新 API。</p>
+<p>一刷:<br><a href="http://es6.ruanyifeng.com/#docs/reflect" target="_blank" rel="noopener">http://es6.ruanyifeng.com/#docs/reflect</a></p>
+<h2 id="10-11-对象"><a href="#10-11-对象" class="headerlink" title="10. 11. 对象"></a>10. 11. 对象</h2><h3 id="10-1-对象的拓展"><a href="#10-1-对象的拓展" class="headerlink" title="10.1. 对象的拓展"></a>10.1. 对象的拓展</h3><h4 id="1-1-属性的遍历"><a href="#1-1-属性的遍历" class="headerlink" title="1.1 属性的遍历"></a>1.1 属性的遍历</h4><ul>
+<li>（1）for…in</li>
+<li>（2）Object.keys(obj)</li>
+<li>（3）Object.getOwnPropertyNames(obj)</li>
+<li>（4）Object.getOwnPropertySymbols(obj)</li>
+<li>（5）Reflect.ownKeys(obj)<br>  Reflect.ownKeys返回一个数组，包含对象自身的所有键名，不管键名是 Symbol 或字符串，也不管是否可枚举。</li>
+</ul>
+<h4 id="10-1-2-super"><a href="#10-1-2-super" class="headerlink" title="10.1.2 super"></a>10.1.2 super</h4><blockquote>
+<p>我们知道，this关键字总是指向函数所在的当前对象，ES6 又新增了另一个类似的关键字super，指向当前对象的原型对象。</p>
+</blockquote>
+<blockquote>
+<p>JavaScript 引擎内部，super.foo等同于Object.getPrototypeOf(this).foo（属性）或Object.getPrototypeOf(this).foo.call(this)（方法）。          ？？<br>Object.getPrototypeOf() 返回指定对象的原型。</p>
+</blockquote>
+<h3 id="11-2-对象的新增方法"><a href="#11-2-对象的新增方法" class="headerlink" title="11.2. 对象的新增方法"></a>11.2. 对象的新增方法</h3><h4 id="11-2-1-Object-is"><a href="#11-2-1-Object-is" class="headerlink" title="11.2.1 Object.is()"></a>11.2.1 Object.is()</h4><p>比较两个值是否严格相等,与严格比较运算符（===）的行为基本一致。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.is(&#123;&#125;, &#123;&#125;); <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line">+<span class="number">0</span> === <span class="number">-0</span> <span class="comment">//true</span></span><br><span class="line"><span class="literal">NaN</span> === <span class="literal">NaN</span> <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.is(+<span class="number">0</span>, <span class="number">-0</span>) <span class="comment">// false</span></span><br><span class="line"><span class="built_in">Object</span>.is(<span class="literal">NaN</span>, <span class="literal">NaN</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="11-2-2-Object-assign"><a href="#11-2-2-Object-assign" class="headerlink" title="11.2.2 Object.assign()"></a>11.2.2 Object.assign()</h4><blockquote>
+<p>Object.assign方法用于对象的合并，将源对象（source）的所有可枚举属性，复制到目标对象（target）。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.assign(target, source1, source2);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Object.assign拷贝的属性是有限制的，只拷贝源对象的自身属性（不拷贝继承属性），也不拷贝不可枚举的属性（enumerable: false）。属性名为 Symbol 值的属性，也会被Object.assign拷贝。</li>
+</ul>
+<h4 id="11-2-3-proto属性，Object-setPrototypeOf-，Object-getPrototypeOf"><a href="#11-2-3-proto属性，Object-setPrototypeOf-，Object-getPrototypeOf" class="headerlink" title="11.2.3 proto属性，Object.setPrototypeOf()，Object.getPrototypeOf()"></a>11.2.3 <strong>proto</strong>属性，Object.setPrototypeOf()，Object.getPrototypeOf()</h4><p><a href="https://jiafei2333.github.io/2019/09/09/Prototype-Extends/" target="_blank" rel="noopener">https://jiafei2333.github.io/2019/09/09/Prototype-Extends/</a></p>
+<h4 id="11-2-4-Object-keys-，Object-values-，Object-entries-搭配-for…of-使用"><a href="#11-2-4-Object-keys-，Object-values-，Object-entries-搭配-for…of-使用" class="headerlink" title="11.2.4 Object.keys()，Object.values()，Object.entries() 搭配 for…of 使用"></a>11.2.4 Object.keys()，Object.values()，Object.entries() 搭配 for…of 使用</h4><p>也都可以搭配数组 <code>for (let index of [&#39;a&#39;, &#39;b&#39;].keys())</code></p>
+<p>一刷：<br><a href="http://es6.ruanyifeng.com/#docs/object" target="_blank" rel="noopener">http://es6.ruanyifeng.com/#docs/object</a><br><a href="http://es6.ruanyifeng.com/#docs/object-methods" target="_blank" rel="noopener">http://es6.ruanyifeng.com/#docs/object-methods</a></p>
+<h2 id="9-数组"><a href="#9-数组" class="headerlink" title="9. 数组"></a>9. 数组</h2><h3 id="9-1-拓展运算符的应用"><a href="#9-1-拓展运算符的应用" class="headerlink" title="9.1. 拓展运算符的应用"></a>9.1. 拓展运算符的应用</h3><p><a href="http://es6.ruanyifeng.com/#docs/array#%E6%89%A9%E5%B1%95%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E5%BA%94%E7%94%A8" target="_blank" rel="noopener">http://es6.ruanyifeng.com/#docs/array#%E6%89%A9%E5%B1%95%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E5%BA%94%E7%94%A8</a></p>
+<h3 id="9-2-Array-from"><a href="#9-2-Array-from" class="headerlink" title="9.2. Array.from()"></a>9.2. Array.from()</h3><blockquote>
+<p>Array.from方法用于将两类对象转为真正的数组：类似数组的对象（array-like object）和可遍历（iterable）的对象（包括 ES6 新增的数据结构 Set 和 Map）。</p>
+</blockquote>
+<p>任何有 <code>length</code> 属性的对象，都可以通过 <code>Array.from</code> 方法转为数组，而此时扩展运算符就无法转换。</p>
+<h3 id="9-3-Array-includes"><a href="#9-3-Array-includes" class="headerlink" title="9.3. Array.includes()"></a>9.3. Array.includes()</h3><h3 id="9-4-Array-flat-Array-flatMap"><a href="#9-4-Array-flat-Array-flatMap" class="headerlink" title="9.4. Array.flat()   Array.flatMap()"></a>9.4. Array.flat()   Array.flatMap()</h3><p>一刷：<br><a href="http://es6.ruanyifeng.com/#docs/array" target="_blank" rel="noopener">http://es6.ruanyifeng.com/#docs/array</a></p>
+<h2 id="8-函数的拓展"><a href="#8-函数的拓展" class="headerlink" title="8. 函数的拓展"></a>8. 函数的拓展</h2><h3 id="8-1-函数的-length-属性"><a href="#8-1-函数的-length-属性" class="headerlink" title="8.1. 函数的 length 属性"></a>8.1. 函数的 length 属性</h3><blockquote>
+<p>函数的length属性，将返回没有指定默认值的参数个数。也就是说，指定了默认值后，length属性将失真，这个个数不算。</p>
+</blockquote>
+<h3 id="8-2-作用域"><a href="#8-2-作用域" class="headerlink" title="8.2. 作用域"></a>8.2. 作用域</h3><p>** <a href="http://es6.ruanyifeng.com/#docs/function#%E4%BD%9C%E7%94%A8%E5%9F%9F" target="_blank" rel="noopener">http://es6.ruanyifeng.com/#docs/function#%E4%BD%9C%E7%94%A8%E5%9F%9F</a></p>
+<h3 id="8-3-箭头函数"><a href="#8-3-箭头函数" class="headerlink" title="8.3. 箭头函数"></a>8.3. 箭头函数</h3><ul>
+<li>（1）函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。</li>
+</ul>
+<h3 id="4-尾调用优化"><a href="#4-尾调用优化" class="headerlink" title="4. 尾调用优化"></a>4. 尾调用优化</h3><blockquote>
+<p>我们知道，函数调用会在内存形成一个“调用记录”，又称“调用帧”（call frame），保存调用位置和内部变量等信息。如果在函数A的内部调用函数B，那么在A的调用帧上方，还会形成一个B的调用帧。等到B运行结束，将结果返回到A，B的调用帧才会消失。如果函数B内部还调用函数C，那就还有一个C的调用帧，以此类推。所有的调用帧，就形成一个“调用栈”（call stack）。</p>
+</blockquote>
+<blockquote>
+<p>尾调用由于是函数的最后一步操作，所以不需要保留外层函数的调用帧，因为调用位置、内部变量等信息都不会再用到了，只要直接用内层函数的调用帧，取代外层函数的调用帧就可以了。</p>
+</blockquote>
+<p>一刷：<br><a href="http://es6.ruanyifeng.com/#docs/function" target="_blank" rel="noopener">http://es6.ruanyifeng.com/#docs/function</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/20/draft/" rel="next" title="草稿">
+                <i class="fa fa-chevron-left"></i> 草稿
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/12/09/React-UpdateVersion/" rel="prev" title="React 项目版本升级">
+                React 项目版本升级 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/Prueba.gif" alt="加菲">
+            
+              <p class="site-author-name" itemprop="name">加菲</p>
+              <p class="site-description motion-element" itemprop="description">啦啦啦~~~加油码字</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#17-Iterator"><span class="nav-number">1.</span> <span class="nav-text">17. Iterator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-Generator"><span class="nav-number">2.</span> <span class="nav-text">18. Generator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#19-Generator-函数的异步应用"><span class="nav-number">3.</span> <span class="nav-text">19. Generator 函数的异步应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#20-async-函数"><span class="nav-number">4.</span> <span class="nav-text">20.async 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-Symbol"><span class="nav-number">5.</span> <span class="nav-text">12. Symbol</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-Proxy"><span class="nav-number">6.</span> <span class="nav-text">14. Proxy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-Reflect"><span class="nav-number">7.</span> <span class="nav-text">15. Reflect</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-11-对象"><span class="nav-number">8.</span> <span class="nav-text">10. 11. 对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#10-1-对象的拓展"><span class="nav-number">8.1.</span> <span class="nav-text">10.1. 对象的拓展</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-属性的遍历"><span class="nav-number">8.1.1.</span> <span class="nav-text">1.1 属性的遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-1-2-super"><span class="nav-number">8.1.2.</span> <span class="nav-text">10.1.2 super</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-2-对象的新增方法"><span class="nav-number">8.2.</span> <span class="nav-text">11.2. 对象的新增方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#11-2-1-Object-is"><span class="nav-number">8.2.1.</span> <span class="nav-text">11.2.1 Object.is()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-2-2-Object-assign"><span class="nav-number">8.2.2.</span> <span class="nav-text">11.2.2 Object.assign()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-2-3-proto属性，Object-setPrototypeOf-，Object-getPrototypeOf"><span class="nav-number">8.2.3.</span> <span class="nav-text">11.2.3 proto属性，Object.setPrototypeOf()，Object.getPrototypeOf()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-2-4-Object-keys-，Object-values-，Object-entries-搭配-for…of-使用"><span class="nav-number">8.2.4.</span> <span class="nav-text">11.2.4 Object.keys()，Object.values()，Object.entries() 搭配 for…of 使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-数组"><span class="nav-number">9.</span> <span class="nav-text">9. 数组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#9-1-拓展运算符的应用"><span class="nav-number">9.1.</span> <span class="nav-text">9.1. 拓展运算符的应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-2-Array-from"><span class="nav-number">9.2.</span> <span class="nav-text">9.2. Array.from()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-3-Array-includes"><span class="nav-number">9.3.</span> <span class="nav-text">9.3. Array.includes()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-4-Array-flat-Array-flatMap"><span class="nav-number">9.4.</span> <span class="nav-text">9.4. Array.flat()   Array.flatMap()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-函数的拓展"><span class="nav-number">10.</span> <span class="nav-text">8. 函数的拓展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-函数的-length-属性"><span class="nav-number">10.1.</span> <span class="nav-text">8.1. 函数的 length 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-作用域"><span class="nav-number">10.2.</span> <span class="nav-text">8.2. 作用域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-3-箭头函数"><span class="nav-number">10.3.</span> <span class="nav-text">8.3. 箭头函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-尾调用优化"><span class="nav-number">10.4.</span> <span class="nav-text">4. 尾调用优化</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">加菲</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
