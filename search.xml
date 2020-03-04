@@ -1,233 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>前端面试题 - 基础篇</title>
-    <url>/2020/01/21/Interview-base/</url>
-    <content><![CDATA[<h1 id="前端面试题4天训练营-1"><a href="#前端面试题4天训练营-1" class="headerlink" title="前端面试题4天训练营(1)"></a>前端面试题4天训练营(1)</h1><h2 id="第一天非常有必要和大家聊的三个话题"><a href="#第一天非常有必要和大家聊的三个话题" class="headerlink" title="第一天非常有必要和大家聊的三个话题"></a>第一天非常有必要和大家聊的三个话题</h2><h3 id="1-大前端时代需要掌握的技术栈"><a href="#1-大前端时代需要掌握的技术栈" class="headerlink" title="1. 大前端时代需要掌握的技术栈"></a>1. 大前端时代需要掌握的技术栈</h3><h4 id="HTML5"><a href="#HTML5" class="headerlink" title="HTML5"></a>HTML5</h4><blockquote>
-<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/Guide/HTML/HTML5" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/Guide/HTML/HTML5</a></p>
-</blockquote>
-<ul>
-<li>语义化标签类</li>
-</ul>
-<p><code>&lt;article&gt;&lt;/article&gt;、&lt;footer&gt;&lt;/footer&gt;、&lt;header&gt;&lt;/header&gt;</code></p>
-<ul>
-<li>音视频处理</li>
-</ul>
-<p>本次升级最大的亮点就是audio、video，新媒体解决方案代替了传统的flash。这可以说是html5最大的亮点。</p>
-<ul>
-<li><p>canvas / webGL</p>
-</li>
-<li><p>history API</p>
-</li>
-</ul>
-<p>vue\react框架中做spa单页应用的话会用到路由，路由分为hash和browser，其中browser路由就是利用提供的histor API实现的</p>
-<ul>
-<li>requestAnimationFrame</li>
-</ul>
-<p><a href="https://segmentfault.com/a/1190000020639465?utm_source=tag-newest" target="_blank" rel="noopener">https://segmentfault.com/a/1190000020639465?utm_source=tag-newest</a></p>
-<ul>
-<li>地理位置</li>
-</ul>
-<p>getCurrentPosition() 方法来获得用户的位置</p>
-<ul>
-<li>web scoket</li>
-</ul>
-<p>………….</p>
-<h4 id="CSS3"><a href="#CSS3" class="headerlink" title="CSS3"></a>CSS3</h4><ul>
-<li><p>常规</p>
-</li>
-<li><p>动画</p>
-</li>
-<li><p>盒子模型</p>
-</li>
-<li><p>响应式布局</p>
-</li>
-</ul>
-<p>………….</p>
-<h4 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h4><ul>
-<li>ECMAScript 3/5/6/7/8/9</li>
-<li>DOM</li>
-<li>BOM</li>
-<li>设计模式</li>
-<li>底层原理<ul>
-<li>堆栈内存</li>
-<li>闭包作用域 AO/VO/GO/EC/ECSTACK-</li>
-<li>面向对象OOP</li>
-<li>THI </li>
-<li>EventLoop</li>
-<li>浏览器渲染原理</li>
-<li>回流重绘</li>
-</ul>
-</li>
-</ul>
-<p>………….</p>
-<h4 id="网络通信层"><a href="#网络通信层" class="headerlink" title="网络通信层"></a>网络通信层</h4><ul>
-<li>AJAX / Fetch / axios</li>
-<li>HTTP1.0 / 2.0</li>
-<li>TCP</li>
-<li>跨域处理方案</li>
-<li>性能优化</li>
-</ul>
-<h4 id="Hybrid或者APP再或者小程序"><a href="#Hybrid或者APP再或者小程序" class="headerlink" title="Hybrid或者APP再或者小程序"></a>Hybrid或者APP再或者小程序</h4><ul>
-<li>Hybrid</li>
-<li>uni-app</li>
-<li>RN</li>
-<li>Flutter</li>
-<li>小程序 MPVUE</li>
-<li>Weex</li>
-<li>PWA</li>
-</ul>
-<p>…………..</p>
-<h4 id="工程化方面"><a href="#工程化方面" class="headerlink" title="工程化方面"></a>工程化方面</h4><ul>
-<li>webpack</li>
-<li>git</li>
-<li>linux / nginx</li>
-</ul>
-<p>…………..</p>
-<h4 id="全栈方面"><a href="#全栈方面" class="headerlink" title="全栈方面"></a>全栈方面</h4><ul>
-<li>node</li>
-<li>express</li>
-<li>koa2</li>
-<li>mongodb</li>
-<li>nuxt.js / next.js</li>
-</ul>
-<p>…………..</p>
-<h4 id="框架方面"><a href="#框架方面" class="headerlink" title="框架方面"></a>框架方面</h4><ul>
-<li>Vue<ul>
-<li>基础知识</li>
-<li>核心原理</li>
-<li>vue-router</li>
-<li>vue-cli</li>
-<li>vuex</li>
-<li>element ui</li>
-<li>vant</li>
-<li>cube</li>
-<li>SSR</li>
-<li>优化</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li>React<ul>
-<li>基础知识</li>
-<li>核心原理</li>
-<li>react-router-dom</li>
-<li>redux</li>
-<li>react-redux</li>
-<li>dva</li>
-<li>umi</li>
-<li>mobix</li>
-<li>antd</li>
-<li>antd pro</li>
-<li>SSR</li>
-<li>优化</li>
-</ul>
-</li>
-</ul>
-<h4 id="游戏方向"><a href="#游戏方向" class="headerlink" title="游戏方向"></a>游戏方向</h4><h4 id="可视化或者AI方向"><a href="#可视化或者AI方向" class="headerlink" title="可视化或者AI方向"></a>可视化或者AI方向</h4><p>……………</p>
-<h3 id="3-BAT-TMD这种大公司到底是怎样面试的"><a href="#3-BAT-TMD这种大公司到底是怎样面试的" class="headerlink" title="3. BAT/TMD这种大公司到底是怎样面试的"></a>3. BAT/TMD这种大公司到底是怎样面试的</h3><p>一个问题就知道你会不会CSS了，(￣ε(#￣)☆╰╮(￣▽￣///)</p>
-<ul>
-<li>什么是标签语义化？</li>
-</ul>
-<p>用合理的标签干合适的事情</p>
-<ul>
-<li>都有哪些标签，都是啥意思？</li>
-</ul>
-<p>有块状标签、有行内标签、有行内块状标签，分部是 如下：</p>
-<ul>
-<li>块级标签和行内标签的区别？</li>
-</ul>
-<p>行内元素：相邻的行内元素在同一行，行内元素的宽度、高度、内边距的 top/bottom和外边距的top/bottom都是不可改变的，但 padding 和 margin 的 left 和 right 是可以设置的。常见的行内元素有：span、a、br、em、i… 块级元素：独占一行，他们的宽度、高度、内边距和外边距都可控制。常见的块级元素有：table、form、ul li、div、p、h1-6、article、header、footer….行内块元素（inline-block）：即融合了行内元素和块级元素的特性，即在一行显示，又能设置宽高。常见的行内块元素有：img、input、button…..</p>
-<ul>
-<li><p>如何转换</p>
-</li>
-<li><p>display除了这几个值还有哪些？</p>
-</li>
-</ul>
-<p><code>display: table</code> <code>display: flex</code> </p>
-<ul>
-<li>display:none<ul>
-<li>让元素隐藏，你可以怎么做</li>
-<li>display:none和visibility:hidden的区别?</li>
-<li>opacity的兼容处理？ (用 filter)</li>
-<li>filter(滤镜)还能做哪些事情？ （修改所有图片的颜色为黑白: filter: grayscale(100%);）</li>
-</ul>
-</li>
-<li>display:flex<ul>
-<li>项目中你什么时候用到了flex</li>
-<li>除了这种方式能居中还有哪些？</li>
-<li>响应式布局还可以怎么做？</li>
-<li>都有哪些盒子模型</li>
-</ul>
-</li>
-</ul>
-<p>o(╥﹏╥)o</p>
-<p>好了，咱们换下一个题….</p>
-<hr>
-
-<p><strong>说一下，你自己感觉自己擅长哪些？</strong> </p>
-<p>(#^.^#)  没事的，在我们眼里，你擅长的点我比你更擅长，如果不是，没关系，后面还有P7/P8们兜着呢！^_^</p><p></p>
-<hr>
-
-<p><strong>说一下，这个需求怎么做？</strong> <br>
-还有吗 (￣▽￣)／ <br>
-还有吗 (￣▽￣)／ <br>
-…… <br>
-那说一下，你感觉这几种方式哪个更好，各自有啥问题……</p>
-
-<hr>
-
-<p>总之一句话，不把你问“死”，算我这次面试失败！！！</p>
-
-<p><strong>“ 在面试介绍的时候要突出自己精心准备的面试题：在哪些公司呆过，自己擅长哪些技术栈，平时有什么爱好，比较擅长原生js，比较擅长promise设计模式 ”</strong></p>
-<h2 id="几道前端经典的面试题"><a href="#几道前端经典的面试题" class="headerlink" title="几道前端经典的面试题"></a>几道前端经典的面试题</h2><h3 id="1-掌握盒子水平垂直居中的五大方案"><a href="#1-掌握盒子水平垂直居中的五大方案" class="headerlink" title="1.掌握盒子水平垂直居中的五大方案"></a>1.掌握盒子水平垂直居中的五大方案</h3><ul>
-<li>定位： 三种</li>
-</ul>
-<p>第一种：需要知道具体宽高，才能用margin left top设置值</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.box</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">50px</span>; </span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">margin-top</span>: -<span class="number">25px</span>;</span><br><span class="line">  <span class="attribute">margin-left</span>: -<span class="number">50px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>第二种：有宽高，不需要考虑具体是多少</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.box</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">50px</span>; </span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">bottom</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">margin</span>: auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>第三种：可以不设置宽高</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.box</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">translate</span>(-50%, -50%);</span><br><span class="line">  <span class="attribute">-webkit-transform</span>: <span class="built_in">translate</span>(-50%, -50%);</span><br><span class="line">  <span class="attribute">-moz-transform</span>: <span class="built_in">translate</span>(-50%, -50%);</span><br><span class="line">  <span class="attribute">-ms-transform</span>: <span class="built_in">translate</span>(-50%, -50%);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>display: flex</li>
-</ul>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 父标签 */</span></span><br><span class="line"><span class="selector-tag">body</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">justify-content</span>: center;</span><br><span class="line">  <span class="attribute">align-items</span>: center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>javascript</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> HTML = <span class="built_in">document</span>.documentElement,</span><br><span class="line">    winW = HTML.clientWidth,</span><br><span class="line">    winH = HTML.clientHeight,</span><br><span class="line">    boxW = box.offsetWidth,</span><br><span class="line">    boxH = box.offsetHeight;</span><br><span class="line">  box.style.position = <span class="string">"absolute"</span>;</span><br><span class="line">  box.style.left = (winW - boxW) / <span class="number">2</span> + <span class="string">'px'</span>;</span><br><span class="line">  box.style.top = (winH - boxH) / <span class="number">2</span> + <span class="string">'px'</span>;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>display: table-cell</li>
-</ul>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: table-cell; <span class="comment">/* */</span></span><br><span class="line">  <span class="attribute">vertical-align</span>: middle;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">  <span class="comment">/* 父级需要固定宽高 百分比不算固定宽高*/</span></span><br><span class="line">  <span class="attribute">width</span>: <span class="number">500px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">500px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.box</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: inline-block;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-关于CSS3中盒模型的几道面试题"><a href="#2-关于CSS3中盒模型的几道面试题" class="headerlink" title="2.关于CSS3中盒模型的几道面试题"></a>2.关于CSS3中盒模型的几道面试题</h3><ul>
-<li>标准盒子模型</li>
-</ul>
-<p><img src="https://jiafei2333.github.io/html/images/css-box-sizing.png" alt></p>
-<ul>
-<li>IE盒子模型（怪异盒子模型）</li>
-</ul>
-<p>border</p>
-<ul>
-<li>FLEX盒模型</li>
-</ul>
-<p><img src="https://jiafei2333.github.io/html/images/css-flex.png" alt></p>
-]]></content>
-      <categories>
-        <category>面试题</category>
-      </categories>
-      <tags>
-        <tag>面试题</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Single-Spa</title>
     <url>/2020/01/09/Single-Spa/</url>
     <content><![CDATA[<p>入手demo：<a href="https://www.jdon.com/52552" target="_blank" rel="noopener">https://www.jdon.com/52552</a></p>
@@ -281,13 +54,16 @@
 <p><code>yarn start</code></p>
 <p>将项目中src/ 下的内容都删除 新建 index.tsx</p>
 <p>React是单向数据流，数据只能从上往下单向流动，一个组件接收到的props是不变的</p>
-<h2 id="React"><a href="#React" class="headerlink" title="React"></a>React</h2><p>文档 <a href="http://www.zhufengpeixun.cn/ahead/html/62.1.react-basic.html" target="_blank" rel="noopener">http://www.zhufengpeixun.cn/ahead/html/62.1.react-basic.html</a></p>
+<h2 id="React"><a href="#React" class="headerlink" title="React"></a>React</h2><p>文档 <a href="http://www.zhufengpeixun.cn/2020/html/62.1.react-basic.html" target="_blank" rel="noopener">http://www.zhufengpeixun.cn/2020/html/62.1.react-basic.html</a></p>
 <blockquote>
 <p>React当中的元素就是普通的js对象，它描述了界面上元素的样子，react-dom会在render的时候根据对象的描述生成真实的dom结构。<br>react元素是构成react应用的最小单位。<br>react中的元素也就是虚拟dom。</p>
 </blockquote>
 <p>react 源码 github.com =&gt; 搜索react =&gt; packages =&gt; react =&gt; src =&gt; ReactElement.js</p>
 <p>react forceUpdate  |  react flush</p>
 <p>e.preventDefault(); // 阻止默认表单提交事件</p>
+<h3 id="jsx"><a href="#jsx" class="headerlink" title="jsx"></a>jsx</h3><p>JavaScript+xml 是一种把js和html混合书写的一种语法。<br>JSX其实只是一种语法糖,最终会通过babeljs转译成createElement语法,以下代码等价。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">ReactDOM.render(</span><br><span class="line">  &lt;h1&gt;Hello&lt;<span class="regexp">/h1&gt;,</span></span><br><span class="line"><span class="regexp">  document.getElementById('root')</span></span><br><span class="line"><span class="regexp">);</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">React.createElement("h1", &#123;</span></span><br><span class="line"><span class="regexp">  className: "title",</span></span><br><span class="line"><span class="regexp">  style: &#123;</span></span><br><span class="line"><span class="regexp">    color: 'red'</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;, "hello");</span></span><br></pre></td></tr></table></figure>
+
 <h3 id="this"><a href="#this" class="headerlink" title="this"></a>this</h3><p>事件的处理 关于this的处理<br>一般来说我们希望在回调函数里让this=当前组件</p>
 <ul>
 <li>1、使用箭头函数 this就会永远指向类的实例</li>
@@ -297,12 +73,21 @@
 </ul>
 </li>
 </ul>
+<h4 id="解决this指针的三种方法"><a href="#解决this指针的三种方法" class="headerlink" title="解决this指针的三种方法"></a>解决this指针的三种方法</h4><ul>
+<li>this.add.bind(this); 把add方法里面的this指针绑定为组件实例</li>
+<li>使用匿名函数 ()=&gt;this.add(); </li>
+<li><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 给类的实例增加一个add的属性，而这个属性的this绑死为组件的实例</span></span><br><span class="line">add = <span class="function"><span class="params">()</span> =&gt;</span> &#123;...&#125;</span><br><span class="line">...</span><br><span class="line">onClick=&#123;<span class="keyword">this</span>.add&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
 <h3 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h3><p>ref的用法 + 受控组件、非受控组件</p>
 <blockquote>
 <p>reference = 引用 如果我们希望在代码中获取到React元素渲染到页面上的真实DOM的话</p>
 </blockquote>
-<p>ref用法主要有三种<br>1、ref    this.refs.a.value   7.4.1 ref的值是一个字符串 (已经废弃)<br>2、ref 函数 这种方式也废弃了<br>3、this.a = React.createRef(); // {current: null}</p>
-<h3 id="受控和非受控"><a href="#受控和非受控" class="headerlink" title="受控和非受控"></a>受控和非受控</h3><p>input内部会存储自己的值，这个值跟react是相互独立的，input的值并不受react控制，这被称为非受控组件。<br>受控：设置 value={this….} onChange来改变value的值</p>
+<p>ref用法</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">this</span>.a = React.createRef(); <span class="comment">// &#123;current: null&#125;</span></span><br><span class="line"></span><br><span class="line">&lt;input ref=&#123;<span class="keyword">this</span>.a&#125; /&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="受控和非受控"><a href="#受控和非受控" class="headerlink" title="受控和非受控"></a>受控和非受控</h3><p>非受控组件：指DOM元素的值存在于DOM元素内部，这个值跟react是相互独立的，不受react控制，这被称为非受控组件。<br>受控：设置 value={this….} onChange来改变value的值</p>
 <h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><h4 id="旧"><a href="#旧" class="headerlink" title="旧"></a>旧</h4><p>父组件包裹子组件 父组件 <code>Counter</code>  子组件 <code>SubCounter</code><br>当父组件改变数据时，触发时 父子组件生命周期顺序如下：</p>
 <p><code>Counter</code> shouldComponentUpdate<br><code>Counter</code> componentWillUpdate<br><code>Counter</code> render<br><code>SubCounter</code> componentWillReceiveProps<br><code>SubCounter</code> shouldComponentUpdate<br><code>SubCounter</code> componentWillUpdate<br><code>SubCounter</code> render<br><code>SubCounter</code> componentDidUpdate<br><code>Counter</code> componentDidUpdate</p>
 <h4 id="新"><a href="#新" class="headerlink" title="新"></a>新</h4><p>如图 props、state、forceUpdate 改变时都会触发</p>
@@ -316,7 +101,57 @@
 
 <p><a href="https://juejin.im/post/5aca20c96fb9a028d700e1ce" target="_blank" rel="noopener">https://juejin.im/post/5aca20c96fb9a028d700e1ce</a></p>
 <p><a href="https://zh-hans.reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html" target="_blank" rel="noopener">https://zh-hans.reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html</a></p>
-<h3 id="状态提升"><a href="#状态提升" class="headerlink" title="状态提升"></a>状态提升</h3><p>多个组件需要共享同一个状态的话，就需要把他们的状态提升到他们共同的父组件中。</p>
+<h3 id="状态"><a href="#状态" class="headerlink" title="状态"></a>状态</h3><h4 id="状态提升"><a href="#状态提升" class="headerlink" title="状态提升"></a>状态提升</h4><p>多个组件需要共享同一个状态的话，就需要把他们的状态提升到他们共同的父组件中。</p>
+<h4 id="setState"><a href="#setState" class="headerlink" title="setState"></a>setState</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">this</span>.setState(&#123;&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>修改状态；重新render</p>
+<h4 id="setState-可能是异步的"><a href="#setState-可能是异步的" class="headerlink" title="setState 可能是异步的"></a>setState 可能是异步的</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">constructor</span>()&#123;</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;<span class="attr">number</span>:<span class="number">0</span>&#125;   </span><br><span class="line">&#125;</span><br><span class="line">add = <span class="function"><span class="params">()</span> =&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">number</span>:<span class="keyword">this</span>.state.number+<span class="number">1</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.state.number); <span class="comment">// 0</span></span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">number</span>:<span class="keyword">this</span>.state.number+<span class="number">1</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.state.number); <span class="comment">// 0</span></span><br><span class="line">    setTimeout( <span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.setState(&#123;<span class="attr">number</span>:<span class="keyword">this</span>.state.number+<span class="number">1</span>&#125;);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.state.number); <span class="comment">// 2</span></span><br><span class="line">        <span class="keyword">this</span>.setState(&#123;<span class="attr">number</span>:<span class="keyword">this</span>.state.number+<span class="number">1</span>&#125;);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.state.number); <span class="comment">// 3</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 页面上显示 3</span></span><br></pre></td></tr></table></figure>
+
+<p>源码<br><img src="http://img.zhufengpeixun.cn/setState.png" alt></p>
+<p><code>dirtyComponents</code> 脏组件，就是组件的状态和界面显示不一致</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 源码</span></span><br><span class="line"><span class="keyword">if</span>( !batchingStrategy.isBatchingUpdates)&#123; <span class="comment">// 为 false 则不批量更新，立即处理</span></span><br><span class="line">    batchingStrategy.batchUpdates(enqueusUpdate, component);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 否则 批量更新，存储到dirtyComponent中</span></span><br><span class="line">dirtyComponent.push(component);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">window</span>.trigger = <span class="function"><span class="keyword">function</span>(<span class="params">event,method</span>)</span>&#123;</span><br><span class="line">    event.target.component[method].call(event.target.component); <span class="comment">// 不是源码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>实现原理和react一样，在react中会把所有的事件都委托给全局统一实现，通过事件源去区分，去调用对应的方法。<br>通过事件委托来实现的。</p>
+<p>在react中，当你要开启一个事件的时候，当你要执行一个回调函数的时候，它会进入到批量更新状态。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">window</span>.trigger = <span class="function"><span class="keyword">function</span>(<span class="params">event,name</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 当事件函数(即这里的add方法)执行的时候，先置为true，开启批量更新模式</span></span><br><span class="line">    batchingStrategy.isBatchingUpdates = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">let</span> component = event.target.component;</span><br><span class="line">    component[name].bind(component,event);</span><br><span class="line">    <span class="comment">// 当事件结束的时候（这里指 add执行结束，且此时还未执行setTimeou异步方法，所以前2个皆为 0 0 ） 置为false</span></span><br><span class="line">    batchingStrategy.isBatchingUpdates = <span class="literal">false</span>;</span><br><span class="line">    <span class="comment">// 进行批量更新，把所有的脏组件根据自己的状态和属性重新渲染</span></span><br><span class="line">    batchingStrategy.batchedUpdates();</span><br><span class="line">&#125;</span><br><span class="line">add = <span class="function"><span class="params">()</span> =&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">number</span>:<span class="keyword">this</span>.state.number+<span class="number">1</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.state.number); <span class="comment">// 0</span></span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">number</span>:<span class="keyword">this</span>.state.number+<span class="number">1</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.state.number); <span class="comment">// 0</span></span><br><span class="line">    <span class="comment">// setTimeout里面的代码比较特殊，不会走批量更新，会立刻进行更新</span></span><br><span class="line">    setTimeout( <span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.setState(&#123;<span class="attr">number</span>:<span class="keyword">this</span>.state.number+<span class="number">1</span>&#125;);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.state.number); <span class="comment">// 2</span></span><br><span class="line">        <span class="keyword">this</span>.setState(&#123;<span class="attr">number</span>:<span class="keyword">this</span>.state.number+<span class="number">1</span>&#125;);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.state.number); <span class="comment">// 3</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>优化window.trigger中的方法 <code>事务</code></p>
+<ul>
+<li>一个所谓的 Transaction 就是将需要执行的 method 使用 wrapper 封装起来，再通过 Transaction 提供的 perform 方法执行</li>
+<li>而在 perform 之前，先执行所有 wrapper 中的 initialize 方法；perform 完成之后（即 method 执行后）再执行所有的 close 方法一组 initialize 及 close 方法称为一个 wrapper<pre> *                       wrappers (injected at creation time)
+*                                      +        +
+*                                      |        |
+*                    +-----------------|--------|--------------+
+*                    |                 v        |              |
+*                    |      +---------------+   |              |
+*                    |   +--|    wrapper1   |---|----+         |
+*                    |   |  +---------------+   v    |         |
+*                    |   |          +-------------+  |         |
+*                    |   |     +----|   wrapper2  |--------+   |
+*                    |   |     |    +-------------+  |     |   |
+*                    |   |     |                     |     |   |
+*                    |   v     v                     v     v   | wrapper
+*                    | +---+ +---+   +---------+   +---+ +---+ | invariants
+* perform(anyMethod) | |   | |   |   |         |   |   | |   | | maintained
+* +-----------------&gt;|-|---|-|---|--&gt;|anyMethod|---|---|-|---|-|--------&gt;
+*                    | |   | |   |   |         |   |   | |   | |
+*                    | |   | |   |   |         |   |   | |   | |
+*                    | |   | |   |   |         |   |   | |   | |
+*                    | +---+ +---+   +---------+   +---+ +---+ |
+*                    |  initialize                    close    |
+*                    +-----------------------------------------+
+* 
+</pre>
+
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Transaction</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(wrapper)&#123;</span><br><span class="line">        <span class="keyword">this</span>.wrapper = wrapper;</span><br><span class="line">    &#125;</span><br><span class="line">    perform(func)&#123;</span><br><span class="line">        <span class="keyword">this</span>.wrapper.initialize();</span><br><span class="line">        func.call();</span><br><span class="line">        <span class="keyword">this</span>.wrapper.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> transaction = <span class="keyword">new</span> Transaction(&#123;</span><br><span class="line">    initialize() &#123;</span><br><span class="line">        batchingStrategy.isBatchingUpdates = <span class="literal">true</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">    close() &#123;</span><br><span class="line">        batchingStrategy.isBatchingUpdates = <span class="literal">false</span>;</span><br><span class="line">        batchingStrategy.batchedUpdates();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">window</span>.trigger = <span class="function"><span class="keyword">function</span>(<span class="params">event,name</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> component = event.target.component;</span><br><span class="line">    transaction.perform(component[name].bind(component,event));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>1、异步更新state，将短时间内的多个setState合并成一个<br>2、为了解决异步更新导致的问题，增加另一种形式的setState：接受一个函数作为参数，在函数中可以得到前一个状态并返回下一个状态</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">add = <span class="function"><span class="params">()</span> =&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(<span class="function">(<span class="params">state</span>)=&gt;</span>&#123;<span class="attr">number</span>: state.number+<span class="number">1</span>&#125;);</span><br><span class="line">    <span class="keyword">this</span>.setState(<span class="function">(<span class="params">state</span>)=&gt;</span>&#123;<span class="attr">number</span>: state.number+<span class="number">1</span>&#125;);</span><br><span class="line">    <span class="keyword">this</span>.setState(<span class="function">(<span class="params">state</span>)=&gt;</span>&#123;<span class="attr">number</span>: state.number+<span class="number">1</span>&#125;);</span><br><span class="line">    <span class="comment">// 这样 页面上会输出3 </span></span><br><span class="line">    <span class="comment">// 如果想从上一个状态计算下一个状态，需要传递一个函数而非对象</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h3 id="react组件通信"><a href="#react组件通信" class="headerlink" title="react组件通信"></a>react组件通信</h3><p>1、属性传递；2、context redux内部也是context实现的。</p>
 <blockquote>
 <p>看下react中文文档 <a href="http://react.html.cn/docs/context.html" target="_blank" rel="noopener">http://react.html.cn/docs/context.html</a> 这里的例子可以看官网的  好好看看官方的这个例子</p>
@@ -337,7 +172,7 @@
 <p>片段(fragments) 可以让你将子元素列表添加到一个分组中，并且不会在DOM 中增加额外节点。</p>
 </blockquote>
 <p><a href="http://react.html.cn/docs/fragments.html" target="_blank" rel="noopener">http://react.html.cn/docs/fragments.html</a></p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MouseTracker</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">        <span class="keyword">super</span>(props);</span><br><span class="line">        <span class="keyword">this</span>.state = &#123; <span class="attr">x</span>: <span class="number">0</span>, <span class="attr">y</span>: <span class="number">0</span> &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    handleMouseMove = <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">            x: event.clientX,</span><br><span class="line">            y: event.clientY</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            &lt;div onMouseMove=&#123;<span class="keyword">this</span>.handleMouseMove&#125;&gt;</span><br><span class="line">               &#123;<span class="keyword">this</span>.props.children(<span class="keyword">this</span>.state)&#125;</span><br><span class="line">            &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">        );</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">ReactDOM.render(&lt; MouseTracker &gt;</span></span><br><span class="line"><span class="regexp">&#123;</span></span><br><span class="line"><span class="regexp">    props=&gt;(</span></span><br><span class="line"><span class="regexp">        &lt;React.Fragment&gt;</span></span><br><span class="line"><span class="regexp">          &lt;h1&gt;移动鼠标!&lt;/</span>h1&gt;</span><br><span class="line">          &lt;p&gt;当前的鼠标位置是 (&#123;props.x&#125;, &#123;props.y&#125;)&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>React.Fragment&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line">&lt;<span class="regexp">/ MouseTracker&gt;, document.getElementById('root'));</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MouseTracker</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">        <span class="keyword">super</span>(props);</span><br><span class="line">        <span class="keyword">this</span>.state = &#123; <span class="attr">x</span>: <span class="number">0</span>, <span class="attr">y</span>: <span class="number">0</span> &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    handleMouseMove = <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">            x: event.clientX,</span><br><span class="line">            y: event.clientY</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            &lt;div onMouseMove=&#123;<span class="keyword">this</span>.handleMouseMove&#125;&gt;</span><br><span class="line">               &#123;<span class="keyword">this</span>.props.children(<span class="keyword">this</span>.state)&#125;</span><br><span class="line">            &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">        );</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">ReactDOM.render(&lt; MouseTracker &gt;</span></span><br><span class="line"><span class="regexp">&#123;</span></span><br><span class="line"><span class="regexp">    props=&gt;(</span></span><br><span class="line"><span class="regexp">        &lt;React.Fragment&gt;</span></span><br><span class="line"><span class="regexp">          &lt;h1&gt;移动鼠标!&lt;/</span>h1&gt;</span><br><span class="line">          &lt;p&gt;当前的鼠标位置是 (&#123;props.x&#125;, &#123;props.y&#125;)&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>React.Fragment&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line">&lt;<span class="regexp">/input MouseTracker&gt;, document.getElementById('root'));</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h3><p><a href="http://www.zhufengpeixun.cn/ahead/html/62.4.react-optimize.html" target="_blank" rel="noopener">http://www.zhufengpeixun.cn/ahead/html/62.4.react-optimize.html</a></p>
 <blockquote>
