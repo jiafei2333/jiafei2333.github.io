@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Hi 加菲">
 <meta property="og:description" content="test test() 方法执行一个检索，用来查看正则表达式与指定的字符串是否匹配。返回 true 或 false">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-15T02:10:38.000Z">
+<meta property="og:updated_time" content="2020-04-01T12:49:55.856Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="正则">
 <meta name="twitter:description" content="test test() 方法执行一个检索，用来查看正则表达式与指定的字符串是否匹配。返回 true 或 false">
@@ -385,6 +385,15 @@
 
 <p>2】</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// /a/123</span></span><br><span class="line">正则 /\/a\/\d+<span class="regexp">/</span></span><br></pre></td></tr></table></figure>
+
+<p>3】<br>将 <code>&lt;span class=&quot;proofreadSignClass</code> 的span标签匹配出来</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">'&lt;p style="word-spacing: 0.05em; line-height: 1.6em; margin-top: 1.2em; margin-bottom: -1.2em; padding-bottom: 1.2em; position: relative; z-index: 1; color: rgb(48, 68, 85); font-family: &amp;quot;Source Sans Pro&amp;quot;, &amp;quot;Helvetica Neue&amp;quot;, Arial, sans-serif;"&gt;&amp;#8203;&lt;span style="color: rgb(0, 0, 0); font-family: 宋体; font-size: 14px; caret-color: red;"&gt;&lt;span class="proofreadSignClass errorWordMark" style="border:2px solid red;color:#F39C12;" title="同音字错误：中华人名共和国→中华人民共和国"&gt;中华人名共和国&lt;/span&gt;&lt;span class="proofreadSignClass errorWordMark" style="border:2px solid red;color:#F39C12;" title="标点符号错误：,→，"&gt;,&lt;/span&gt;神经。&lt;span style="color: rgb(48, 68, 85); font-family: &amp;quot;Source Sans Pro&amp;quot;, &amp;quot;Helvetica Neue&amp;quot;, Arial, sans-serif; word-spacing: 0.8px;"&gt;&lt;/span&gt;&lt;span style="word-spacing: 0.8px; caret-color: red; font-family: 宋体; font-size: 14px;"&gt;&lt;span class="proofreadSignClass errorWordMark" style="border:2px solid red;color:#F39C12;" title="同音字错误：中华人名共和国→中华人民共和国"&gt;中华人名共和国&lt;/span&gt;&lt;span class="proofreadSignClass errorWordMark" style="border:2px solid red;color:#F39C12;" title="标点符号错误：,→，"&gt;,&lt;/span&gt;神经。&lt;/span&gt;&lt;span style="color: rgb(48, 68, 85); font-family: &amp;quot;Source Sans Pro&amp;quot;, &amp;quot;Helvetica Neue&amp;quot;, Arial, sans-serif; word-spacing: 0.8px;"&gt;&lt;/span&gt;&lt;span style="word-spacing: 0.8px; caret-color: red; font-family: 宋体; font-size: 14px;"&gt;&lt;span class="proofreadSignClass errorWordMark" style="border:2px solid red;color:#F39C12;" title="同音字错误：中华人名共和国→中华人民共和国"&gt;中华人名共和国&lt;/span&gt;&lt;span class="proofreadSignClass errorWordMark" style="border:2px solid red;color:#F39C12;" title="标点符号错误：,→，"&gt;,&lt;/span&gt;神经。&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> proofreadHtml = <span class="function">(<span class="params">str</span>) =&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> reg = str.match(<span class="regexp">/(&lt;span class="proofreadSignClass[^&gt;]*&gt;)([\s\S]*?)(&lt;\/span&gt;)/ig</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(reg, reg.length);</span><br><span class="line">&#125;</span><br><span class="line">proofreadHtml(str);</span><br></pre></td></tr></table></figure>
+
+<p>结果</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[ <span class="string">'&lt;span class="proofreadSignClass errorWordMark" style="border:2px solid red;color:#F39C12;" title="同音字错误：中华人名共和国→中华人民共和国"&gt;中华人名共和国&lt;/span&gt;'</span>,</span><br><span class="line">  <span class="string">'&lt;span class="proofreadSignClass errorWordMark" style="border:2px solid red;color:#F39C12;" title="标点符号错误：,→，"&gt;,&lt;/span&gt;'</span>,</span><br><span class="line">  <span class="string">'&lt;span class="proofreadSignClass errorWordMark" style="border:2px solid red;color:#F39C12;" title="同音字错误：中华人名共和国→中华人民共和国"&gt;中华人名共和国&lt;/span&gt;'</span>,</span><br><span class="line">  <span class="string">'&lt;span class="proofreadSignClass errorWordMark" style="border:2px solid red;color:#F39C12;" title="标点符号错误：,→，"&gt;,&lt;/span&gt;'</span>,</span><br><span class="line">  <span class="string">'&lt;span class="proofreadSignClass errorWordMark" style="border:2px solid red;color:#F39C12;" title="同音字错误：中华人名共和国→中华人民共和国"&gt;中华人名共和国&lt;/span&gt;'</span>,</span><br><span class="line">  <span class="string">'&lt;span class="proofreadSignClass errorWordMark" style="border:2px solid red;color:#F39C12;" title="标点符号错误：,→，"&gt;,&lt;/span&gt;'</span> ]</span><br></pre></td></tr></table></figure>
+
+<p>[\s\S]是完全通配的意思，\s是指空白，包括空格、换行、tab缩进等所有的空白，而\S刚好相反<br>这样一正一反下来，就表示所有的字符，完全的，一字不漏的。<br>另外，[]这个符号，表示在它里面包含的单个字符不限顺序的出现，比如下面的正则：<br>[ace]*<br>这表示，只要出现a/c/e这三个任意的字母，都会被匹配<br>[\s]表示，只要出现空白就匹配<br>[\S]表示，非空白就匹配<br>那么它们的组合，表示所有的都匹配，与它相对应的，有[\w\W]等，意义完全相同、另外要说的一点是，为什么有”.”这个通配符了，还要这样的用法。<br>其实，[\s\S]  [\w\W]这样的用法，比较”.”所匹配的还要多，因为”.”是不会匹配换行的，所有出现有换行匹配的时候，人们就习惯 使用[\s\S]或者[\w\W]这样的完全通配模式。</p>
+
       
     </div>
     
@@ -505,7 +514,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-count">67</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
