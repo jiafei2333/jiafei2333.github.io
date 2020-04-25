@@ -82,7 +82,7 @@
 <meta name="description" content="啦啦啦~~~加油码字">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Hi 加菲">
-<meta property="og:url" content="http://yoursite.com/tags/HTTP/index.html">
+<meta property="og:url" content="http://yoursite.com/tags/Http/index.html">
 <meta property="og:site_name" content="Hi 加菲">
 <meta property="og:description" content="啦啦啦~~~加油码字">
 <meta property="og:locale" content="zh-Hans">
@@ -118,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/HTTP/">
+  <link rel="canonical" href="http://yoursite.com/tags/Http/">
 
 
 
 
 
-  <title>标签: HTTP | Hi 加菲</title>
+  <title>标签: Http | Hi 加菲</title>
   
 
 
@@ -276,7 +276,7 @@
 
     <div id="posts" class="posts-collapse">
       <div class="collection-title">
-        <h1>HTTP<small>标签</small>
+        <h1>Http<small>标签</small>
         </h1>
       </div>
 
@@ -288,17 +288,17 @@
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/2019/10/09/Node-http-3/" itemprop="url">
+            <a class="post-title-link" href="/2019/10/16/Cookie-Session/" itemprop="url">
               
-                <span itemprop="name">Nodejs http （三）</span>
+                <span itemprop="name">cookie-session</span>
               
             </a>
         
       </h2>
 
       <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-10-09T09:33:46+08:00" content="2019-10-09">
-          10-09
+        <time class="post-time" itemprop="dateCreated" datetime="2019-10-16T11:37:04+08:00" content="2019-10-16">
+          10-16
         </time>
       </div>
 
@@ -314,43 +314,17 @@
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/2019/09/30/Node-http-2/" itemprop="url">
+            <a class="post-title-link" href="/2019/10/16/Review-1/" itemprop="url">
               
-                <span itemprop="name">Nodejs http （二）</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-09-30T14:15:59+08:00" content="2019-09-30">
-          09-30
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/09/29/Node-http-1/" itemprop="url">
-              
-                <span itemprop="name">Nodejs http （一）</span>
+                <span itemprop="name">Review（一）</span>
               
             </a>
         
       </h2>
 
       <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-09-29T11:26:13+08:00" content="2019-09-29">
-          09-29
+        <time class="post-time" itemprop="dateCreated" datetime="2019-10-16T10:33:55+08:00" content="2019-10-16">
+          10-16
         </time>
       </div>
 
@@ -412,7 +386,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-count">70</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -936,6 +910,49 @@
 
     // handle and trigger popup window;
     $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+.popup-trigger').click(function(e) {
       e.stopPropagation();
       if (isfetched === false) {
         searchFunc(path, 'local-search-input', 'local-search-result');
