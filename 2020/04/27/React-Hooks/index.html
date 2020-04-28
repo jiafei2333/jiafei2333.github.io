@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="相关文档https://reactjs.bootcss.com/docs/hooks-intro.htmlhttp://www.zhufengpeixun.cn/2020/html/62.5.react-hooks.html">
+<meta name="description" content="1. React Hooks Hook 是 React 16.8 的新增特性。它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性 如果你在编写函数组件并意识到需要向其添加一些 state，以前的做法是必须将其它转化为 class。现在你可以在现有的函数组件中使用 Hook  2. 解决的问题 在组件之间复用状态逻辑很难,可能要用到render props和高阶组">
 <meta name="keywords" content="React,React Hooks">
 <meta property="og:type" content="article">
 <meta property="og:title" content="React-Hooks">
 <meta property="og:url" content="http://yoursite.com/2020/04/27/React-Hooks/index.html">
 <meta property="og:site_name" content="Hi 加菲">
-<meta property="og:description" content="相关文档https://reactjs.bootcss.com/docs/hooks-intro.htmlhttp://www.zhufengpeixun.cn/2020/html/62.5.react-hooks.html">
+<meta property="og:description" content="1. React Hooks Hook 是 React 16.8 的新增特性。它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性 如果你在编写函数组件并意识到需要向其添加一些 state，以前的做法是必须将其它转化为 class。现在你可以在现有的函数组件中使用 Hook  2. 解决的问题 在组件之间复用状态逻辑很难,可能要用到render props和高阶组">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-04-27T15:50:40.602Z">
+<meta property="og:updated_time" content="2020-04-27T16:03:40.664Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React-Hooks">
-<meta name="twitter:description" content="相关文档https://reactjs.bootcss.com/docs/hooks-intro.htmlhttp://www.zhufengpeixun.cn/2020/html/62.5.react-hooks.html">
+<meta name="twitter:description" content="1. React Hooks Hook 是 React 16.8 的新增特性。它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性 如果你在编写函数组件并意识到需要向其添加一些 state，以前的做法是必须将其它转化为 class。现在你可以在现有的函数组件中使用 Hook  2. 解决的问题 在组件之间复用状态逻辑很难,可能要用到render props和高阶组">
 
 
 
@@ -374,7 +374,20 @@
       
 
       
-        <h1 id="相关文档"><a href="#相关文档" class="headerlink" title="相关文档"></a>相关文档</h1><p><a href="https://reactjs.bootcss.com/docs/hooks-intro.html" target="_blank" rel="noopener">https://reactjs.bootcss.com/docs/hooks-intro.html</a><br><a href="http://www.zhufengpeixun.cn/2020/html/62.5.react-hooks.html" target="_blank" rel="noopener">http://www.zhufengpeixun.cn/2020/html/62.5.react-hooks.html</a></p>
+        <h1 id="1-React-Hooks"><a href="#1-React-Hooks" class="headerlink" title="1. React Hooks"></a>1. React Hooks</h1><ul>
+<li>Hook 是 React 16.8 的新增特性。它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性</li>
+<li>如果你在编写函数组件并意识到需要向其添加一些 state，以前的做法是必须将其它转化为 class。现在你可以在现有的函数组件中使用 Hook</li>
+</ul>
+<h1 id="2-解决的问题"><a href="#2-解决的问题" class="headerlink" title="2. 解决的问题"></a>2. 解决的问题</h1><ul>
+<li>在组件之间复用状态逻辑很难,可能要用到render props和高阶组件，React 需要为共享状态逻辑提供更好的原生途径，Hook 使你在无需修改组件结构的情况下复用状态逻辑</li>
+<li>复杂组件变得难以理解，Hook 将组件中相互关联的部分拆分成更小的函数（比如设置订阅或请求数据）</li>
+<li>难以理解的 class,包括难以捉摸的this</li>
+</ul>
+<h1 id="3-注意事项"><a href="#3-注意事项" class="headerlink" title="3. 注意事项"></a>3. 注意事项</h1><ul>
+<li>只能在函数最外层调用 Hook。不要在循环、条件判断或者子函数中调用。</li>
+<li>只能在 React 的函数组件中调用 Hook。不要在其他 JavaScript 函数中调用</li>
+</ul>
+<h1 id="4-useState"><a href="#4-useState" class="headerlink" title="4. useState"></a>4. useState</h1><h1 id="相关文档"><a href="#相关文档" class="headerlink" title="相关文档"></a>相关文档</h1><p><a href="https://reactjs.bootcss.com/docs/hooks-intro.html" target="_blank" rel="noopener">https://reactjs.bootcss.com/docs/hooks-intro.html</a><br><a href="http://www.zhufengpeixun.cn/2020/html/62.5.react-hooks.html" target="_blank" rel="noopener">http://www.zhufengpeixun.cn/2020/html/62.5.react-hooks.html</a></p>
 
       
     </div>
@@ -549,7 +562,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#相关文档"><span class="nav-text">相关文档</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-React-Hooks"><span class="nav-text">1. React Hooks</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-解决的问题"><span class="nav-text">2. 解决的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-注意事项"><span class="nav-text">3. 注意事项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-useState"><span class="nav-text">4. useState</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关文档"><span class="nav-text">相关文档</span></a></li></ol></div>
             
 
           </div>
