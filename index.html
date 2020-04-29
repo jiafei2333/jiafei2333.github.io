@@ -377,7 +377,39 @@
       
         
           
-            <h1 id="一、roadhog"><a href="#一、roadhog" class="headerlink" title="一、roadhog"></a>一、roadhog</h1>
+            <h1 id="1-roadhog"><a href="#1-roadhog" class="headerlink" title="1. roadhog"></a>1. roadhog</h1><ul>
+<li>roadhog 是基于 webpack 的封装工具，目的是简化 webpack 的配置</li>
+<li>提供 server、 build 和 test 三个命令，分别用于本地调试和构建</li>
+<li>提供了特别易用的 mock 功能</li>
+<li>命令行体验和 create-react-app 一致，配置略有不同，比如默认开启 css modules</li>
+<li>还提供了 JSON 格式的配置方式。</li>
+</ul>
+<p>根目录新建.roadhogrc.mock.js文件 mock本地数据</p>
+<h2 id="1-1-内部是如何实现的"><a href="#1-1-内部是如何实现的" class="headerlink" title="1.1 内部是如何实现的"></a>1.1 内部是如何实现的</h2><p>1、本地全局安装<code>npm install roadhog -g</code><br>2、<code>npm root -g</code> 查看全局安装的路径，找到roadhog/package.json<br>可以看到</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"bin"</span>:&#123;</span><br><span class="line">    <span class="string">"roadhog"</span>: <span class="string">"./bin/roadhog.js"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3、查看这个roadhog.js文件，部分源码如下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> spawn = <span class="built_in">require</span>(<span class="string">'cross-spawn'</span>);</span><br><span class="line"><span class="keyword">const</span> chalk = <span class="built_in">require</span>(<span class="string">'chalk'</span>); <span class="comment">// 可以在命令行显示颜色</span></span><br><span class="line"><span class="keyword">const</span> script = process.argv[<span class="number">2</span>];</span><br><span class="line"><span class="comment">//node bin/roadhog.js -v</span></span><br><span class="line"><span class="keyword">switch</span> (script) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"-v"</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"--version"</span>:</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">require</span>(<span class="string">"../package.json"</span>).version);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"build"</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"server"</span>:</span><br><span class="line">        result = spawn.sync(</span><br><span class="line">            <span class="string">"node"</span>,</span><br><span class="line">            [<span class="built_in">require</span>.resolve(<span class="string">`../lib/<span class="subst">$&#123;script&#125;</span>`</span>)],</span><br><span class="line">            &#123; <span class="attr">stdio</span>: <span class="string">"inherit"</span> &#125;</span><br><span class="line">        );</span><br><span class="line">        process.exit(result.status);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`Unknown script <span class="subst">$&#123;chalk.cyan(script)&#125;</span>.`</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>获取到命令行输入的参数 <code>process.argv</code> 根据不同的参数执行相应的文件<br>例如这里执行的是build，在node环境中，读取的是<code>../lib/build.js</code>文件<br>lib/build.js 缩减版如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">"webpack"</span>);</span><br><span class="line"><span class="keyword">const</span> chalk = <span class="built_in">require</span>(<span class="string">"chalk"</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doneHandler</span>(<span class="params">err, stats</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(stats.toJson().assets);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">build</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> config = <span class="built_in">require</span>(<span class="string">"lib/config/webpack.config.prod"</span>);</span><br><span class="line">    <span class="keyword">var</span> compiler = webpack(config);</span><br><span class="line">    compiler.run(doneHandler);</span><br><span class="line">&#125;</span><br><span class="line">build();</span><br></pre></td></tr></table></figure>
+
+<p>会去读取 <code>webpack.config.prod</code> 配置文件，再交给webpack编译打包<br>4、lib\config\webpack.config.prod.js 简单配置如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="string">"./src/index.js"</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.resolve(<span class="string">'dist'</span>),</span><br><span class="line">        filename: <span class="string">"[name].js"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>5、配置自定义的打包配置<br>根目录新建.roadhogrc 或 .roadhogrc.js</p>
+<h1 id="2-UmiJs"><a href="#2-UmiJs" class="headerlink" title="2. UmiJs"></a>2. UmiJs</h1><ul>
+<li>UmiJS 是一个类 Next.JS 的 react 开发框架。</li>
+<li>他基于一个约定，即 pages 目录下的文件即路由，而文件则导出 react 组件</li>
+<li>然后打通从源码到产物的每个阶段，并配以完善的插件体系，让我们能把 umi 的产物部署到各种场景里。</li>
+</ul>
+<ul>
+<li>roadhog 是基于 webpack 的封装工具，目的是简化 webpack 的配置</li>
+<li>umi 可以简单地理解为 roadhog + 路由，思路类似 next.js/nuxt.js，辅以一套插件机制，目的是通过框架的方式简化 React 开发</li>
+<li>dva 目前是纯粹的数据流，和 umi 以及 roadhog 之间并没有相互的依赖关系，可以分开使用也可以一起使用，个人觉得 umi + dva 是比较搭的</li>
+</ul>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a href="http://www.zhufengpeixun.cn/2020/html/30.cms-8-roadhog.html" target="_blank" rel="noopener">http://www.zhufengpeixun.cn/2020/html/30.cms-8-roadhog.html</a><br><a href="http://www.zhufengpeixun.cn/2020/html/30.cms-10-umi.html" target="_blank" rel="noopener">http://www.zhufengpeixun.cn/2020/html/30.cms-10-umi.html</a></p>
+
           
         
       
@@ -12699,7 +12731,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
