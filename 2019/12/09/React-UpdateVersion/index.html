@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="前言 当前项目版本 react: “16.2.0” 、dva: “2.3.1” 、 roadhog: “2.4.2”、 babel: 6.x最新版本 react v16.12.0暂时决定 升级至 react v16.8.0、babel v7.7.7  16.3.0生命周期更新、16.8.0 新增Hooks 已知：  生命周期版本更改，废弃了 componentWillMount（可以将业务代码改至">
+<meta name="description" content="前言 当前项目版本 react: “16.2.0” 、dva: “2.3.1” 、 roadhog: “2.4.2”、 babel: 6.x最新版本 react v16.12.0暂时决定 升级至 react v16.9.0、babel v7.7.7  16.3.0生命周期更新、16.9.0 新增Hooks 已知：  生命周期版本更改，废弃了 componentWillMount（可以将业务代码改至">
 <meta property="og:type" content="article">
 <meta property="og:title" content="React 项目版本升级">
 <meta property="og:url" content="http://yoursite.com/2019/12/09/React-UpdateVersion/index.html">
 <meta property="og:site_name" content="Hi 加菲">
-<meta property="og:description" content="前言 当前项目版本 react: “16.2.0” 、dva: “2.3.1” 、 roadhog: “2.4.2”、 babel: 6.x最新版本 react v16.12.0暂时决定 升级至 react v16.8.0、babel v7.7.7  16.3.0生命周期更新、16.8.0 新增Hooks 已知：  生命周期版本更改，废弃了 componentWillMount（可以将业务代码改至">
+<meta property="og:description" content="前言 当前项目版本 react: “16.2.0” 、dva: “2.3.1” 、 roadhog: “2.4.2”、 babel: 6.x最新版本 react v16.12.0暂时决定 升级至 react v16.9.0、babel v7.7.7  16.3.0生命周期更新、16.9.0 新增Hooks 已知：  生命周期版本更改，废弃了 componentWillMount（可以将业务代码改至">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://jiafei2333.github.io/html/images/reactUpdating.png">
 <meta property="og:image" content="https://jiafei2333.github.io/html/images/roadhog-analyze-errr1.png">
-<meta property="og:updated_time" content="2019-12-20T02:52:44.000Z">
+<meta property="og:updated_time" content="2020-04-30T06:48:58.447Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React 项目版本升级">
-<meta name="twitter:description" content="前言 当前项目版本 react: “16.2.0” 、dva: “2.3.1” 、 roadhog: “2.4.2”、 babel: 6.x最新版本 react v16.12.0暂时决定 升级至 react v16.8.0、babel v7.7.7  16.3.0生命周期更新、16.8.0 新增Hooks 已知：  生命周期版本更改，废弃了 componentWillMount（可以将业务代码改至">
+<meta name="twitter:description" content="前言 当前项目版本 react: “16.2.0” 、dva: “2.3.1” 、 roadhog: “2.4.2”、 babel: 6.x最新版本 react v16.12.0暂时决定 升级至 react v16.9.0、babel v7.7.7  16.3.0生命周期更新、16.9.0 新增Hooks 已知：  生命周期版本更改，废弃了 componentWillMount（可以将业务代码改至">
 <meta name="twitter:image" content="https://jiafei2333.github.io/html/images/reactUpdating.png">
 
 
@@ -377,9 +377,9 @@
 
       
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
-<p>当前项目版本 react: “16.2.0” 、dva: “2.3.1” 、 roadhog: “2.4.2”、 babel: 6.x<br>最新版本 react v16.12.0<br>暂时决定 升级至 react v16.8.0、babel v7.7.7</p>
+<p>当前项目版本 react: “16.2.0” 、dva: “2.3.1” 、 roadhog: “2.4.2”、 babel: 6.x<br>最新版本 react v16.12.0<br>暂时决定 升级至 react v16.9.0、babel v7.7.7</p>
 </blockquote>
-<p>16.3.0生命周期更新、16.8.0 新增Hooks</p>
+<p>16.3.0生命周期更新、16.9.0 新增Hooks</p>
 <p>已知：</p>
 <ul>
 <li>生命周期版本更改，废弃了 componentWillMount（可以将业务代码改至 componentDidMount）、componentWillReceiveProps（该部分牵扯大量业务逻辑状态更改，检索出来有约50处使用，耗时）、componentWillUpdate（当前项目中未使用，可忽略）</li>
@@ -398,15 +398,33 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Warning: React version not specified <span class="keyword">in</span> eslint-plugin-react settings. See https:<span class="comment">//github.com/yannickcr/eslint-plugin-reat#configuration.</span></span><br></pre></td></tr></table></figure>
 
 <p>8、旧的生命周期方法名替换  <code>npx react-codemod rename-unsafe-lifecycles</code> 失败</p>
-<pre><code class="bash">175 errors
-0 unmodified
-817 skipped
-9 ok</code></pre>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">175</span> errors</span><br><span class="line"><span class="number">0</span> unmodified</span><br><span class="line"><span class="number">817</span> skipped</span><br><span class="line"><span class="number">9</span> ok</span><br></pre></td></tr></table></figure>
+
 <p>9、在路由组件的最外层包裹一个错误边界组件。</p>
 <p>10、 《使用开发者工具中的分析器对组件进行分析》  看不懂…</p>
 <p><a href="https://zh-hans.reactjs.org/docs/optimizing-performance.html" target="_blank" rel="noopener">https://zh-hans.reactjs.org/docs/optimizing-performance.html</a><br>中文版 <a href="https://juejin.im/post/5ba1f995f265da0a972e1657#heading-0" target="_blank" rel="noopener">https://juejin.im/post/5ba1f995f265da0a972e1657#heading-0</a></p>
 <h3 id="roadhog-analyze"><a href="#roadhog-analyze" class="headerlink" title="roadhog analyze"></a>roadhog analyze</h3><p><code>roadhog build --analyze</code></p>
 <p><img src="https://jiafei2333.github.io/html/images/roadhog-analyze-errr1.png" alt></p>
+<p>如上图所示发现是版本问题，那就先升级babel</p>
+<h3 id="升级babel"><a href="#升级babel" class="headerlink" title="升级babel"></a>升级babel</h3><p>根目录下新增 .babelrc 文件</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"plugins"</span>: [<span class="string">"transform-decorators-legacy"</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以下是之前一系列的babel插件</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">devDependencies:&#123;</span><br><span class="line">  "babel-plugin-dva-hmr": "^0.4.1",</span><br><span class="line">  "babel-plugin-transform-remove-console": "^6.9.4",</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dependencies:&#123;</span><br><span class="line">  "babel-cli": "^6.26.0",</span><br><span class="line">  "babel-plugin-import": "^1.13.0",</span><br><span class="line">  "babel-plugin-transform-decorators-legacy": "^1.3.5",</span><br><span class="line">  "babel-polyfill": "^6.26.0",</span><br><span class="line">  "babel-preset-es2015": "^6.24.1",</span><br><span class="line">  "babel-preset-stage-2": "^6.24.1",</span><br><span class="line">  "babel-runtime": "^6.26.0",</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>官方提供了一个工具babel-upgrade，对于已有的项目，只需要运行这样一行命令就可以了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx babel-upgrade --write --install</span><br></pre></td></tr></table></figure>
+
+<p>升级如下：</p>
+<p>.babelrc</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"plugins"</span>: [</span><br><span class="line">    [</span><br><span class="line">      <span class="string">"@babel/plugin-proposal-decorators"</span>,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"legacy"</span>: <span class="literal">true</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">dependencies:&#123;</span><br><span class="line">  "@babel/cli": "^7.0.0",</span><br><span class="line">  "@babel/core": "^7.0.0",</span><br><span class="line">  "@babel/plugin-proposal-class-properties": "^7.0.0",</span><br><span class="line">  "@babel/plugin-proposal-decorators": "^7.0.0",</span><br><span class="line">  "@babel/plugin-proposal-export-namespace-from": "^7.0.0",</span><br><span class="line">  "@babel/plugin-proposal-function-sent": "^7.0.0",</span><br><span class="line">  "@babel/plugin-proposal-json-strings": "^7.0.0",</span><br><span class="line">  "@babel/plugin-proposal-numeric-separator": "^7.0.0",</span><br><span class="line">  "@babel/plugin-proposal-throw-expressions": "^7.0.0",</span><br><span class="line">  "@babel/plugin-syntax-dynamic-import": "^7.0.0",</span><br><span class="line">  "@babel/plugin-syntax-import-meta": "^7.0.0",</span><br><span class="line">  "@babel/polyfill": "^7.0.0",</span><br><span class="line">  "@babel/preset-env": "^7.0.0",</span><br><span class="line">  "@babel/runtime-corejs2": "^7.0.0",</span><br><span class="line"></span><br><span class="line">  "babel-plugin-import": "^1.13.0",</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">devDependencies:&#123;</span><br><span class="line">  "@babel/core": "^7.0.0",</span><br><span class="line"></span><br><span class="line">  "babel-plugin-dva-hmr": "^0.4.1",</span><br><span class="line">  "babel-plugin-transform-remove-console": "^6.9.4",</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>继续分析—</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">roadhog build --analyze</span><br></pre></td></tr></table></figure>
+
+<p>还是失败</p>
 
       
     </div>
@@ -577,7 +595,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#步骤"><span class="nav-text">步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#升级-react-react-dom"><span class="nav-text">升级 react | react-dom</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#roadhog-analyze"><span class="nav-text">roadhog analyze</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#步骤"><span class="nav-text">步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#升级-react-react-dom"><span class="nav-text">升级 react | react-dom</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#roadhog-analyze"><span class="nav-text">roadhog analyze</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#升级babel"><span class="nav-text">升级babel</span></a></li></ol></li></ol></div>
             
 
           </div>
