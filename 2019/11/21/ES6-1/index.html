@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Hi 加菲">
 <meta property="og:description" content="17. Iteratorhttps://jiafei2333.github.io/2019/09/16/Generator/  是一种接口，为各种不同的数据结构（Array、Object、Map、Set 等）提供统一的访问机制。任何数据结构只要部署 Iterator 接口，就可以完成遍历操作。ES6 创造了一种新的遍历命令for…of循环，Iterator 接口主要供for…of消费。  一刷：h">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-04-30T06:50:01.347Z">
+<meta property="og:updated_time" content="2020-05-06T10:46:19.442Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ES6 之 阅读理解">
 <meta name="twitter:description" content="17. Iteratorhttps://jiafei2333.github.io/2019/09/16/Generator/  是一种接口，为各种不同的数据结构（Array、Object、Map、Set 等）提供统一的访问机制。任何数据结构只要部署 Iterator 接口，就可以完成遍历操作。ES6 创造了一种新的遍历命令for…of循环，Iterator 接口主要供for…of消费。  一刷：h">
@@ -446,6 +446,11 @@
 <h3 id="8-3-箭头函数"><a href="#8-3-箭头函数" class="headerlink" title="8.3. 箭头函数"></a>8.3. 箭头函数</h3><ul>
 <li>（1）函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。</li>
 </ul>
+<p>箭头函数可以让this指向固定化，这种特性很有利于封装回调函数。下面是一个例子，DOM 事件的回调函数封装在一个对象里面。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> handler = &#123;</span><br><span class="line">  id: <span class="string">'123456'</span>,</span><br><span class="line"></span><br><span class="line">  init: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">document</span>.addEventListener(<span class="string">'click'</span>,</span><br><span class="line">      event =&gt; <span class="keyword">this</span>.doSomething(event.type), <span class="literal">false</span>);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  doSomething: <span class="function"><span class="keyword">function</span>(<span class="params">type</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Handling '</span> + type  + <span class="string">' for '</span> + <span class="keyword">this</span>.id);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>上面代码的init方法中，使用了箭头函数，这导致这个箭头函数里面的this，总是指向handler对象。否则，回调函数运行时，this.doSomething这一行会报错，因为此时this指向document对象。</p>
+<p>this指向的固定化，并不是因为箭头函数内部有绑定this的机制，实际原因是箭头函数根本没有自己的this，导致内部的this就是外层代码块的this。正是因为它没有this，所以也就不能用作构造函数。</p>
 <h3 id="8-4-尾调用优化"><a href="#8-4-尾调用优化" class="headerlink" title="8.4. 尾调用优化"></a>8.4. 尾调用优化</h3><blockquote>
 <p>我们知道，函数调用会在内存形成一个“调用记录”，又称“调用帧”（call frame），保存调用位置和内部变量等信息。如果在函数A的内部调用函数B，那么在A的调用帧上方，还会形成一个B的调用帧。等到B运行结束，将结果返回到A，B的调用帧才会消失。如果函数B内部还调用函数C，那就还有一个C的调用帧，以此类推。所有的调用帧，就形成一个“调用栈”（call stack）。</p>
 </blockquote>
