@@ -82,14 +82,14 @@
 <meta name="description" content="1. roadhog roadhog 是基于 webpack 的封装工具，目的是简化 webpack 的配置 提供 server、 build 和 test 三个命令，分别用于本地调试和构建 提供了特别易用的 mock 功能 命令行体验和 create-react-app 一致，配置略有不同，比如默认开启 css modules 还提供了 JSON 格式的配置方式。  根目录新建.roadhogr">
 <meta name="keywords" content="roadhog,umi,dva,ant.design">
 <meta property="og:type" content="article">
-<meta property="og:title" content="roadhog-umi-dva-antd">
+<meta property="og:title" content="roadhog-umi">
 <meta property="og:url" content="http://yoursite.com/2020/04/28/roadhog-umi-dva-antd/index.html">
 <meta property="og:site_name" content="Hi 加菲">
 <meta property="og:description" content="1. roadhog roadhog 是基于 webpack 的封装工具，目的是简化 webpack 的配置 提供 server、 build 和 test 三个命令，分别用于本地调试和构建 提供了特别易用的 mock 功能 命令行体验和 create-react-app 一致，配置略有不同，比如默认开启 css modules 还提供了 JSON 格式的配置方式。  根目录新建.roadhogr">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-05-03T02:10:04.610Z">
+<meta property="og:updated_time" content="2020-05-06T15:18:52.863Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="roadhog-umi-dva-antd">
+<meta name="twitter:title" content="roadhog-umi">
 <meta name="twitter:description" content="1. roadhog roadhog 是基于 webpack 的封装工具，目的是简化 webpack 的配置 提供 server、 build 和 test 三个命令，分别用于本地调试和构建 提供了特别易用的 mock 功能 命令行体验和 create-react-app 一致，配置略有不同，比如默认开启 css modules 还提供了 JSON 格式的配置方式。  根目录新建.roadhogr">
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title>roadhog-umi-dva-antd | Hi 加菲</title>
+  <title>roadhog-umi | Hi 加菲</title>
   
 
 
@@ -302,7 +302,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">roadhog-umi-dva-antd</h1>
+          <h1 class="post-title" itemprop="name headline">roadhog-umi</h1>
         
 
         <div class="post-meta">
@@ -405,12 +405,17 @@
 <p>会监控pages文件夹，有新的文件生成就改变.umi/文件夹下的配置</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line">fs.watchFile(<span class="string">'**'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    ...监控文件变化，执行重新生成配置文件的操作</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
-<ul>
+<h1 id="3-dva"><a href="#3-dva" class="headerlink" title="3. dva"></a>3. dva</h1><ul>
+<li>基于 redux、redux-saga 和 react-router 的轻量级前端框架。</li>
+<li>dva是基于react+redux最佳实践上实现的封装方案，简化了redux和redux-saga使用上的诸多繁琐操作</li>
+</ul>
+<p>[官网]<a href="https://dvajs.com/guide/" target="_blank" rel="noopener">https://dvajs.com/guide/</a></p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><ul>
 <li>roadhog 是基于 webpack 的封装工具，目的是简化 webpack 的配置</li>
 <li>umi 可以简单地理解为 roadhog + 路由，思路类似 next.js/nuxt.js，辅以一套插件机制，目的是通过框架的方式简化 React 开发</li>
 <li>dva 目前是纯粹的数据流，和 umi 以及 roadhog 之间并没有相互的依赖关系，可以分开使用也可以一起使用，个人觉得 umi + dva 是比较搭的</li>
 </ul>
-<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a href="http://www.zhufengpeixun.cn/2020/html/30.cms-8-roadhog.html" target="_blank" rel="noopener">http://www.zhufengpeixun.cn/2020/html/30.cms-8-roadhog.html</a><br><a href="http://www.zhufengpeixun.cn/2020/html/30.cms-10-umi.html" target="_blank" rel="noopener">http://www.zhufengpeixun.cn/2020/html/30.cms-10-umi.html</a></p>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a href="http://www.zhufengpeixun.cn/2020/html/30.cms-8-roadhog.html" target="_blank" rel="noopener">http://www.zhufengpeixun.cn/2020/html/30.cms-8-roadhog.html</a><br><a href="http://www.zhufengpeixun.cn/2020/html/30.cms-10-umi.html" target="_blank" rel="noopener">http://www.zhufengpeixun.cn/2020/html/30.cms-10-umi.html</a><br><a href="https://v2.umijs.org/zh/guide/" target="_blank" rel="noopener">https://v2.umijs.org/zh/guide/</a><br><a href="http://www.zhufengpeixun.cn/2020/html/30.cms-12-dva.html" target="_blank" rel="noopener">http://www.zhufengpeixun.cn/2020/html/30.cms-12-dva.html</a></p>
 
       
     </div>
@@ -556,7 +561,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -589,7 +594,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-roadhog"><span class="nav-text">1. roadhog</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-内部是如何实现的"><span class="nav-text">1.1 内部是如何实现的</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-UmiJs"><span class="nav-text">2. UmiJs</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文章"><span class="nav-text">参考文章</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-roadhog"><span class="nav-text">1. roadhog</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-内部是如何实现的"><span class="nav-text">1.1 内部是如何实现的</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-UmiJs"><span class="nav-text">2. UmiJs</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-dva"><span class="nav-text">3. dva</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-text">小结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文章"><span class="nav-text">参考文章</span></a></li></ol></div>
             
 
           </div>
