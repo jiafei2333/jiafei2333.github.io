@@ -102,7 +102,7 @@
 <meta property="og:image" content="https://jiafei2333.github.io/html/images/Extends-9.png">
 <meta property="og:image" content="https://jiafei2333.github.io/html/images/Extends-10.png">
 <meta property="og:image" content="https://jiafei2333.github.io/html/images/Object.create-Picture.png">
-<meta property="og:updated_time" content="2020-05-06T10:48:10.075Z">
+<meta property="og:updated_time" content="2020-05-14T11:42:10.756Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="原型链 &amp; 继承">
 <meta name="twitter:description" content="原型链1)定义对象的几种方法">
@@ -402,7 +402,13 @@
 <p>② 原理：判断这个实例对象是不是构造函数的实例，其实是 判断左侧实例对象的<strong>__</strong>proto____ 和 构造函数的prototype指向的是不是同一个引用  在同一条原型链上就可以</p>
 <p><img src="https://jiafei2333.github.io/html/images/instanceof-2.png" alt title="instanceof打印结果"></p>
 <p>所以也可以说obj3是Object的实例 同一条原型链上都可以;<br>通过 obj3.<strong>__</strong>proto____.constructor === M | obj3.constructor === M； 通过constructor可以来精确的判断是不是哪个实例</p>
-<h3 id="4-new-运算符-原型链二（待看）"><a href="#4-new-运算符-原型链二（待看）" class="headerlink" title="4)new 运算符 原型链二（待看）"></a>4)new 运算符 原型链二（待看）</h3><h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><h3 id="1）构造函数继承"><a href="#1）构造函数继承" class="headerlink" title="1）构造函数继承"></a>1）构造函数继承</h3><p><img src="https://jiafei2333.github.io/html/images/Extends-1.png" alt title="构造函数"></p>
+<h3 id="4-new-运算符"><a href="#4-new-运算符" class="headerlink" title="4)new 运算符"></a>4)new 运算符</h3><p>new 关键字会进行如下操作：</p>
+<p>1、创建一个空的JavaScript对象（即{}）；<br>2、将函数的 prototype 赋值给对象的 <strong>proto</strong>属性 ；<br>3、调用函数，并将步骤1新创建的对象作为函数的this上下文 ；<br>4、如果该函数没有返回值或者返回值不是对象，则返回创建的对象，如果返回值是对象，则直接返回该对象。</p>
+<p>JS引擎执行这句代码时，在内部做了很多工作，用伪代码模拟其工作流程如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Person(<span class="string">"John"</span>) = &#123;</span><br><span class="line">  <span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line">	obj.__proto__ = Person.prototype; <span class="comment">// 此时便建立了obj对象的原型链： obj-&gt;Person.prototype-&gt;Object.prototype-&gt;null</span></span><br><span class="line">	<span class="keyword">var</span> result = Person.call(obj,<span class="string">"John"</span>); <span class="comment">// 相当于obj.Person("John")</span></span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">typeof</span> result === <span class="string">'object'</span> ? result : obj; <span class="comment">// 如果无返回值或者返回一个非对象值，则将obj返回作为新对象</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>相关文章：<br><a href="https://juejin.im/post/5d65e03b6fb9a06b2c32a00c" target="_blank" rel="noopener">https://juejin.im/post/5d65e03b6fb9a06b2c32a00c</a><br><a href="https://juejin.im/post/5b397b526fb9a00e5d7999a4" target="_blank" rel="noopener">https://juejin.im/post/5b397b526fb9a00e5d7999a4</a></p>
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><h3 id="1）构造函数继承"><a href="#1）构造函数继承" class="headerlink" title="1）构造函数继承"></a>1）构造函数继承</h3><p><img src="https://jiafei2333.github.io/html/images/Extends-1.png" alt title="构造函数"></p>
 <p>打印结果：</p>
 <p><img src="https://jiafei2333.github.io/html/images/Extends-3.png" alt title="打印结果"></p>
 <p>这里可以看到，没有继承父类的say方法</p>
@@ -561,7 +567,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-count">71</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -616,7 +622,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#原型链"><span class="nav-text">原型链</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-定义对象的几种方法"><span class="nav-text">1)定义对象的几种方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2）原型链"><span class="nav-text">2）原型链</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3）instanceof"><span class="nav-text">3）instanceof</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-new-运算符-原型链二（待看）"><span class="nav-text">4)new 运算符 原型链二（待看）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继承"><span class="nav-text">继承</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1）构造函数继承"><span class="nav-text">1）构造函数继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2）原型链继承"><span class="nav-text">2）原型链继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3）组合方式"><span class="nav-text">3）组合方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4）Object-create"><span class="nav-text">4）Object.create</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Object-create-第一个参数"><span class="nav-text">Object.create 第一个参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Object-create-第二个参数"><span class="nav-text">Object.create 第二个参数</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#原型链"><span class="nav-text">原型链</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-定义对象的几种方法"><span class="nav-text">1)定义对象的几种方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2）原型链"><span class="nav-text">2）原型链</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3）instanceof"><span class="nav-text">3）instanceof</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-new-运算符"><span class="nav-text">4)new 运算符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继承"><span class="nav-text">继承</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1）构造函数继承"><span class="nav-text">1）构造函数继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2）原型链继承"><span class="nav-text">2）原型链继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3）组合方式"><span class="nav-text">3）组合方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4）Object-create"><span class="nav-text">4）Object.create</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Object-create-第一个参数"><span class="nav-text">Object.create 第一个参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Object-create-第二个参数"><span class="nav-text">Object.create 第二个参数</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
