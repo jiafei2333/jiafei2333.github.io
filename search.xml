@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Books Digests</title>
+      <link href="/2020/05/25/Books-Digests/"/>
+      <url>/2020/05/25/Books-Digests/</url>
+      
+        <content type="html"><![CDATA[<h1 id="一、《深入浅出-React和Redux》"><a href="#一、《深入浅出-React和Redux》" class="headerlink" title="一、《深入浅出 React和Redux》"></a>一、《深入浅出 React和Redux》</h1><h2 id="React"><a href="#React" class="headerlink" title="React"></a>React</h2><p>1、我们在JSX中看到一个组件使用了onClick，但是并没有产生直接使用onclick的HTML，而是使用事件委托的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最高层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给特定函数。<br>    因为React控制了组件的生命周期，在unmount的时候自然能够清除相关的所有事件处理函数，内存泄漏也不再是一个问题。</p><p>2、试试            </p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">使用 <span class="string">` create-react-app `</span> 命令创建项目</span><br><span class="line">执行 <span class="string">` npm run eject`</span> 将隐藏在 <span class="string">` react-scripts `</span> 中的一系列技术栈配置都显示出来 (不可逆)</span><br></pre></td></tr></table></figure><p>3、纯函数，指的是没有任何副作用，输出完全依赖输入的函数，两次函数调用如果输入相同，得到的结果也绝对相同。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 其他 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 摘要 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>React Hooks</title>
       <link href="/2020/05/25/React-Hooks/"/>
       <url>/2020/05/25/React-Hooks/</url>
