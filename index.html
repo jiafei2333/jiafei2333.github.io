@@ -284,6 +284,170 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/23/React-Redux-Antd/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="加菲">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/Prueba.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi 加菲">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/23/React-Redux-Antd/" itemprop="url">React+Redux+Antd</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-23T22:43:10+08:00">
+                2020-05-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/" itemprop="url" rel="index">
+                    <span itemprop="name">React</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/Redux/" itemprop="url" rel="index">
+                    <span itemprop="name">Redux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><p><code>npx create-react-app myapp</code></p>
+<p>版本：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">"react": "^16.13.1",</span><br><span class="line">"react-dom": "^16.13.1",</span><br><span class="line">"@babel/core": "^7.9.6",</span><br><span class="line">"webpack": "^4.43.0",</span><br></pre></td></tr></table></figure>
+
+<h4 id="安装webpack"><a href="#安装webpack" class="headerlink" title="安装webpack"></a>安装webpack</h4><p><code>npm install --save-dev webpack-cli webpack webpack-merge webpack-dev-server  clean-webpack-plugin</code></p>
+<p>具体步骤见 <a href="https://jiafei2333.github.io/2019/10/12/Webpack-base/" target="_blank" rel="noopener">https://jiafei2333.github.io/2019/10/12/Webpack-base/</a></p>
+<h4 id="安装loader"><a href="#安装loader" class="headerlink" title="安装loader"></a>安装loader</h4><p><code>npm install style-loader css-loader --save-dev</code><br><code>npm install less less-loader --save-dev</code><br><code>npm install file-loader --save-dev</code></p>
+<h4 id="安装babel"><a href="#安装babel" class="headerlink" title="安装babel"></a>安装babel</h4><p><code>npm install @babel/core @babel/preset-env babel-loader --save-dev</code><br><code>npm i @babel/plugin-proposal-class-properties @babel/plugin-proposal-decorators --save-dev</code><br><code>npm install core-js@2 --save</code><br><code>npm install --save-dev @babel/plugin-transform-runtime</code><br><code>npm install --save @babel/runtime</code></p>
+<p>具体步骤见 <a href="https://jiafei2333.github.io/2019/11/13/Webpack-js/" target="_blank" rel="noopener">https://jiafei2333.github.io/2019/11/13/Webpack-js/</a></p>
+<h4 id="安装开发环境"><a href="#安装开发环境" class="headerlink" title="安装开发环境"></a>安装开发环境</h4><p><code>npm install --save redux</code><br><code>npm install --save react-redux</code><br><code>npm install --save redux-saga</code><br><code>npm install --save react-router-dom</code></p>
+<h4 id="基础目录创建"><a href="#基础目录创建" class="headerlink" title="基础目录创建"></a>基础目录创建</h4><p>()[<a href="https://jiafei2333.github.io/html/images/react-redux01.png" target="_blank" rel="noopener">https://jiafei2333.github.io/html/images/react-redux01.png</a> “”]</p>
+<h4 id="UI组件库"><a href="#UI组件库" class="headerlink" title="UI组件库"></a>UI组件库</h4><p><code>npm install antd --save</code></p>
+<h3 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/28/roadhog-umi-dva-antd/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1024,6 +1188,14 @@
 <p>新建./react/event.js</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; updateQueue &#125; <span class="keyword">from</span> <span class="string">'./component'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* 在React中并不是把事件绑在要绑定的DOM节点上，而是绑定到document上，类似于事件委托</span></span><br><span class="line"><span class="comment">* 1、因为合成事件可以屏蔽浏览器的差异，不同浏览器绑定事件和触发的方式不一样 </span></span><br><span class="line"><span class="comment">* 2、合成事件可以实现事件对象复用，重用，减少垃圾回收，提高性能</span></span><br><span class="line"><span class="comment">* 3、因为默认我们要实现批量更新，setState 两个setState会合并成一次更新</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">* @params dom 要绑定事件的DOM节点</span></span><br><span class="line"><span class="comment">* @params eventType 事件的类型 onClick onChange</span></span><br><span class="line"><span class="comment">* @params listener 事件处理函数</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">addEvent</span>(<span class="params">dom, eventType, listener</span>) </span>&#123;</span><br><span class="line">    eventType = eventType.toLowerCase(); <span class="comment">// onClick =&gt;onclick</span></span><br><span class="line">    <span class="comment">// 在要绑定的DOM节点上挂载一个对象，准备存放监听函数</span></span><br><span class="line">    <span class="keyword">let</span> eventStore = dom.eventStore || (dom.eventStore = &#123;&#125;);</span><br><span class="line">    <span class="comment">// eventStore.onclick = ()=&gt;&#123; alert('hello') &#125;;</span></span><br><span class="line">    eventStore[eventType] = listener;</span><br><span class="line">    <span class="comment">// document.addEventListener('click', dispatchEvent); </span></span><br><span class="line">    <span class="comment">// dispatchEvent 事件处理，向上冒泡，最终是document处理事件 </span></span><br><span class="line">    <span class="comment">// 第一阶段是捕获，第二阶段是冒泡，false冒泡阶段，true捕获阶段</span></span><br><span class="line">    <span class="built_in">document</span>.addEventListener(eventType.slice(<span class="number">2</span>), dispatchEvent, <span class="literal">false</span>);</span><br><span class="line">    <span class="comment">// 磨平差异</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="string">'chrome'</span>)&#123;</span><br><span class="line">        <span class="built_in">document</span>.addEventListener();</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="string">'ie6'</span>)&#123;</span><br><span class="line">        <span class="built_in">document</span>.attachEvent();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> syntheticEvent;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 真正事件触发的回调统一是这个dispatchEvent方法</span></span><br><span class="line"><span class="comment">// event是原生DOM事件对象，但是传递给我们的监听函数并不是它 </span></span><br><span class="line"><span class="comment">// 所有的事件处理函数都会进入dispatchEvent</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">dispatchEvent</span>(<span class="params">event</span>) </span>&#123; </span><br><span class="line">    <span class="keyword">let</span> &#123; type, target &#125; = event; <span class="comment">// type=click , target=button</span></span><br><span class="line">    <span class="keyword">let</span> eventType = <span class="string">'on'</span> + type;</span><br><span class="line">    syntheticEvent = getSyntheticEvent(event);</span><br><span class="line">    <span class="comment">//在事件监听函数执行前先进入批量更新模式</span></span><br><span class="line">    updateQueue.isPending = <span class="literal">true</span>;</span><br><span class="line">    <span class="comment">// 模拟事件冒泡</span></span><br><span class="line">    <span class="keyword">while</span> (target) &#123;</span><br><span class="line">        <span class="keyword">let</span> &#123; eventStore &#125; = target;</span><br><span class="line">        <span class="keyword">let</span> listener = eventStore &amp;&amp; eventStore[eventType];</span><br><span class="line">        <span class="keyword">if</span> (listener) &#123;</span><br><span class="line">            listener.call(target, syntheticEvent);</span><br><span class="line">        &#125;</span><br><span class="line">        target = target.parentNode;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 等所有的监听函数都执行完了，就可以清掉所有的属性了，供下次复用次syntheticEvent对象</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> syntheticEvent) &#123;</span><br><span class="line">        <span class="keyword">if</span> (syntheticEvent.hasOwnProperty(key))</span><br><span class="line">            <span class="keyword">delete</span> syntheticEvent[key];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//当事件处理函数执行完成后，把批量更新模式改为false</span></span><br><span class="line">    updateQueue.isPending = <span class="literal">false</span>;</span><br><span class="line">    <span class="comment">//执行批量更新，就是把缓存的那个updater全部执行了</span></span><br><span class="line">    updateQueue.batchUpdate();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 持久化  异步调用事件会有问题，事件被清空了，用 事件对象.persist(); 持久化</span></span><br><span class="line"><span class="comment">// 如果执行了persist，就让syntheticEvent指向了新对象，while循环结束之后再清除的是新对象的属性</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">persist</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    syntheticEvent = &#123;&#125;;</span><br><span class="line">    <span class="built_in">Object</span>.setPrototypeOf(syntheticEvent, &#123;</span><br><span class="line">        persist</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getSyntheticEvent</span>(<span class="params">nativeEvent</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 第一次才会创建，以后不再创建，始终会用同一个</span></span><br><span class="line">    <span class="keyword">if</span> (!syntheticEvent) &#123;</span><br><span class="line">        persist();</span><br><span class="line">    &#125;</span><br><span class="line">    syntheticEvent.nativeEvent = nativeEvent;</span><br><span class="line">    syntheticEvent.currentTarget = nativeEvent.target;</span><br><span class="line">    <span class="comment">// 把原生事件上的方法和属性都拷贝到了合成对象上</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> nativeEvent) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> nativeEvent[key] == <span class="string">'function'</span>) &#123;</span><br><span class="line">            syntheticEvent[key] = nativeEvent[key].bind(nativeEvent);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            syntheticEvent[key] = nativeEvent[key];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> syntheticEvent;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h2 id="unstable-batchedUpdates-批量强制更新"><a href="#unstable-batchedUpdates-批量强制更新" class="headerlink" title="unstable_batchedUpdates 批量强制更新"></a>unstable_batchedUpdates 批量强制更新</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 情况一</span></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">number</span>: <span class="keyword">this</span>.state.number+<span class="number">1</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.state.number); <span class="comment">// 1</span></span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">number</span>: <span class="keyword">this</span>.state.number+<span class="number">1</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.state.number); <span class="comment">// 2</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 情况二 批量强制更新</span></span><br><span class="line"><span class="keyword">import</span> ReactDOM, &#123;unstable_batchedUpdates&#125; <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    unstable_batchedUpdates(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.setState(&#123;<span class="attr">number</span>: <span class="keyword">this</span>.state.number+<span class="number">1</span>&#125;);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.state.number); <span class="comment">// 0</span></span><br><span class="line">        <span class="keyword">this</span>.setState(&#123;<span class="attr">number</span>: <span class="keyword">this</span>.state.number+<span class="number">1</span>&#125;);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.state.number); <span class="comment">// 0</span></span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>原理</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; updateQueue &#125; <span class="keyword">from</span> <span class="string">'./component'</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unstable_batchedUpdates</span>(<span class="params">fn</span>)</span>&#123;</span><br><span class="line">    updateQueue.isPending = <span class="literal">true</span>; <span class="comment">// 强行处理批量更新模式</span></span><br><span class="line">    fn();</span><br><span class="line">    updateQueue.isPending = <span class="literal">false</span>;</span><br><span class="line">    updateQueue.batchUpdate();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>补充一下updateQueue</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">let</span> updateQueue = &#123;</span><br><span class="line">    updaters: [], <span class="comment">// 这里面放着将要执行的更新器对象</span></span><br><span class="line">    isPending: <span class="literal">false</span>, <span class="comment">// 是否批量更新，如果 isPending=true 则处于批量更新模式</span></span><br><span class="line">    add(updater) &#123; <span class="comment">// 放进去就完事，不进行真正的更新</span></span><br><span class="line">        <span class="keyword">this</span>.updaters.push(updater);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 需要有人调用batchUpdate方法才会真正更新</span></span><br><span class="line">    batchUpdate() &#123;<span class="comment">// 强行全部更新 执行真正的更新</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.isPending) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.isPending = <span class="literal">true</span>; <span class="comment">// 进入批量更新模式</span></span><br><span class="line">        <span class="keyword">let</span> &#123; updaters &#125; = <span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">let</span> updater;</span><br><span class="line">        <span class="keyword">while</span> ((updater = updaters.pop())) &#123;</span><br><span class="line">            updater.updateComponent(); <span class="comment">// 更新所有脏 dirty 组件</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.isPending = <span class="literal">false</span>; <span class="comment">// 改为非批量更新</span></span><br><span class="line">    &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
 <h1 id="DOM-DIFF"><a href="#DOM-DIFF" class="headerlink" title="DOM-DIFF"></a>DOM-DIFF</h1><ul>
 <li>DOM 节点跨层级的移动操作特别少，可以忽略不计</li>
 <li>拥有相同类的两个组件将会生成相似的树形结构，拥有不同类的两个组件将会生成不同的树形结构</li>
@@ -1060,8 +1232,17 @@
 <h3 id="部分代码实现"><a href="#部分代码实现" class="headerlink" title="部分代码实现"></a>部分代码实现</h3><p>更新子节点</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> diffQueue = [];<span class="comment">// 这是一个补丁包，记录了哪些节点需要删除，哪些节点需要添加</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateChildren</span>(<span class="params">dom, oldChildrenElements, newChildrenElements</span>)</span>&#123;</span><br><span class="line">    updateDepth++; <span class="comment">// 每进入一个新的子层级，就让updateDepth++</span></span><br><span class="line">    diff(dom, oldChildrenElements, newChildrenElements, diffQueue);</span><br><span class="line">    updateDepth--; <span class="comment">// 每比较完一层，返回上一级的时候，就updateDepth--</span></span><br><span class="line">    <span class="keyword">if</span>(updateDepth == <span class="number">0</span>)&#123; <span class="comment">// updateDepth = 0，就说明到最上面一层了，整个更新对比就完事了</span></span><br><span class="line">        path(diffQueue); <span class="comment">// 把收集到的差异补丁传给path方法进行更新</span></span><br><span class="line">        diffQueue.length = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 这里diffQueue的结构 </span></span><br><span class="line">diffQueue.push(&#123;</span><br><span class="line">    parentNode: parentNode, <span class="comment">// 我要移动哪个父节点下的元素</span></span><br><span class="line">    type: <span class="string">'MOVE'</span>, <span class="comment">// INSERT REMOVE</span></span><br><span class="line">    fromIndex: oldChildrenElement._mountIndex, <span class="comment">// 从哪里移动</span></span><br><span class="line">    toIndex: i,<span class="comment">// 移动到哪里</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
+<p>开始打包，这里操作的是真实的DOM元素</p>
+<ul>
+<li>第一步，把该删除的删除 MOVE REMOVE 移动的和删除的</li>
+<li>第二步，插入移动的</li>
+</ul>
+<p>这里指的是移动的B 和 删除的 D，其中要把移动的B放在一个Map里面缓存起来后面复用</p>
+<p>先更新父节点的属性，再更新子节点的属性<br>先移动子节点，再移动父节点</p>
 <p>相关文章：<br><a href="http://www.zhufengpeixun.cn/2020/html/96.1.react16.html" target="_blank" rel="noopener">http://www.zhufengpeixun.cn/2020/html/96.1.react16.html</a></p>
+<h1 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h1><h1 id="context"><a href="#context" class="headerlink" title="context"></a>context</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createContext</span>(<span class="params">defaultValue</span>)</span>&#123;</span><br><span class="line">    Provider.value = defaultValue;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">Provider</span>(<span class="params">props</span>)</span>&#123;</span><br><span class="line">        Provider.value = props.value;</span><br><span class="line">        <span class="keyword">return</span> props.children;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">Consumer</span>(<span class="params">props</span>)</span>&#123;</span><br><span class="line">        <span class="comment">// return props.children(Provider.value);</span></span><br><span class="line">        <span class="keyword">return</span> onlyOne(props.children)(Provider.value);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &#123;Provider, Consumer&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> React = &#123;</span><br><span class="line">    createElement,</span><br><span class="line">    Component,</span><br><span class="line">    createRef,</span><br><span class="line">    createContext</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> React;</span><br></pre></td></tr></table></figure>
 
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">onlyOne</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Array</span>.isArray(obj) ? obj[<span class="number">0</span>] : obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           
         
       
@@ -3795,6 +3976,8 @@
 <li><p>2019年12月09日 晴<br>每个人都在负重前行。</p>
 </li>
 <li><p>2019年12月18日 冷<br>《情商》</p>
+</li>
+<li><p>2020年05月25日 大雨<br>三十而立</p>
 </li>
 </ul>
 
@@ -12727,7 +12910,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -12738,7 +12921,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -12749,7 +12932,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
