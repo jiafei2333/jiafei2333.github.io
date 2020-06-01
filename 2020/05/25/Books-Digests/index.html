@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Hi 加菲">
 <meta property="og:description" content="React1、我们在JSX中看到一个组件使用了onClick，但是并没有产生直接使用onclick的HTML，而是使用事件委托的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最高层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给特定函数。    因为React控制了组件的生命周期，在unmount的时候自然能够清">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-06-01T14:52:36.090Z">
+<meta property="og:updated_time" content="2020-06-01T15:58:03.294Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《深入浅出 React和Redux》">
 <meta name="twitter:description" content="React1、我们在JSX中看到一个组件使用了onClick，但是并没有产生直接使用onclick的HTML，而是使用事件委托的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最高层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给特定函数。    因为React控制了组件的生命周期，在unmount的时候自然能够清">
@@ -387,6 +387,21 @@
 
 <p>(1) 如果一个组件需要定义自己的构造函数，一定要在构造函数的第一行通过super调用父类也就是React.Component的构造函数。如果在构造函数中没有调用super(props)，那么组件实例被构造之后，类实例的所有成员函数就无法通过this.props访问到父组件传递过来的props值。<br>(2) 在Count的构造函数中还给两个成员函数绑定了当前this的执行环境，因为ES6方法创建的React组件类并不自动给我们绑定this到当前实例对象。<br>(3) 在构造函数中可以通过参数props获得传入prop值，在其他函数中比如render中，可以通过this.props访问传入prop的值。</p>
 <p>8、在开发环境中定义 propTypes, 在开发过程中避免犯错，但是生产环境做propTypes检查没什么帮助，还要消耗CPU计算资源。在生产环境用插件<code>babel-react-optimize</code>，生产环境安装可以去掉propTypes。</p>
+<p>9、组件的生命周期的三个阶段：</p>
+<ul>
+<li>装载过程(Mount)，也就是把组件第一次在DOM树中渲染的过程；</li>
+<li>更新过程(Update)，当组件被重新渲染的过程；</li>
+<li>卸载过程(Unmount)，组件从DOM中删除的过程。</li>
+</ul>
+<p>9.1、装载过程</p>
+<ul>
+<li>constructor</li>
+<li>getInitialState</li>
+<li>getDefaultProps</li>
+<li>componentWillMount</li>
+<li>render</li>
+<li>componentDidMount</li>
+</ul>
 
       
     </div>
