@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Hi 加菲">
 <meta property="og:description" content="React1、我们在JSX中看到一个组件使用了onClick，但是并没有产生直接使用onclick的HTML，而是使用事件委托的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最高层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给特定函数。    因为React控制了组件的生命周期，在unmount的时候自然能够清">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-06-01T15:58:03.294Z">
+<meta property="og:updated_time" content="2020-06-08T15:01:38.686Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《深入浅出 React和Redux》">
 <meta name="twitter:description" content="React1、我们在JSX中看到一个组件使用了onClick，但是并没有产生直接使用onclick的HTML，而是使用事件委托的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最高层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给特定函数。    因为React控制了组件的生命周期，在unmount的时候自然能够清">
@@ -402,6 +402,19 @@
 <li>render</li>
 <li>componentDidMount</li>
 </ul>
+<p>【constructor】目的：</p>
+<ul>
+<li><p>初始化state</p>
+</li>
+<li><p>绑定成员函数的this环境<br> 在ES6语法下，类的每个成员函数在执行时的this并不是和类实例自动绑定的。而在构造函数中，this就是当前组件实例，为了方便调用，往往在构造函数中将这个实例的特定函数绑定this为当前函数。</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.onClickIncrementButton = this.onClickIncrementButton.bind(this);</span><br></pre></td></tr></table></figure>
+
+<p> 表示通过bind方法让当前实例中onClickIncrementButton函数被调用时，this始终指向当前组件实例。</p>
+</li>
+</ul>
+<p>【getInitialState、 getDefaultProps】只有在React.createClass方法创造的组件类才有作用。</p>
+<p>【类组件名.defaultProps】在ES6中可以指定props 的初始值</p>
+<p>【render】<br>  函数应该是一个纯函数，完全根据this.state和this.props来决定返回的结果，而且不要产生任何副作用。</p>
 
       
     </div>
