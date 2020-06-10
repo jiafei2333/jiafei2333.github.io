@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="React,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="fiberreact16就是用fiber写的fiber解决了执行栈不能中断的问题 1.屏幕刷新率 目前大多数设备的屏幕刷新率为 60 次/秒 浏览器渲染动画或页面的每一帧的速率也需要跟设备屏幕的刷新率保持一致 页面是一帧一帧绘制出来的，当每秒绘制的帧数（FPS）达到 60 时，页面是流畅的,小于这个值时，用户会感觉到卡顿 每个帧的预算时间是16.66 毫秒 (1秒/60) 1s 60帧，所以每一帧">
+<meta name="keywords" content="React">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ReactSoundCode_Fiber">
+<meta property="og:url" content="http://yoursite.com/2020/06/10/ReactSoundCode-Fiber/index.html">
+<meta property="og:site_name" content="Hi 加菲">
+<meta property="og:description" content="fiberreact16就是用fiber写的fiber解决了执行栈不能中断的问题 1.屏幕刷新率 目前大多数设备的屏幕刷新率为 60 次/秒 浏览器渲染动画或页面的每一帧的速率也需要跟设备屏幕的刷新率保持一致 页面是一帧一帧绘制出来的，当每秒绘制的帧数（FPS）达到 60 时，页面是流畅的,小于这个值时，用户会感觉到卡顿 每个帧的预算时间是16.66 毫秒 (1秒/60) 1s 60帧，所以每一帧">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-06-10T14:06:06.500Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ReactSoundCode_Fiber">
+<meta name="twitter:description" content="fiberreact16就是用fiber写的fiber解决了执行栈不能中断的问题 1.屏幕刷新率 目前大多数设备的屏幕刷新率为 60 次/秒 浏览器渲染动画或页面的每一帧的速率也需要跟设备屏幕的刷新率保持一致 页面是一帧一帧绘制出来的，当每秒绘制的帧数（FPS）达到 60 时，页面是流畅的,小于这个值时，用户会感觉到卡顿 每个帧的预算时间是16.66 毫秒 (1秒/60) 1s 60帧，所以每一帧">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/06/10/ReactSoundCode-Fiber/">
+
+
+
+
+
+  <title>ReactSoundCode_Fiber | Hi 加菲</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi 加菲</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每个人都在负重前行</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/10/ReactSoundCode-Fiber/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="加菲">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/Prueba.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi 加菲">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ReactSoundCode_Fiber</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-10T22:05:31+08:00">
+                2020-06-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/" itemprop="url" rel="index">
+                    <span itemprop="name">React</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="fiber"><a href="#fiber" class="headerlink" title="fiber"></a>fiber</h1><p>react16就是用fiber写的<br>fiber解决了执行栈不能中断的问题</p>
+<h2 id="1-屏幕刷新率"><a href="#1-屏幕刷新率" class="headerlink" title="1.屏幕刷新率"></a>1.屏幕刷新率</h2><ul>
+<li>目前大多数设备的屏幕刷新率为 60 次/秒</li>
+<li>浏览器渲染动画或页面的每一帧的速率也需要跟设备屏幕的刷新率保持一致</li>
+<li>页面是一帧一帧绘制出来的，当每秒绘制的帧数（FPS）达到 60 时，页面是流畅的,小于这个值时，用户会感觉到卡顿</li>
+<li>每个帧的预算时间是16.66 毫秒 (1秒/60)</li>
+<li>1s 60帧，所以每一帧分到的时间是 1000/60 ≈ 16 ms。所以我们书写代码时力求不让一帧的工作量超过 16ms</li>
+</ul>
+<h2 id="2-帧"><a href="#2-帧" class="headerlink" title="2.帧"></a>2.帧</h2><ul>
+<li>每个帧的开头包括样式计算、布局和绘制</li>
+<li>JavaScript执行 Javascript引擎和页面渲染引擎在同一个渲染线程,GUI渲染和Javascript执行两者是互斥的</li>
+<li>如果某个任务执行时间过长，浏览器会推迟渲染</li>
+</ul>
+<p><a href="http://img.zhufengpeixun.cn/lifeofframe.jpg" target="_blank" rel="noopener"></a></p>
+<h3 id="2-1-rAF"><a href="#2-1-rAF" class="headerlink" title="2.1 rAF"></a>2.1 rAF</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/requestAnimationFrame" target="_blank" rel="noopener">requestAnimationFrame</a> 回调函数会在绘制之前执行</p>
+<p>window.requestAnimationFrame() 告诉浏览器你希望执行一个动画，并且要求浏览器在下次重绘之前调用指定的回调函数更新动画。该方法需要传入一个回调函数作为参数，该回调函数会在浏览器下一次重绘之前执行<br>即在上图布局、绘制之前的浅蓝色区域执行。<br>requestIdleCallback就是上图最右侧的绿色区域，如果在这个区域操作DOM就会重新渲染。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"background: lightblue;width: 0;height: 20px;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span>&gt;</span>开始<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line">        /**</span><br><span class="line">         * requestAnimationFrame(callback) 由浏览器专门为动画提供的API</span><br><span class="line">         * cancelAnimationFrame(返回值) 清除动画</span><br><span class="line">         * &lt;16.7 丢帧</span><br><span class="line">         * &gt;16.7 跳跃 卡顿</span><br><span class="line">         */</span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> div = <span class="built_in">document</span>.querySelector(<span class="string">'div'</span>);</span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> button = <span class="built_in">document</span>.querySelector(<span class="string">'button'</span>);</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> start;</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="keyword">function</span> <span class="title">progress</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">			<span class="comment">// div的宽 = div之前的宽 + 1px</span></span></span><br><span class="line"><span class="javascript">            div.style.width = div.offsetWidth + <span class="number">1</span> + <span class="string">'px'</span>;</span></span><br><span class="line"><span class="javascript">            div.innerHTML = (div.offsetWidth) + <span class="string">'%'</span>;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">if</span> (div.offsetWidth &lt; <span class="number">100</span>) &#123;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">let</span> current = <span class="built_in">Date</span>.now();</span></span><br><span class="line"><span class="javascript">				<span class="comment">// 打印的是line28开始准备执行的时间到真正执行的时间差</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(current - start);</span></span><br><span class="line">                start = current;</span><br><span class="line">                timer = requestAnimationFrame(progress);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="javascript">		button.addEventListener(<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line">			div.style.width = 0;</span><br><span class="line"><span class="javascript">            start = <span class="built_in">Date</span>.now();<span class="comment">// 先获取到当前时间 current是毫秒数</span></span></span><br><span class="line">            requestAnimationFrame(progress);</span><br><span class="line">		&#125;)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>点击button之后，可以看到打印出的时间差都是16、17秒，基本上在16.7左右</p>
+<h3 id="2-2-requestIdleCallback"><a href="#2-2-requestIdleCallback" class="headerlink" title="2.2 requestIdleCallback"></a>2.2 requestIdleCallback</h3><ul>
+<li>我们希望快速响应用户，让用户觉得够快，不能阻塞用户的交互</li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/requestIdleCallback" target="_blank" rel="noopener">requestIdleCallback</a>使开发者能够在主事件循环上执行后台和低优先级工作，而不会影响延迟关键事件，如动画和输入响应</li>
+<li>正常帧任务完成后没超过16 ms,说明时间有富余，此时就会执行 requestIdleCallback 里注册的任务</li>
+</ul>
+<p><a href="http://img.zhufengpeixun.cn/cooperativescheduling2.jpg" target="_blank" rel="noopener"></a><br>上图，绿色的框中就是一帧。<br>首先，用户代码向浏览器申请时间片，当浏览器执行完之后如果有剩余时间，就分配时间片给用户代码执行，在约定时间内再归还控制器。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这是一个全局属性</span></span><br><span class="line"><span class="comment">// 告诉浏览器，我现在执行callback函数，但是它优先级比较低，告诉浏览器可以空闲的时候执行</span></span><br><span class="line"><span class="comment">// 但是如果到了超时时间，就必须马上执行</span></span><br><span class="line">requestIdleCallback(callback, &#123;<span class="attr">timeout</span>: <span class="number">1000</span>&#125;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.requestIdleCallback(</span><br><span class="line">  callback: <span class="function">(<span class="params">deaLine: IdleDeadline</span>) =&gt;</span> <span class="keyword">void</span>,</span><br><span class="line">  option?: &#123;<span class="attr">timeout</span>: number&#125;</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">interface IdleDeadline &#123;</span><br><span class="line">  didTimeout: boolean <span class="comment">// 表示任务执行是否超过约定时间</span></span><br><span class="line">  timeRemaining(): DOMHighResTimeStamp <span class="comment">// 任务可供执行的剩余时间</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>callback：回调即空闲时需要执行的任务，该回调函数接收一个IdleDeadline对象作为入参。其中IdleDeadline对象包含：<ul>
+<li>didTimeout，布尔值，表示任务是否超时，结合 timeRemaining 使用</li>
+<li>timeRemaining()，表示当前帧剩余的时间，也可理解为留给任务的时间还有多少</li>
+</ul>
+</li>
+<li>options：目前 options 只有一个参数<ul>
+<li>timeout。表示超过这个时间后，如果任务还没执行，则强制执行，不必等待空闲<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="keyword">function</span> <span class="title">sleep</span>(<span class="params">delay</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">for</span> (<span class="keyword">var</span> time = <span class="built_in">Date</span>.now(); <span class="built_in">Date</span>.now() - time &lt;= delay;);</span></span><br><span class="line">        &#125;</span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> works = [</span></span><br><span class="line">            () =&gt; &#123;</span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(<span class="string">"第1个任务开始"</span>);</span></span><br><span class="line"><span class="javascript">                <span class="comment">//sleep(20); // 一帧16.6 因为此任务的执行时间超过了16.6毫秒，所以把控制权交给浏览器</span></span></span><br><span class="line"><span class="javascript">                <span class="comment">//while(true)&#123;&#125;</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(<span class="string">"第1个任务结束"</span>);</span></span><br><span class="line">            &#125;,</span><br><span class="line">            () =&gt; &#123;</span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(<span class="string">"第2个任务开始"</span>);</span></span><br><span class="line"><span class="javascript">                <span class="comment">//sleep(20);</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(<span class="string">"第2个任务结束"</span>);</span></span><br><span class="line">            &#125;,</span><br><span class="line">            () =&gt; &#123;</span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(<span class="string">"第3个任务开始"</span>);</span></span><br><span class="line"><span class="javascript">                <span class="comment">//sleep(20);</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(<span class="string">"第3个任务结束"</span>);</span></span><br><span class="line">            &#125;,</span><br><span class="line">        ];</span><br><span class="line"></span><br><span class="line">        requestIdleCallback(workLoop, &#123; timeout: 1000 &#125;);</span><br><span class="line"><span class="javascript">        <span class="function"><span class="keyword">function</span> <span class="title">workLoop</span>(<span class="params">deadline</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="built_in">console</span>.log(<span class="string">'本帧剩余时间'</span>, <span class="built_in">parseInt</span>(deadline.timeRemaining()));</span></span><br><span class="line"><span class="javascript">            <span class="comment">// 如果此帧的剩余时间超过0 或者 已经超时了(timeout)</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">while</span> ((deadline.timeRemaining() &gt; <span class="number">0</span> || deadline.didTimeout) &amp;&amp; works.length &gt; <span class="number">0</span>) &#123;</span></span><br><span class="line">                performUnitOfWork();</span><br><span class="line"><span class="javascript">            &#125; <span class="comment">// 如果说没有剩余时间了，就需要放弃执行任务控制权，执行权交还给浏览器</span></span></span><br><span class="line"></span><br><span class="line"><span class="javascript">            <span class="keyword">if</span> (works.length &gt; <span class="number">0</span>) &#123; <span class="comment">// 说明还有未完成的任务</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(<span class="string">`只剩下<span class="subst">$&#123;<span class="built_in">parseInt</span>(deadline.timeRemaining())&#125;</span>ms,时间片到了等待下次空闲时间的调度`</span>);</span></span><br><span class="line">                requestIdleCallback(workLoop, &#123; timeout: 1000 &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="javascript">        <span class="function"><span class="keyword">function</span> <span class="title">performUnitOfWork</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">//console.log("performUnitOfWork:",works.length);</span></span></span><br><span class="line">            works.shift()();</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<p>这里的line29 while，每完成一个任务(works)，都会判断是否还有剩余时间，有的话再去执行下一个任务，即line30</p>
+<p>如果把上面的<code>sleep(20)</code>注释都打开，打印如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">本帧剩余时间 14</span><br><span class="line">第1个任务开始</span><br><span class="line">第1个任务结束</span><br><span class="line">只剩下0ms,时间片到了等待下次空闲时间的调度</span><br><span class="line">本帧剩余时间 9</span><br><span class="line">第2个任务开始</span><br><span class="line">第2个任务结束</span><br><span class="line">只剩下0ms,时间片到了等待下次空闲时间的调度</span><br><span class="line">本帧剩余时间 15</span><br><span class="line">第3个任务开始</span><br><span class="line">第3个任务结束</span><br></pre></td></tr></table></figure>
+
+<p>如果line10的<code>while(true){}</code>那执行任务就会卡在这里<br>如果把sleep都打开，上述任务总共执行时间为60ms+，具体时间值不固定</p>
+<blockquote>
+<p>这里的一帧16.6毫秒只是大多数情况，显示器越强，刷新频率越高，一帧的时间越短。一秒多少帧跟显示器的刷新频率有关。只有当显示器的刷新频率是60HZ的时候，一帧才是16.6毫秒。</p>
+</blockquote>
+<blockquote>
+<p>fiber是把整个任务分成很多小任务，每次执行一个任务，执行完成后会看看有没有剩余时间，如果有继续下一个任务，如果没有放弃执行，交给浏览器调度。</p>
+</blockquote>
+<h3 id="2-3-MessageChannel"><a href="#2-3-MessageChannel" class="headerlink" title="2.3 MessageChannel"></a>2.3 MessageChannel</h3><h2 id="3-单链表"><a href="#3-单链表" class="headerlink" title="3. 单链表"></a>3. 单链表</h2><p>在fiber中很多地方都用到链表</p>
+<ul>
+<li>单链表是一种链式存取的数据结构</li>
+<li>链表中的数据是以节点来表示的，每个节点的构成：元素 + 指针(指示后继元素存储位置)，元素就是存储数据的存储单元，指针就是连接每个节点的地址</li>
+</ul>
+<p><a href="http://img.zhufengpeixun.cn/trainlist.jpg" target="_blank" rel="noopener"></a></p>
+<p>如上图，firstUpdate 头指针、lastUpdate 尾指针、nextUpdate 指向下一个</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Update</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(payload) &#123;</span><br><span class="line">      <span class="keyword">this</span>.payload = payload; <span class="comment">// payload指数据或者元素</span></span><br><span class="line">      <span class="keyword">this</span>.nextUpdate = <span class="literal">null</span>; <span class="comment">// 指向下一个节点的指针</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UpdateQueue</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">      <span class="keyword">this</span>.baseState = <span class="literal">null</span>; <span class="comment">// 原状态</span></span><br><span class="line">      <span class="keyword">this</span>.firstUpdate = <span class="literal">null</span>; <span class="comment">// 第一个 更新</span></span><br><span class="line">      <span class="keyword">this</span>.lastUpdate = <span class="literal">null</span>; <span class="comment">// 最后一个更新</span></span><br><span class="line">  &#125;</span><br><span class="line">  clear() &#123;</span><br><span class="line">      <span class="keyword">this</span>.firstUpdate = <span class="literal">null</span>;</span><br><span class="line">      <span class="keyword">this</span>.lastUpdate = <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  enqueueUpdate(update) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.firstUpdate === <span class="literal">null</span>) &#123;</span><br><span class="line">          <span class="keyword">this</span>.firstUpdate = <span class="keyword">this</span>.lastUpdate = update;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="keyword">this</span>.lastUpdate.nextUpdate = update; <span class="comment">// 最后一个元素的next指向新插入的这个元素</span></span><br><span class="line">          <span class="keyword">this</span>.lastUpdate = update; <span class="comment">// 尾指针指向新插入的这个元素</span></span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 获取老状态，然后遍历这个链表，进行更新 更新状态</span></span><br><span class="line">  forceUpdate() &#123;</span><br><span class="line">      <span class="keyword">let</span> currentState = <span class="keyword">this</span>.baseState || &#123;&#125;; <span class="comment">// 初始状态</span></span><br><span class="line">      <span class="keyword">let</span> currentUpdate = <span class="keyword">this</span>.firstUpdate;</span><br><span class="line">      <span class="keyword">while</span> (currentUpdate) &#123;</span><br><span class="line">          <span class="keyword">let</span> nexState = <span class="keyword">typeof</span> currentUpdate.payload == <span class="string">'function'</span> ? currentUpdate.payload(currentState) : currentUpdate.payload;</span><br><span class="line">          currentState = &#123; ...currentState, ...nexState &#125;; <span class="comment">// 解构老状态 合并新状态</span></span><br><span class="line">          currentUpdate = currentUpdate.nextUpdate;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">this</span>.firstUpdate = <span class="keyword">this</span>.lastUpdate = <span class="literal">null</span>; <span class="comment">// 更新完成之后清空列表</span></span><br><span class="line">      <span class="keyword">this</span>.baseState = currentState;</span><br><span class="line">      <span class="keyword">return</span> currentState;<span class="comment">// 返回新状态</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> queue = <span class="keyword">new</span> UpdateQueue();</span><br><span class="line">queue.enqueueUpdate(<span class="keyword">new</span> Update(&#123; <span class="attr">name</span>: <span class="string">'test1'</span> &#125;));</span><br><span class="line">queue.enqueueUpdate(<span class="keyword">new</span> Update(&#123; <span class="attr">number</span>: <span class="number">0</span> &#125;));</span><br><span class="line">queue.enqueueUpdate(<span class="keyword">new</span> Update(<span class="function"><span class="params">state</span> =&gt;</span> (&#123; <span class="attr">number</span>: state.number + <span class="number">1</span> &#125;)));</span><br><span class="line">queue.enqueueUpdate(<span class="keyword">new</span> Update(<span class="function"><span class="params">state</span> =&gt;</span> (&#123; <span class="attr">number</span>: state.number + <span class="number">1</span> &#125;)));</span><br><span class="line">queue.enqueueUpdate(<span class="keyword">new</span> Update(&#123; <span class="attr">name</span>: <span class="string">'test2'</span> &#125;));</span><br><span class="line">queue.enqueueUpdate(<span class="keyword">new</span> Update(&#123; <span class="attr">age</span>: <span class="string">'18'</span> &#125;));</span><br><span class="line">queue.forceUpdate();</span><br><span class="line"><span class="built_in">console</span>.log(queue.baseState);</span><br></pre></td></tr></table></figure>
+
+<p>打印: { name: ‘test2’, number: 2, age: ‘18’ }</p>
+<blockquote>
+<p>一个虚拟DOM是一个链表节点，也是一个工作单元。一个虚拟DOM就是一个最小单元。</p>
+</blockquote>
+<h2 id="4-fiber历史"><a href="#4-fiber历史" class="headerlink" title="4. fiber历史"></a>4. fiber历史</h2><ol>
+<li>fiber之前是什么样的？为什么需要fiber</li>
+<li>看一下fiber之后的代码是怎么样的？</li>
+</ol>
+<h3 id="4-1-fiber之前的协调"><a href="#4-1-fiber之前的协调" class="headerlink" title="4.1 fiber之前的协调"></a>4.1 fiber之前的协调</h3><ul>
+<li>React 会递归比对VirtualDOM树，找出需要变动的节点，然后同步更新它们。这个过程 React 称为Reconcilation(协调)</li>
+<li>在Reconcilation期间，React 会一直占用着浏览器资源，一则会导致用户触发的事件得不到响应, 二则会导致掉帧，用户可能会感觉到卡顿</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> root = &#123;</span><br><span class="line">  key: <span class="string">'A1'</span>,</span><br><span class="line">  children: [</span><br><span class="line">      &#123;</span><br><span class="line">          key: <span class="string">'B1'</span>,</span><br><span class="line">          children: [</span><br><span class="line">              &#123;</span><br><span class="line">                  key: <span class="string">'C1'</span>,</span><br><span class="line">                  children: []</span><br><span class="line">              &#125;,</span><br><span class="line">              &#123;</span><br><span class="line">                  key: <span class="string">'C2'</span>,</span><br><span class="line">                  children: []</span><br><span class="line">              &#125;</span><br><span class="line">          ]</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">          key: <span class="string">'B2'</span>,</span><br><span class="line">          children: []</span><br><span class="line">      &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">walk</span>(<span class="params">element</span>) </span>&#123;</span><br><span class="line">  doWork(element);</span><br><span class="line">  element.children.forEach(<span class="function"><span class="params">child</span>=&gt;</span>&#123;</span><br><span class="line">    walk(child)</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doWork</span>(<span class="params">element</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(element.key);</span><br><span class="line">&#125;</span><br><span class="line">walk(root);</span><br></pre></td></tr></table></figure>
+
+<p>如上数据结构，A1下有B1、B2，B1下有C1、C2<br>打印：A1 B1 C1 C2 B2  深度优先遍历</p>
+<p>这种遍历是递归调用，执行栈会越来越深，不能中断，因为中断后想恢复就非常难了。<br>1.不能中断 2.执行栈太深</p>
+<h3 id="4-2-fiber是什么"><a href="#4-2-fiber是什么" class="headerlink" title="4.2 fiber是什么"></a>4.2 fiber是什么</h3><ul>
+<li>我们可以通过某些调度策略合理分配CPU资源，从而提高用户的响应速度</li>
+<li>通过Fiber架构，让自己的Reconcilation过程变成可被中断。 适时地让出CPU执行权，除了可以让浏览器及时地响应用户的交互</li>
+</ul>
+<h4 id="4-2-1-fiber是一个执行单位"><a href="#4-2-1-fiber是一个执行单位" class="headerlink" title="4.2.1 fiber是一个执行单位"></a>4.2.1 fiber是一个执行单位</h4><ul>
+<li>Fiber是一个执行单元,每次执行完一个执行单元, React 就会检查现在还剩多少时间，如果没有时间就将控制权让出去</li>
+</ul>
+<p><a href="http://img.zhufengpeixun.cn/fiberflow.jpg" target="_blank" rel="noopener"></a></p>
+<h4 id="4-2-2-fiber是一种数据结构"><a href="#4-2-2-fiber是一种数据结构" class="headerlink" title="4.2.2 fiber是一种数据结构"></a>4.2.2 fiber是一种数据结构</h4><ul>
+<li>React目前的做法是使用链表, 每个 VirtualDOM 节点内部表示为一个Fiber</li>
+</ul>
+<p><a href="http://img.zhufengpeixun.cn/fiberconstructor.jpg" target="_blank" rel="noopener"></a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">type Fiber = &#123;</span><br><span class="line">  <span class="comment">//类型  </span></span><br><span class="line">  type: any,</span><br><span class="line">  <span class="comment">//父节点</span></span><br><span class="line">  <span class="keyword">return</span>: Fiber,</span><br><span class="line">  <span class="comment">// 指向第一个子节点</span></span><br><span class="line">  child: Fiber,</span><br><span class="line">  <span class="comment">// 指向下一个弟弟</span></span><br><span class="line">  sibling: Fiber</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-fiber执行阶段"><a href="#5-fiber执行阶段" class="headerlink" title="5. fiber执行阶段"></a>5. fiber执行阶段</h2><ul>
+<li>每次渲染有两个阶段：Reconciliation(协调\render阶段)和Commit(提交阶段)</li>
+<li>协调阶段: 可以认为是 Diff 阶段, 这个阶段可以被中断, 这个阶段会找出所有节点变更，例如节点新增、删除、属性变更等等, 这些变更React 称之为副作用(Effect)</li>
+<li>提交阶段: 将上一个阶段计算出来的需要处理的副作用(Effects)一次性执行了。这个阶段必须同步执行，不能被打断</li>
+</ul>
+<h3 id="5-1-render阶段"><a href="#5-1-render阶段" class="headerlink" title="5.1 render阶段"></a>5.1 render阶段</h3><p>render阶段会构建fiber树</p>
+<p>element.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> A1 = &#123; <span class="attr">type</span>: <span class="string">'div'</span>, <span class="attr">key</span>: <span class="string">'A1'</span> &#125;;</span><br><span class="line"><span class="keyword">let</span> B1 = &#123; <span class="attr">type</span>: <span class="string">'div'</span>, <span class="attr">key</span>: <span class="string">'B1'</span>, <span class="attr">return</span>: A1 &#125;;</span><br><span class="line"><span class="keyword">let</span> B2 = &#123; <span class="attr">type</span>: <span class="string">'div'</span>, <span class="attr">key</span>: <span class="string">'B2'</span>, <span class="attr">return</span>: A1 &#125;;</span><br><span class="line"><span class="keyword">let</span> C1 = &#123; <span class="attr">type</span>: <span class="string">'div'</span>, <span class="attr">key</span>: <span class="string">'C1'</span>, <span class="attr">return</span>: B1 &#125;;</span><br><span class="line"><span class="keyword">let</span> C2 = &#123; <span class="attr">type</span>: <span class="string">'div'</span>, <span class="attr">key</span>: <span class="string">'C2'</span>, <span class="attr">return</span>: B1 &#125;;</span><br><span class="line">A1.child = B1;</span><br><span class="line">B1.sibling = B2;</span><br><span class="line">B1.child = C1;</span><br><span class="line">C1.sibling = C2;</span><br><span class="line"><span class="built_in">module</span>.exports = A1;</span><br></pre></td></tr></table></figure>
+
+<p>render.js 遍历fiber树</p>
+<ul>
+<li>从顶点开始遍历</li>
+<li>如果有第一个儿子，先遍历第一个儿子</li>
+<li>如果没有第一个儿子，标志着此节点遍历完成</li>
+<li>如果有弟弟遍历弟弟</li>
+<li>如果有没有下一个弟弟，返回父节点标识完成父节点遍历，如果有叔叔遍历叔叔</li>
+<li>没有父节点遍历结束</li>
+</ul>
+<p><a href="http://img.zhufengpeixun.cn/fiberconstructortranverse3.jpg" target="_blank" rel="noopener"></a></p>
+<p>如上图:<br>遍历顺序：<code>A1</code>，有儿子，<code>B1</code>，有儿子，<code>C1</code>，没有儿子，有弟弟，<code>C2</code>，没有儿子，没有弟弟，有叔叔，即B1的弟弟，<code>B2</code>，没儿子，没弟弟，没叔叔，回到<code>A1</code>。</p>
+<p>完成顺序：<code>c1</code>、<code>C2</code>、<code>B1</code>、<code>B2</code>、<code>A1</code>。  这里<code>C1</code>没有儿子，里面完成了，接着是<code>C2</code>没有儿子，完成，C1、C2都完成了，<code>B1</code>完成一次类推。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> rootFiber = <span class="built_in">require</span>(<span class="string">'./element'</span>);</span><br><span class="line"><span class="comment">//下一个执行工作单元</span></span><br><span class="line"><span class="keyword">let</span> nextUnitOfWork = <span class="literal">null</span>;</span><br><span class="line"><span class="comment">//render工作循环</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">workLoop</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (nextUnitOfWork) &#123;<span class="comment">// 如果有待执行的执行单元就执行</span></span><br><span class="line">        <span class="comment">//执行一个任务并返回下一个任务</span></span><br><span class="line">        nextUnitOfWork = performUnitOfWork(nextUnitOfWork);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//render阶段结束</span></span><br><span class="line">&#125;</span><br><span class="line"> <span class="comment">// 执行单个工作单元</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">performUnitOfWork</span>(<span class="params">fiber</span>) </span>&#123; <span class="comment">// A1 B1</span></span><br><span class="line">    beginWork(fiber); <span class="comment">// 处理次fiber</span></span><br><span class="line">    <span class="keyword">if</span> (fiber.child) &#123;<span class="comment">//如果有子节点就返回第一个子节点</span></span><br><span class="line">        <span class="comment">// 这里A1有child返回B1；B1有儿子返回C1</span></span><br><span class="line">        <span class="keyword">return</span> fiber.child;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (fiber) &#123;<span class="comment">//如果没有子节点说明当前节点已经完成了渲染工作 C1</span></span><br><span class="line">        completeUnitOfWork(fiber);<span class="comment">//可以结束此fiber的渲染了 </span></span><br><span class="line">        <span class="keyword">if</span> (fiber.sibling) &#123;<span class="comment">//如果它有弟弟就返回弟弟</span></span><br><span class="line">            <span class="keyword">return</span> fiber.sibling;</span><br><span class="line">        &#125;</span><br><span class="line">        fiber = fiber.return;<span class="comment">//如果没有弟弟让爸爸完成，然后找叔叔</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">beginWork</span>(<span class="params">fiber</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'beginWork'</span>, fiber.key); <span class="comment">// A1</span></span><br><span class="line">    <span class="comment">//fiber.stateNode = document.createElement(fiber.type);</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">completeUnitOfWork</span>(<span class="params">fiber</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'completeUnitOfWork'</span>, fiber.key);</span><br><span class="line">&#125;</span><br><span class="line">nextUnitOfWork = rootFiber;</span><br><span class="line">workLoop();</span><br></pre></td></tr></table></figure>
+
+<p>打印：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">beginWork A1</span><br><span class="line">beginWork B1</span><br><span class="line">beginWork C1</span><br><span class="line">completeUnitOfWork C1</span><br><span class="line">beginWork C2</span><br><span class="line">completeUnitOfWork C2</span><br><span class="line">completeUnitOfWork B1</span><br><span class="line">beginWork B2</span><br><span class="line">completeUnitOfWork B2</span><br><span class="line">completeUnitOfWork A1</span><br></pre></td></tr></table></figure>
+
+<p>现在把它和之前的<code>requestIdleCallback</code>连起来</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">workLoop</span>(<span class="params">deadline</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// while (nextUnitOfWork) &#123;</span></span><br><span class="line">    <span class="keyword">while</span> ((deadline.timeRemaining() &gt; <span class="number">0</span> || deadline.didTimeout) &amp;&amp; nextUnitOfWork) &#123;</span><br><span class="line">        nextUnitOfWork = performUnitOfWork(nextUnitOfWork);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (nextUnitOfWork) &#123; <span class="comment">// 说明还有未完成的任务</span></span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">`只剩下<span class="subst">$&#123;<span class="built_in">parseInt</span>(deadline.timeRemaining())&#125;</span>ms,时间片到了等待下次空闲时间的调度`</span>);</span><br><span class="line">      requestIdleCallback(workLoop, &#123; <span class="attr">timeout</span>: <span class="number">1000</span> &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">performUnitOfWork</span>(<span class="params">fiber</span>) </span>&#123;</span><br><span class="line">    beginWork(fiber);</span><br><span class="line">    <span class="keyword">if</span> (fiber.child) &#123;</span><br><span class="line">        <span class="keyword">return</span> fiber.child;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (fiber) &#123;</span><br><span class="line">        completeUnitOfWork(fiber);</span><br><span class="line">        <span class="keyword">if</span> (fiber.sibling) &#123;</span><br><span class="line">            <span class="keyword">return</span> fiber.sibling;</span><br><span class="line">        &#125;</span><br><span class="line">        fiber = fiber.return;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">beginWork</span>(<span class="params">fiber</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'beginWork'</span>, fiber.key);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">completeUnitOfWork</span>(<span class="params">fiber</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'completeUnitOfWork'</span>, fiber.key);</span><br><span class="line">&#125;</span><br><span class="line">nextUnitOfWork = rootFiber;</span><br><span class="line">requestIdleCallback(workLoop, &#123;<span class="attr">timeout</span>: <span class="number">1000</span>&#125;);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>相当于用链实现了一个类似于可中断的递归的功能</p>
+</blockquote>
+<p>vue中不是fiber，在vue中是把每个更新任务分割的足够小，它是组件级别的更新，更新范围小。vue3采用了模板标记更新，能很快速的定位到更新的地方进行更新。<br>react是不管在哪里调setState，都是从根节点（指整个项目的根节点）比较更新的。在react中是任务还是很大，但是分割成多个小任务，可以中断和恢复，不阻塞主进程执行高级优先任务。</p>
+<h3 id="5-2-commit阶段"><a href="#5-2-commit阶段" class="headerlink" title="5.2 commit阶段"></a>5.2 commit阶段</h3><h2 id="6-手动实现React"><a href="#6-手动实现React" class="headerlink" title="6. 手动实现React"></a>6. 手动实现React</h2><p>创建一个空项目 <code>create-react-app myApp</code></p>
+<h3 id="6-1-实现虚拟DOM"><a href="#6-1-实现虚拟DOM" class="headerlink" title="6.1 实现虚拟DOM"></a>6.1 实现虚拟DOM</h3><h4 id="1】"><a href="#1】" class="headerlink" title="1】"></a>1】</h4><p>src/index.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line"><span class="comment">// JSX其实是一种特殊语法，在babel编译的时候会编译成js</span></span><br><span class="line"><span class="keyword">let</span> element = (</span><br><span class="line">  &lt;div id=<span class="string">"A1"</span>&gt;</span><br><span class="line">    &lt;div id=<span class="string">"B1"</span>&gt;</span><br><span class="line">      &lt;div id=<span class="string">"C1"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">      &lt;div id=<span class="string">"C2"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    &lt;div id="B2"&gt;&lt;/</span>div&gt;</span><br><span class="line">  &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">);</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">ReactDOM.render(</span></span><br><span class="line"><span class="regexp">  element,</span></span><br><span class="line"><span class="regexp">  document.getElementById('root')</span></span><br><span class="line"><span class="regexp">);</span></span><br></pre></td></tr></table></figure>
+
+<p>将上述line4-ling12放到<a href="https://www.babeljs.cn/中编译(勾选左边的react)，结果：" target="_blank" rel="noopener">https://www.babeljs.cn/中编译(勾选左边的react)，结果：</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// React.createElement(type,props,...children);</span></span><br><span class="line"><span class="keyword">var</span> element = React.createElement(<span class="string">"div"</span>, &#123;<span class="attr">id</span>: <span class="string">"A1"</span>&#125;, </span><br><span class="line">React.createElement(<span class="string">"div"</span>, &#123;<span class="attr">id</span>: <span class="string">"B1"</span>&#125;, </span><br><span class="line">React.createElement(<span class="string">"div"</span>, &#123;<span class="attr">id</span>: <span class="string">"C1"</span>&#125;), </span><br><span class="line">React.createElement(<span class="string">"div"</span>, &#123;<span class="attr">id</span>: <span class="string">"C2"</span>&#125;)), </span><br><span class="line">React.createElement(<span class="string">"div"</span>, &#123;<span class="attr">id</span>: <span class="string">"B2"</span>&#125;));</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> element = React.createElement(<span class="string">"div"</span>, &#123;<span class="attr">id</span>: <span class="string">"A1"</span>&#125;, </span><br><span class="line">React.createElement(<span class="string">"div"</span>, &#123;<span class="attr">id</span>: <span class="string">"B1"</span>&#125;, </span><br><span class="line">React.createElement(<span class="string">"div"</span>, &#123;<span class="attr">id</span>: <span class="string">"C1"</span>&#125;), </span><br><span class="line">React.createElement(<span class="string">"div"</span>, &#123;<span class="attr">id</span>: <span class="string">"C2"</span>&#125;)), </span><br><span class="line">React.createElement(<span class="string">"div"</span>, &#123;<span class="attr">id</span>: <span class="string">"B2"</span>&#125;));</span><br><span class="line"><span class="built_in">console</span>.log(element);</span><br><span class="line">ReactDOM.render(</span><br><span class="line">  element,</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>React.createElement 返回一个元素，也就是虚拟DOM，虚拟DOM就是一个JS对象，以JS对象的方式描述界面上DOM的样子</p>
+<p>React.createElement替换jsx格式在页面上显示是一样的，还是以A1为开头的div 的数据格式，console.log()打印出来如下：<br><a href="https://jiafei2333.github.io/html/images/react-fiber01.png" target="_blank" rel="noopener"></a></p>
+<p>新建 src/react.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 创建元素（虚拟DOM）的方法</span></span><br><span class="line"><span class="comment"> * @param &#123;*&#125; type 元素的类型</span></span><br><span class="line"><span class="comment"> * @param &#123;*&#125; config 配置对象 属性、key、ref</span></span><br><span class="line"><span class="comment"> * @param  &#123;...any&#125; children 放置所有的儿子 这里做成数组，正在在react中可能是数组也可能是对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createElement</span>(<span class="params">type, config, ...children</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">delete</span> config.__self;</span><br><span class="line">    <span class="keyword">delete</span> config.__source; <span class="comment">// 表示这个文件是在哪行哪列哪个文件生成的</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        type,</span><br><span class="line">        props:&#123;</span><br><span class="line">            ...config,</span><br><span class="line">            children</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2】"><a href="#2】" class="headerlink" title="2】"></a>2】</h4><p>当C1中的内容是文本时，children里面不是虚拟DOM，是文本值<br>src/index.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line"><span class="keyword">let</span> element = (</span><br><span class="line">  &lt;div id=<span class="string">"A1"</span>&gt;</span><br><span class="line">    &lt;div id=<span class="string">"B1"</span>&gt;</span><br><span class="line">      &lt;div id=<span class="string">"C1"</span>&gt;C1内容&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">      &lt;div id="C2"&gt;C2内容&lt;/</span>div&gt;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    &lt;div id="B2"&gt;B2内容&lt;/</span>div&gt;</span><br><span class="line">  &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">);</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">console.log(element);</span></span><br><span class="line"><span class="regexp">ReactDOM.render(</span></span><br><span class="line"><span class="regexp">  element,</span></span><br><span class="line"><span class="regexp">  document.getElementById('root')</span></span><br><span class="line"><span class="regexp">);</span></span><br></pre></td></tr></table></figure>
+
+<p><a href="https://jiafei2333.github.io/html/images/react-fiber02.png" target="_blank" rel="noopener"></a></p>
+<p>新建src/constants.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 表示这是一个文本元素</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> ELEMENT_TEXT = <span class="built_in">Symbol</span>.for(<span class="string">'ELEMENT_TEXT'</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;ELEMENT_TEXT&#125; <span class="keyword">from</span> <span class="string">'./constants'</span>;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 创建元素（虚拟DOM）的方法</span></span><br><span class="line"><span class="comment"> * @param &#123;*&#125; type 元素的类型</span></span><br><span class="line"><span class="comment"> * @param &#123;*&#125; config 配置对象 属性、key、ref</span></span><br><span class="line"><span class="comment"> * @param  &#123;...any&#125; children 放置所有的儿子 这里做成数组，正在在react中可能是数组也可能是对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createElement</span>(<span class="params">type, config, ...children</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">delete</span> config.__self;</span><br><span class="line">    <span class="keyword">delete</span> config.__source; <span class="comment">// 表示这个文件是在哪行哪列哪个文件生成的</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        type,</span><br><span class="line">        props:&#123;</span><br><span class="line">            ...config,</span><br><span class="line">            children: children.map(<span class="function"><span class="params">child</span>=&gt;</span>&#123;</span><br><span class="line">                <span class="comment">// 做了一个兼容处理，如果是react元素就返回自己，如果是一个字符串的话就返回元素对象</span></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">typeof</span> child === <span class="string">'object'</span> ? child : &#123; <span class="comment">// 源码里面没有转，就是字符串</span></span><br><span class="line">                    type: ELEMENT_TEXT,</span><br><span class="line">                    props: &#123;<span class="attr">text</span>:child, <span class="attr">children</span>: []&#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> React = &#123;</span><br><span class="line">    createElement</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> React;</span><br></pre></td></tr></table></figure>
+
+<p>调用自己写的react看看：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'./react'</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line"><span class="keyword">let</span> element = (</span><br><span class="line">  &lt;div id=<span class="string">"A1"</span>&gt;</span><br><span class="line">    &lt;div id=<span class="string">"B1"</span>&gt;</span><br><span class="line">      &lt;div id=<span class="string">"C1"</span>&gt;C1内容&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">      &lt;div id="C2"&gt;C2内容&lt;/</span>div&gt;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    &lt;div id="B2"&gt;B2内容&lt;/</span>div&gt;</span><br><span class="line">  &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">);</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">console.log(element);</span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ ReactDOM.render(</span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/   element,</span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/   document.getElementById('root')</span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ );</span></span><br></pre></td></tr></table></figure>
+
+<p>打印出的虚拟DOM结构如下：<br><a href="https://jiafei2333.github.io/html/images/react-fiber03.png" target="_blank" rel="noopener"></a></p>
+<h3 id="6-2-初次渲染"><a href="#6-2-初次渲染" class="headerlink" title="6.2 初次渲染"></a>6.2 初次渲染</h3><p><a href="http://img.zhufengpeixun.cn/collecting2.jpg" target="_blank" rel="noopener"></a></p>
+<h4 id="1】-1"><a href="#1】-1" class="headerlink" title="1】"></a>1】</h4><p>原生的效果<br>src/index.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line"><span class="keyword">let</span> style = &#123; <span class="attr">border</span>: <span class="string">'3px solid red'</span>, <span class="attr">margin</span>: <span class="string">'5px'</span> &#125;;</span><br><span class="line"><span class="keyword">let</span> element = (</span><br><span class="line">  &lt;div id=<span class="string">"A1"</span> style=&#123;style&#125;&gt;A1内容</span><br><span class="line">    &lt;div id=<span class="string">"B1"</span> style=&#123;style&#125;&gt;B1内容</span><br><span class="line">      &lt;div id=<span class="string">"C1"</span> style=&#123;style&#125;&gt;C1内容&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">      &lt;div id="C2" style=&#123;style&#125;&gt;C2内容&lt;/</span>div&gt;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    &lt;div id="B2" style=&#123;style&#125;&gt;B2内容&lt;/</span>div&gt;</span><br><span class="line">  &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">);</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">console.log(element);</span></span><br><span class="line"><span class="regexp">ReactDOM.render(</span></span><br><span class="line"><span class="regexp">  element,</span></span><br><span class="line"><span class="regexp">  document.getElementById('root')</span></span><br><span class="line"><span class="regexp">);</span></span><br></pre></td></tr></table></figure>
+
+<p><a href="https://jiafei2333.github.io/html/images/react-fiber04.png" target="_blank" rel="noopener"></a></p>
+<p>src/constants.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 表示这是一个文本元素</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> ELEMENT_TEXT = <span class="built_in">Symbol</span>.for(<span class="string">'ELEMENT_TEXT'</span>);</span><br><span class="line"><span class="comment">// React应用需要一个跟fiber</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> TAG_ROOT = <span class="built_in">Symbol</span>.for(<span class="string">'TAG_ROOT'</span>);</span><br><span class="line"><span class="comment">// 原生的节点 span div   函数组件 类组件</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> TAG_HOST = <span class="built_in">Symbol</span>.for(<span class="string">'TAG_HOST'</span>);</span><br><span class="line"><span class="comment">// 这是文本节点</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> TAG_TEXT = <span class="built_in">Symbol</span>.for(<span class="string">'TAG_TEXT'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>新建 src/react-dom.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;TAG_ROOT&#125; <span class="keyword">from</span> <span class="string">'./constants'</span>;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *render是要把一个元素渲染到一个容器内部</span></span><br><span class="line"><span class="comment"> *每个虚拟DOM节点对应一个fiber</span></span><br><span class="line"><span class="comment"> * @param &#123;*&#125; element  虚拟DOM</span></span><br><span class="line"><span class="comment"> * @param &#123;*&#125; container  容器</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">render</span>(<span class="params">element, container</span>)</span>&#123; <span class="comment">// ReactDOM.render(element,document.getElementById('root')); 这里 container 对应的是&lt;div id="root"&gt;&lt;/div&gt;这个真实的DOM元素</span></span><br><span class="line">    <span class="keyword">let</span> rootFiber = &#123;</span><br><span class="line">        tag: TAG_ROOT, <span class="comment">// 每个fiber都会有一个tag标识，</span></span><br><span class="line">        stateNode: container, <span class="comment">// 一般情况下如果这个元素是一个原生节点的话，stateNode指向真实DOM元素</span></span><br><span class="line">        <span class="comment">// props.children 是一个数组，里面放的是React元素 即虚拟DOM ，后面会根据每个React元素创建对应的fiber</span></span><br><span class="line">        props:&#123; <span class="attr">children</span>: [element] &#125; <span class="comment">// 这个fiber的属性对象children属性，里面放的是要渲染的元素</span></span><br><span class="line">    &#125;</span><br><span class="line">    scheduleRoot(); <span class="comment">// 开始调度，从根节点开始遍历</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> ReactDOM = &#123;</span><br><span class="line">    render</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> ReactDOM;</span><br></pre></td></tr></table></figure>
+
+<p>新建 src/schedule.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *从根节点开始渲染和调度</span></span><br><span class="line"><span class="comment"> *两个阶段：</span></span><br><span class="line"><span class="comment"> 一、diff阶段，对比新旧的虚拟DOM，进行增量 更新或创建</span></span><br><span class="line"><span class="comment"> render阶段：这个阶段比较花时间，可以对任务进行拆分，拆分的维度就是虚拟DOM节点，一个虚拟DOM节点对应一个任务，此阶段可以暂停,成果是effect list知道哪些节点删除了 增加了</span></span><br><span class="line"><span class="comment"> 二、commit阶段: 进行DOM更新创建阶段，此阶段不能暂停，要一气呵成 </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">let</span> nextUnitOfWork = <span class="literal">null</span><span class="comment">//下一个工作单元</span></span><br><span class="line"><span class="keyword">let</span> workInProgressRoot = <span class="literal">null</span>;<span class="comment">//正在渲染中的根Fiber </span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">scheduleRoot</span>(<span class="params">rootFiber</span>)</span>&#123; <span class="comment">// &#123;tag: TAG_ROOT, stateNode: container, props:&#123; children: [element] &#125;  &#125;</span></span><br><span class="line">    <span class="comment">// 大致原理：根据 element虚拟DOM 创建真实DOM插入到容器 container 中</span></span><br><span class="line">    <span class="comment">//把当前树设置为nextUnitOfWork开始进行调度</span></span><br><span class="line">    workInProgressRoot = rootFiber;</span><br><span class="line">    nextUnitOfWork = rootFiber;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">workLoop</span>(<span class="params">deadline</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> shouldYield = <span class="literal">false</span>; <span class="comment">// 是否要让出时间片或控制权</span></span><br><span class="line">    <span class="keyword">while</span> (nextUnitOfWork &amp;&amp; !shouldYield) &#123;</span><br><span class="line">        nextUnitOfWork = performUnitOfWork(nextUnitOfWork);<span class="comment">//执行一个任务并返回下一个任务</span></span><br><span class="line">        shouldYield = deadline.timeRemaining() &lt; <span class="number">1</span>;<span class="comment">//如果剩余时间小于1毫秒就说明没有时间了，需要把控制权让给浏览器</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//如果没有下一个执行单元了，并且当前渲染树存在，则进行提交阶段</span></span><br><span class="line">    <span class="keyword">if</span> (nextUnitOfWork) &#123; <span class="comment">// 如果时间片到期后还有任务没完成，就需要请求浏览器再次调度</span></span><br><span class="line">        requestIdleCallback(workLoop, &#123;<span class="attr">timeout</span>: <span class="number">500</span>&#125;);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"渲染阶段结束"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// react告诉浏览器，我现在有任务，请你在闲的时候执行</span></span><br><span class="line"><span class="comment">// 这里有一个优先级的概念 expirationTime</span></span><br><span class="line">requestIdleCallback(workLoop, &#123;<span class="attr">timeout</span>: <span class="number">500</span>&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>2】src/schedule.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h1><p><a href="http://www.zhufengpeixun.cn/2020/html/96.2.fiber.html" target="_blank" rel="noopener">http://www.zhufengpeixun.cn/2020/html/96.2.fiber.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/06/02/Monitor/" rel="next" title="前端监控">
+                <i class="fa fa-chevron-left"></i> 前端监控
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/Prueba.gif" alt="加菲">
+            
+              <p class="site-author-name" itemprop="name">加菲</p>
+              <p class="site-description motion-element" itemprop="description">啦啦啦~~~加油码字</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">75</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#fiber"><span class="nav-text">fiber</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-屏幕刷新率"><span class="nav-text">1.屏幕刷新率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-帧"><span class="nav-text">2.帧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-rAF"><span class="nav-text">2.1 rAF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-requestIdleCallback"><span class="nav-text">2.2 requestIdleCallback</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-MessageChannel"><span class="nav-text">2.3 MessageChannel</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-单链表"><span class="nav-text">3. 单链表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-fiber历史"><span class="nav-text">4. fiber历史</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-fiber之前的协调"><span class="nav-text">4.1 fiber之前的协调</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-fiber是什么"><span class="nav-text">4.2 fiber是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-1-fiber是一个执行单位"><span class="nav-text">4.2.1 fiber是一个执行单位</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-2-fiber是一种数据结构"><span class="nav-text">4.2.2 fiber是一种数据结构</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-fiber执行阶段"><span class="nav-text">5. fiber执行阶段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-render阶段"><span class="nav-text">5.1 render阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-commit阶段"><span class="nav-text">5.2 commit阶段</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-手动实现React"><span class="nav-text">6. 手动实现React</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-实现虚拟DOM"><span class="nav-text">6.1 实现虚拟DOM</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1】"><span class="nav-text">1】</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2】"><span class="nav-text">2】</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-初次渲染"><span class="nav-text">6.2 初次渲染</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1】-1"><span class="nav-text">1】</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关文章"><span class="nav-text">相关文章</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">加菲</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
