@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Hi 加菲">
 <meta property="og:description" content="React1、我们在JSX中看到一个组件使用了onClick，但是并没有产生直接使用onclick的HTML，而是使用事件委托的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最高层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给特定函数。    因为React控制了组件的生命周期，在unmount的时候自然能够清">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-06-08T15:01:38.686Z">
+<meta property="og:updated_time" content="2020-06-10T14:24:37.385Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《深入浅出 React和Redux》">
 <meta name="twitter:description" content="React1、我们在JSX中看到一个组件使用了onClick，但是并没有产生直接使用onclick的HTML，而是使用事件委托的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最高层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给特定函数。    因为React控制了组件的生命周期，在unmount的时候自然能够清">
@@ -415,6 +415,8 @@
 <p>【getInitialState、 getDefaultProps】只有在React.createClass方法创造的组件类才有作用。</p>
 <p>【类组件名.defaultProps】在ES6中可以指定props 的初始值</p>
 <p>【render】<br>  函数应该是一个纯函数，完全根据this.state和this.props来决定返回的结果，而且不要产生任何副作用。</p>
+<p>【componentDidMount】<br>  render函数被调用完之后，componentDidMount函数并不是会被立刻调用，componentDidMount被调用的时候，render函数返回的东西已经引发了渲染，组件已经被”装载“到了DOM树上。</p>
+<p>  举例：<br>  <parents></parents>、<child1></child1>、<child2></child2>、<child3></child3><br>  父组件包含三个子组件，在这4个组件中各自生命周期函数中打印文字，如下：<br>  Parents constructor<br>  Parents componentWillMount<br>  Parents render<br>  Child1  constructor<br>  Child1  componentWillMount<br>  Child1  render<br>  Child2  constructor<br>  Child2  componentWillMount<br>  Child2  render<br>  Child3  constructor<br>  Child3  componentWillMount<br>  Child3  render<br>  Child3<br>  这个实践一下。。。。。。。。。。。。。。。。。。。。。。</p>
 
       
     </div>
@@ -455,8 +457,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/06/02/Monitor/" rel="prev" title="前端监控">
-                前端监控 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/06/10/ReactSoundCode-Fiber/" rel="prev" title="React源码理解之Fiber">
+                React源码理解之Fiber <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
