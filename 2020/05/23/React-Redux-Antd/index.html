@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="React,Redux,Webpack,Antd,">
+  <meta name="keywords" content="Redux,React,Antd,">
 
 
 
@@ -80,14 +80,14 @@
 
 
 <meta name="description" content="环境搭建npx create-react-app myapp 版本： 1234&quot;react&quot;: &quot;^16.13.1&quot;,&quot;react-dom&quot;: &quot;^16.13.1&quot;,&quot;@babel/core&quot;: &quot;^7.9.6&quot;,&quot;webpack&quot;: &quot;^4.43.0&quot;,  安装webpacknpm install --save-dev webpack-cli webpack webpack-merge webp">
-<meta name="keywords" content="React,Redux,Webpack,Antd">
+<meta name="keywords" content="Redux,React,Antd">
 <meta property="og:type" content="article">
 <meta property="og:title" content="React+Redux+Antd">
 <meta property="og:url" content="http://yoursite.com/2020/05/23/React-Redux-Antd/index.html">
 <meta property="og:site_name" content="Hi 加菲">
 <meta property="og:description" content="环境搭建npx create-react-app myapp 版本： 1234&quot;react&quot;: &quot;^16.13.1&quot;,&quot;react-dom&quot;: &quot;^16.13.1&quot;,&quot;@babel/core&quot;: &quot;^7.9.6&quot;,&quot;webpack&quot;: &quot;^4.43.0&quot;,  安装webpacknpm install --save-dev webpack-cli webpack webpack-merge webp">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-05-25T14:45:23.568Z">
+<meta property="og:updated_time" content="2020-07-02T15:07:02.271Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React+Redux+Antd">
 <meta name="twitter:description" content="环境搭建npx create-react-app myapp 版本： 1234&quot;react&quot;: &quot;^16.13.1&quot;,&quot;react-dom&quot;: &quot;^16.13.1&quot;,&quot;@babel/core&quot;: &quot;^7.9.6&quot;,&quot;webpack&quot;: &quot;^4.43.0&quot;,  安装webpacknpm install --save-dev webpack-cli webpack webpack-merge webp">
@@ -394,10 +394,37 @@
 <h4 id="安装loader"><a href="#安装loader" class="headerlink" title="安装loader"></a>安装loader</h4><p><code>npm install style-loader css-loader --save-dev</code><br><code>npm install less less-loader --save-dev</code><br><code>npm install file-loader --save-dev</code></p>
 <h4 id="安装babel"><a href="#安装babel" class="headerlink" title="安装babel"></a>安装babel</h4><p><code>npm install @babel/core @babel/preset-env babel-loader --save-dev</code><br><code>npm i @babel/plugin-proposal-class-properties @babel/plugin-proposal-decorators --save-dev</code><br><code>npm install core-js@2 --save</code><br><code>npm install --save-dev @babel/plugin-transform-runtime</code><br><code>npm install --save @babel/runtime</code></p>
 <p>具体步骤见 <a href="https://jiafei2333.github.io/2019/11/13/Webpack-js/" target="_blank" rel="noopener">https://jiafei2333.github.io/2019/11/13/Webpack-js/</a></p>
-<h4 id="安装开发环境"><a href="#安装开发环境" class="headerlink" title="安装开发环境"></a>安装开发环境</h4><p><code>npm install --save redux</code><br><code>npm install --save react-redux</code><br><code>npm install --save redux-saga</code><br><code>npm install --save react-router-dom</code></p>
-<h4 id="基础目录创建"><a href="#基础目录创建" class="headerlink" title="基础目录创建"></a>基础目录创建</h4><p>()[<a href="https://jiafei2333.github.io/html/images/react-redux01.png" target="_blank" rel="noopener">https://jiafei2333.github.io/html/images/react-redux01.png</a> “”]</p>
+<h4 id="安装开发环境"><a href="#安装开发环境" class="headerlink" title="安装开发环境"></a>安装开发环境</h4><p><code>npm install --save redux</code><br><code>npm install --save react-redux</code><br><code>npm install --save redux-saga</code><br><code>npm install --save react-router-dom</code><br><code>npm install redux-thunk redux-logger --save</code></p>
+<h4 id="基础目录创建"><a href="#基础目录创建" class="headerlink" title="基础目录创建"></a>基础目录创建</h4><p><a href="https://jiafei2333.github.io/html/images/react-redux01.png" target="_blank" rel="noopener"></a></p>
 <h4 id="UI组件库"><a href="#UI组件库" class="headerlink" title="UI组件库"></a>UI组件库</h4><p><code>npm install antd --save</code></p>
-<h3 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h3>
+<h4 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h4><h3 id="将redux与react-router-连接"><a href="#将redux与react-router-连接" class="headerlink" title="将redux与react-router 连接"></a>将redux与react-router 连接</h3><h4 id="前情"><a href="#前情" class="headerlink" title="前情"></a>前情</h4><p>src/redux/actions/home.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;fetchLoginAdd&#125; <span class="keyword">from</span> <span class="string">'../actionServer/home'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;LOGIN_ADD&#125; <span class="keyword">from</span> <span class="string">'../action-types'</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">LoginPost</span>(<span class="params">data</span>)</span>&#123; <span class="comment">// redux-thunk</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">async</span> <span class="function"><span class="keyword">function</span>(<span class="params">dispatch, getState</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> all = <span class="keyword">await</span> fetchLoginAdd(data);</span><br><span class="line">        <span class="keyword">if</span>(all.Code === <span class="number">0</span>)&#123;</span><br><span class="line">            dispatch(&#123;<span class="attr">type</span>: LOGIN_ADD&#125;)</span><br><span class="line">            <span class="comment">// 当这里登陆成功需要跳转到首页，直接切换路由时，需要用到dispatch(push('/xxx'));</span></span><br><span class="line">            <span class="comment">// 引入push     import &#123; push &#125; from 'connected-react-router';</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> &#123;</span><br><span class="line">    LoginPost</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在redux actions中可以用dispatch(push(‘/xxxx’))切换路由<br>通过 connected-react-router 和 history 两个库将 react-router 与 redux 进行深度整合实现。</p>
+<p><code>npm install connect-react-router history --save</code></p>
+<p>然后给 store 添加如下配置：</p>
+<ul>
+<li>创建<code>history</code>对象，因为我们的应用是浏览器端，所以使用<code>createBrowserHistory</code>创建</li>
+<li>使用connectRouter包裹 root reducer 并且提供我们创建的history对象，获得新的 root reducer</li>
+<li>使用routerMiddleware(history)实现使用 dispatch history actions，这样就可以使用push(‘/path/to/somewhere’)去改变路由（这里的 push 是来自 connected-react-router 的）</li>
+</ul>
+<p>store.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;createStore, applyMiddleware&#125; <span class="keyword">from</span> <span class="string">'redux'</span>;</span><br><span class="line"><span class="keyword">import</span> thunk <span class="keyword">from</span> <span class="string">'redux-thunk'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; createBrowserHistory &#125; <span class="keyword">from</span> <span class="string">'history'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; routerMiddleware &#125; <span class="keyword">from</span> <span class="string">'connected-react-router'</span>;</span><br><span class="line"><span class="keyword">import</span> rootReducers <span class="keyword">from</span> <span class="string">'../reducers/reducer'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> history = createBrowserHistory();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> initialState = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = createStore(</span><br><span class="line">    rootReducers(history),</span><br><span class="line">    initialState, </span><br><span class="line">    applyMiddleware(thunk, routerMiddleware(history)));</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> store;</span><br></pre></td></tr></table></figure>
+
+<p>src/reducers/reducers.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;combineReducers&#125; <span class="keyword">from</span> <span class="string">'redux'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; connectRouter &#125; <span class="keyword">from</span> <span class="string">'connected-react-router'</span>;</span><br><span class="line"><span class="keyword">import</span> appReduce <span class="keyword">from</span> <span class="string">'./appReduce'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> createRootReducer = <span class="function"><span class="params">history</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> combineReducers(&#123;</span><br><span class="line">        router: connectRouter(history),</span><br><span class="line">        appReduce</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> createRootReducer;</span><br></pre></td></tr></table></figure>
+
+<p>根组件中，添加如下配置</p>
+<ul>
+<li>使用ConnectedRouter包裹路由，并且将 store 中创建的history对象引入，作为 props 传入应用</li>
+<li>ConnectedRouter组件要作为Provider的子组件</li>
+</ul>
+<p>index.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Provider&#125; <span class="keyword">from</span> <span class="string">'react-redux'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;ConnectedRouter&#125; <span class="keyword">from</span> <span class="string">'connected-react-router'</span>;</span><br><span class="line"><span class="keyword">import</span> store,&#123;history&#125; <span class="keyword">from</span> <span class="string">'Redux/store/store'</span>;</span><br><span class="line"><span class="keyword">import</span> Router <span class="keyword">from</span> <span class="string">'./router'</span>;</span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">  &lt;Provider store=&#123;store&#125;&gt;</span><br><span class="line">    &lt;ConnectedRouter history=&#123;history&#125;&gt;</span><br><span class="line">      &lt;Router /&gt;</span><br><span class="line">    &lt;<span class="regexp">/ConnectedRouter&gt;</span></span><br><span class="line"><span class="regexp">  &lt;/</span>Provider&gt;,</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>));</span><br></pre></td></tr></table></figure>
+
+<p>这样就将 redux 与 react-router 整合完毕了。</p>
+<h3 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h3><p><a href="https://juejin.im/post/5b4de4496fb9a04fc226a7af#heading-9" target="_blank" rel="noopener">https://juejin.im/post/5b4de4496fb9a04fc226a7af#heading-9</a></p>
+
       
     </div>
     
@@ -414,11 +441,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/React/" rel="tag"># React</a>
-          
             <a href="/tags/Redux/" rel="tag"># Redux</a>
           
-            <a href="/tags/Webpack/" rel="tag"># Webpack</a>
+            <a href="/tags/React/" rel="tag"># React</a>
           
             <a href="/tags/Antd/" rel="tag"># Antd</a>
           
@@ -579,7 +604,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境搭建"><span class="nav-text">环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装webpack"><span class="nav-text">安装webpack</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装loader"><span class="nav-text">安装loader</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装babel"><span class="nav-text">安装babel</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装开发环境"><span class="nav-text">安装开发环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基础目录创建"><span class="nav-text">基础目录创建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UI组件库"><span class="nav-text">UI组件库</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#错误处理"><span class="nav-text">错误处理</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境搭建"><span class="nav-text">环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装webpack"><span class="nav-text">安装webpack</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装loader"><span class="nav-text">安装loader</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装babel"><span class="nav-text">安装babel</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装开发环境"><span class="nav-text">安装开发环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基础目录创建"><span class="nav-text">基础目录创建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UI组件库"><span class="nav-text">UI组件库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#错误处理"><span class="nav-text">错误处理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将redux与react-router-连接"><span class="nav-text">将redux与react-router 连接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#前情"><span class="nav-text">前情</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关文章"><span class="nav-text">相关文章</span></a></li></ol></div>
             
 
           </div>
