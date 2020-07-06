@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Hi 加菲">
 <meta property="og:description" content="React1、我们在JSX中看到一个组件使用了onClick，但是并没有产生直接使用onclick的HTML，而是使用事件委托的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最高层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给特定函数。    因为React控制了组件的生命周期，在unmount的时候自然能够清">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-06-30T15:15:40.369Z">
+<meta property="og:updated_time" content="2020-07-06T15:12:46.375Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《深入浅出 React和Redux》">
 <meta name="twitter:description" content="React1、我们在JSX中看到一个组件使用了onClick，但是并没有产生直接使用onclick的HTML，而是使用事件委托的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最高层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给特定函数。    因为React控制了组件的生命周期，在unmount的时候自然能够清">
@@ -416,13 +416,16 @@
 <p>【类组件名.defaultProps】在ES6中可以指定props 的初始值</p>
 <p>【render】<br>  函数应该是一个纯函数，完全根据this.state和this.props来决定返回的结果，而且不要产生任何副作用。</p>
 <p>【componentDidMount】<br>  render函数被调用完之后，componentDidMount函数并不是会被立刻调用，componentDidMount被调用的时候，render函数返回的东西已经引发了渲染，组件已经被”装载“到了DOM树上。</p>
-<p>  举例：<br>  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;App&gt;</span><br><span class="line">  &lt;Counter1&gt;<span class="xml"><span class="tag">&lt;/<span class="name">Counter1</span>&gt;</span></span></span><br><span class="line">  &lt;Counter2&gt;<span class="xml"><span class="tag">&lt;/<span class="name">Counter2</span>&gt;</span></span></span><br><span class="line">  &lt;Counter3&gt;<span class="xml"><span class="tag">&lt;/<span class="name">Counter3</span>&gt;</span></span></span><br><span class="line">&lt;<span class="regexp">/App&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>  举例：<br>  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;App&gt;</span><br><span class="line">  &lt;Counter1&gt;&lt;/Counter1&gt;</span><br><span class="line">  &lt;Counter2&gt;&lt;/Counter2&gt;</span><br><span class="line">  &lt;Counter3&gt;&lt;/Counter3&gt;</span><br><span class="line">&lt;<span class="regexp">/App&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>  父组件包含三个子组件，在这4个组件中各自生命周期函数中打印文字，如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">constructor App</span><br><span class="line">componentWillMount App</span><br><span class="line">render App</span><br><span class="line">constructor Counter1</span><br><span class="line">componentWillMount Counter1</span><br><span class="line">render Counter1</span><br><span class="line">constructor Counter2</span><br><span class="line">componentWillMount Counter2</span><br><span class="line">render Counter2</span><br><span class="line">constructor Counter3</span><br><span class="line">componentWillMount Counter3</span><br><span class="line">render Counter3</span><br><span class="line">componentDidMount Counter1</span><br><span class="line">componentDidMount Counter2</span><br><span class="line">componentDidMount Counter3</span><br><span class="line">componentDidMount App</span><br></pre></td></tr></table></figure>
 
 <pre><code>可以看到，虽然componentWillMount都是紧贴自己组价的render函数之前被调用，componentDidMount可不是跟着render函数被调用，当所有三个组件的render都被调用之后，三个组件的componentDidMount才连在一起被调用。
 之所以会出现上面的现象是因为render函数本身并不往DOM树上渲染或者装载内容，它只是返回一个JSX的对象，然后由React库来根据返回对象决定如何渲染。而React库肯定是要把所有组件返回的结果综合起来，才能知道该如何产生对应的DOM修改。所以，只有React库调用三个Counter组件的render函数之后，才能有可能完成装载，这时候才会依次调用各个组件的componentDidMount函数作为装载过程的收尾。
-componentDidMount只在浏览器端执行，在componentDidMount被调用的时候，组件已经被装载到DOM树上了，可以放心获取渲染出来的任何DOM。</code></pre><p>【componentDidUpdate】<br>    当props或者state被修改的时候，就会引发组件的更新过程。</p>
+componentDidMount只在浏览器端执行，在componentDidMount被调用的时候，组件已经被装载到DOM树上了，可以放心获取渲染出来的任何DOM。</code></pre><p>【componentDidUpdate】<br>    当props或者state被修改的时候，就会引发组件的更新过程。 </p>
+<p>【shouldComponentUpdate】<br>    我们知道render函数应该是一个纯函数，这个纯函数的逻辑输入就是组件的props和state。所以，shouldComponentUpdate的参数就是接下来的props和state值。</p>
+<p>【componentWillUnMount】<br>    当React组件要从DOM树上删除掉之前，对应的componentWillUnMount函数就会被调用</p>
+<p>10、第二章小结：React利用props来定义组件的对外接口，用state来代表内部的状态，某个数据选择用props还是state表示，取决于这个数据是对外还是对内。</p>
 
       
     </div>
