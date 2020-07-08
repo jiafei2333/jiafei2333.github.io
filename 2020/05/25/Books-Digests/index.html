@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="React1、我们在JSX中看到一个组件使用了onClick，但是并没有产生直接使用onclick的HTML，而是使用事件委托的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最高层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给特定函数。    因为React控制了组件的生命周期，在unmount的时候自然能够清">
+<meta name="description" content="1.React1、我们在JSX中看到一个组件使用了onClick，但是并没有产生直接使用onclick的HTML，而是使用事件委托的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最高层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给特定函数。    因为React控制了组件的生命周期，在unmount的时候自然能">
 <meta name="keywords" content="摘要">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《深入浅出 React和Redux》">
 <meta property="og:url" content="http://yoursite.com/2020/05/25/Books-Digests/index.html">
 <meta property="og:site_name" content="Hi 加菲">
-<meta property="og:description" content="React1、我们在JSX中看到一个组件使用了onClick，但是并没有产生直接使用onclick的HTML，而是使用事件委托的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最高层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给特定函数。    因为React控制了组件的生命周期，在unmount的时候自然能够清">
+<meta property="og:description" content="1.React1、我们在JSX中看到一个组件使用了onClick，但是并没有产生直接使用onclick的HTML，而是使用事件委托的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最高层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给特定函数。    因为React控制了组件的生命周期，在unmount的时候自然能">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-07-06T15:12:46.375Z">
+<meta property="og:updated_time" content="2020-07-08T11:41:46.955Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《深入浅出 React和Redux》">
-<meta name="twitter:description" content="React1、我们在JSX中看到一个组件使用了onClick，但是并没有产生直接使用onclick的HTML，而是使用事件委托的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最高层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给特定函数。    因为React控制了组件的生命周期，在unmount的时候自然能够清">
+<meta name="twitter:description" content="1.React1、我们在JSX中看到一个组件使用了onClick，但是并没有产生直接使用onclick的HTML，而是使用事件委托的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最高层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给特定函数。    因为React控制了组件的生命周期，在unmount的时候自然能">
 
 
 
@@ -374,7 +374,7 @@
       
 
       
-        <h1 id="React"><a href="#React" class="headerlink" title="React"></a>React</h1><p>1、我们在JSX中看到一个组件使用了onClick，但是并没有产生直接使用onclick的HTML，而是使用事件委托的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最高层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给特定函数。<br>    因为React控制了组件的生命周期，在unmount的时候自然能够清除相关的所有事件处理函数，内存泄漏也不再是一个问题。</p>
+        <h1 id="1-React"><a href="#1-React" class="headerlink" title="1.React"></a>1.React</h1><p>1、我们在JSX中看到一个组件使用了onClick，但是并没有产生直接使用onclick的HTML，而是使用事件委托的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最高层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给特定函数。<br>    因为React控制了组件的生命周期，在unmount的时候自然能够清除相关的所有事件处理函数，内存泄漏也不再是一个问题。</p>
 <p>2、试试            </p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">使用 <span class="string">` create-react-app `</span> 命令创建项目</span><br><span class="line">执行 <span class="string">` npm run eject`</span> 将隐藏在 <span class="string">` react-scripts `</span> 中的一系列技术栈配置都显示出来 (不可逆)</span><br></pre></td></tr></table></figure>
 
@@ -426,6 +426,14 @@ componentDidMount只在浏览器端执行，在componentDidMount被调用的时�
 <p>【shouldComponentUpdate】<br>    我们知道render函数应该是一个纯函数，这个纯函数的逻辑输入就是组件的props和state。所以，shouldComponentUpdate的参数就是接下来的props和state值。</p>
 <p>【componentWillUnMount】<br>    当React组件要从DOM树上删除掉之前，对应的componentWillUnMount函数就会被调用</p>
 <p>10、第二章小结：React利用props来定义组件的对外接口，用state来代表内部的状态，某个数据选择用props还是state表示，取决于这个数据是对外还是对内。</p>
+<h1 id="2-Redux"><a href="#2-Redux" class="headerlink" title="2.Redux"></a>2.Redux</h1><ul>
+<li>唯一数据源</li>
+<li>保持状态只读</li>
+<li>数据改变只能通过纯函数完成</li>
+</ul>
+<h3 id="2-1-1唯一数据源"><a href="#2-1-1唯一数据源" class="headerlink" title="2.1.1唯一数据源"></a>2.1.1唯一数据源</h3><p>指的是应用的状态数据应该只存储在唯一的一个store上。<br>这个唯一Store的状态，是一个树形的对象，每个组件往往只是用树形对象上一部分的数据。</p>
+<h3 id="2-1-2保持状态只读"><a href="#2-1-2保持状态只读" class="headerlink" title="2.1.2保持状态只读"></a>2.1.2保持状态只读</h3><p>就是说不能直接修改状态，要修改Store的状态，必须要通过派发一个action对象完成。</p>
+<h3 id="2-1-3数据改变只能通过纯函数完成"><a href="#2-1-3数据改变只能通过纯函数完成" class="headerlink" title="2.1.3数据改变只能通过纯函数完成"></a>2.1.3数据改变只能通过纯函数完成</h3><h2 id="2-2-容器组件和展示组件"><a href="#2-2-容器组件和展示组件" class="headerlink" title="2.2 容器组件和展示组件"></a>2.2 容器组件和展示组件</h2><p>拆分容器组件和展示组件，是设计React组件的一种模式，和Redux没有直接关系。                                                                                                             </p>
 
       
     </div>
@@ -602,7 +610,7 @@ componentDidMount只在浏览器端执行，在componentDidMount被调用的时�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#React"><span class="nav-text">React</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-React"><span class="nav-text">1.React</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Redux"><span class="nav-text">2.Redux</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1唯一数据源"><span class="nav-text">2.1.1唯一数据源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2保持状态只读"><span class="nav-text">2.1.2保持状态只读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-3数据改变只能通过纯函数完成"><span class="nav-text">2.1.3数据改变只能通过纯函数完成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-容器组件和展示组件"><span class="nav-text">2.2 容器组件和展示组件</span></a></li></ol></div>
             
 
           </div>
