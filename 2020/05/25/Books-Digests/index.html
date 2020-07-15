@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="1.React1、我们在JSX中看到一个组件使用了onClick，但是并没有产生直接使用onclick的HTML，而是使用事件委托的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最高层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给特定函数。    因为React控制了组件的生命周期，在unmount的时候自然能">
+<meta name="description" content="前言目的：第一遍摘抄书中大部分内容，方便过第二、三遍时可以随时随地通过手机查看。 1.React1、我们在JSX中看到一个组件使用了onClick，但是并没有产生直接使用onclick的HTML，而是使用事件委托的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最高层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给">
 <meta name="keywords" content="摘要">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《深入浅出 React和Redux》">
 <meta property="og:url" content="http://yoursite.com/2020/05/25/Books-Digests/index.html">
 <meta property="og:site_name" content="Hi 加菲">
-<meta property="og:description" content="1.React1、我们在JSX中看到一个组件使用了onClick，但是并没有产生直接使用onclick的HTML，而是使用事件委托的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最高层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给特定函数。    因为React控制了组件的生命周期，在unmount的时候自然能">
+<meta property="og:description" content="前言目的：第一遍摘抄书中大部分内容，方便过第二、三遍时可以随时随地通过手机查看。 1.React1、我们在JSX中看到一个组件使用了onClick，但是并没有产生直接使用onclick的HTML，而是使用事件委托的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最高层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-07-08T11:41:46.955Z">
+<meta property="og:updated_time" content="2020-07-15T15:11:55.995Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《深入浅出 React和Redux》">
-<meta name="twitter:description" content="1.React1、我们在JSX中看到一个组件使用了onClick，但是并没有产生直接使用onclick的HTML，而是使用事件委托的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最高层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给特定函数。    因为React控制了组件的生命周期，在unmount的时候自然能">
+<meta name="twitter:description" content="前言目的：第一遍摘抄书中大部分内容，方便过第二、三遍时可以随时随地通过手机查看。 1.React1、我们在JSX中看到一个组件使用了onClick，但是并没有产生直接使用onclick的HTML，而是使用事件委托的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最高层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给">
 
 
 
@@ -374,7 +374,8 @@
       
 
       
-        <h1 id="1-React"><a href="#1-React" class="headerlink" title="1.React"></a>1.React</h1><p>1、我们在JSX中看到一个组件使用了onClick，但是并没有产生直接使用onclick的HTML，而是使用事件委托的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最高层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给特定函数。<br>    因为React控制了组件的生命周期，在unmount的时候自然能够清除相关的所有事件处理函数，内存泄漏也不再是一个问题。</p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>目的：第一遍摘抄书中大部分内容，方便过第二、三遍时可以随时随地通过手机查看。</p>
+<h1 id="1-React"><a href="#1-React" class="headerlink" title="1.React"></a>1.React</h1><p>1、我们在JSX中看到一个组件使用了onClick，但是并没有产生直接使用onclick的HTML，而是使用事件委托的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最高层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给特定函数。<br>    因为React控制了组件的生命周期，在unmount的时候自然能够清除相关的所有事件处理函数，内存泄漏也不再是一个问题。</p>
 <p>2、试试            </p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">使用 <span class="string">` create-react-app `</span> 命令创建项目</span><br><span class="line">执行 <span class="string">` npm run eject`</span> 将隐藏在 <span class="string">` react-scripts `</span> 中的一系列技术栈配置都显示出来 (不可逆)</span><br></pre></td></tr></table></figure>
 
@@ -433,8 +434,36 @@ componentDidMount只在浏览器端执行，在componentDidMount被调用的时�
 </ul>
 <h3 id="2-1-1唯一数据源"><a href="#2-1-1唯一数据源" class="headerlink" title="2.1.1唯一数据源"></a>2.1.1唯一数据源</h3><p>指的是应用的状态数据应该只存储在唯一的一个store上。<br>这个唯一Store的状态，是一个树形的对象，每个组件往往只是用树形对象上一部分的数据。</p>
 <h3 id="2-1-2保持状态只读"><a href="#2-1-2保持状态只读" class="headerlink" title="2.1.2保持状态只读"></a>2.1.2保持状态只读</h3><p>就是说不能直接修改状态，要修改Store的状态，必须要通过派发一个action对象完成。</p>
-<h3 id="2-1-3数据改变只能通过纯函数完成"><a href="#2-1-3数据改变只能通过纯函数完成" class="headerlink" title="2.1.3数据改变只能通过纯函数完成"></a>2.1.3数据改变只能通过纯函数完成</h3><h2 id="2-2-容器组件和展示组件"><a href="#2-2-容器组件和展示组件" class="headerlink" title="2.2 容器组件和展示组件"></a>2.2 容器组件和展示组件</h2><p>拆分容器组件和展示组件，是设计React组件的一种模式，和Redux没有直接关系。                                                                                                             </p>
+<h3 id="2-1-3数据改变只能通过纯函数完成"><a href="#2-1-3数据改变只能通过纯函数完成" class="headerlink" title="2.1.3数据改变只能通过纯函数完成"></a>2.1.3数据改变只能通过纯函数完成</h3><h2 id="2-2-容器组件和展示组件"><a href="#2-2-容器组件和展示组件" class="headerlink" title="2.2 容器组件和展示组件"></a>2.2 容器组件和展示组件</h2><p>拆分容器组件和展示组件，是设计React组件的一种模式，和Redux没有直接关系。  </p>
+<h2 id="2-1-react-redux"><a href="#2-1-react-redux" class="headerlink" title="2.1 react-redux"></a>2.1 react-redux</h2><h3 id="2-1-1-connect"><a href="#2-1-1-connect" class="headerlink" title="2.1.1 connect"></a>2.1.1 connect</h3><p><code>connect(mapStateToProps, mapDispatchToProps)(Counter)</code></p>
+<p>这里有两次函数执行，第一次是connect函数，第二次是把connect函数返回的函数再次执行，最后产生的就是容器组件。</p>
+<h3 id="2-1-2-Provider"><a href="#2-1-2-Provider" class="headerlink" title="2.1.2 Provider"></a>2.1.2 Provider</h3><p>react-redux要求store必须包含三个函数：subscribe、dispatch、getState。</p>
+<h1 id="3-模块化-React-和-Redux-应用"><a href="#3-模块化-React-和-Redux-应用" class="headerlink" title="3.模块化 React 和 Redux 应用"></a>3.模块化 React 和 Redux 应用</h1><ul>
+<li>代码文件的组织结构；</li>
+<li>确定模块的边界；</li>
+<li>Store的状态树设计。</li>
+</ul>
+<h2 id="3-1-代码文件的组织方式"><a href="#3-1-代码文件的组织方式" class="headerlink" title="3.1 代码文件的组织方式"></a>3.1 代码文件的组织方式</h2><p>Redux应用适合于“按功能组织”，也就是把完成同一应用功能的代码放在一个目录下，一个应用功能包含多个角色的代码。<br>拿Todo应用为例，那个应用的两个基本功能就是TodoList和Filter，所以代码文件目录如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">todoList/</span><br><span class="line">    actions.js</span><br><span class="line">    actionTypes.js</span><br><span class="line">    index.js</span><br><span class="line">    reducer.js</span><br><span class="line">    views/</span><br><span class="line">        component.js</span><br><span class="line">        container.js</span><br><span class="line">filter/</span><br><span class="line">    actions.js</span><br><span class="line">    actionTypes.js</span><br><span class="line">    index.js     // 这个文件把所有的角色导入，统一导出</span><br><span class="line">    reducer.js</span><br><span class="line">    views/</span><br><span class="line">        component.js</span><br><span class="line">        container.js</span><br></pre></td></tr></table></figure>
 
+<p>每个基本功能对应的其实就是一个功能模块，每个功能模块对应一个目录。<br>在这种组织方式下，当你要修改某个功能模块代码的时候，只要关注对应的目录就行了。</p>
+<h2 id="3-2-确定模块的边界"><a href="#3-2-确定模块的边界" class="headerlink" title="3.2 确定模块的边界"></a>3.2 确定模块的边界</h2><blockquote>
+<p>在理想的情况下，我们应该通过增加代码就能增加系统的功能，而不是通过对现有代码的修改来增加功能。</p>
+</blockquote>
+<p>不同功能模块之间的依赖关系应该简单而且清晰，也就是所谓的保持模块之间低耦合性；一个模块应该把自己的功能封装的很好，让外界不要太依赖与自己内部的结构，这样不会因为内部的变化而影响外部模块的功能，就是所谓高内聚性。</p>
+<p>React组件本身应该具有低耦合性和高内聚性的特点，不过，在Redux的游乐场中，React组件扮演的就是一个视图的角色，还有reducer、actions这些角色参与这个游戏。对于整个Redux应用而言，整体由模块构成，但是模块不再是React组件，而是由React组件加上相关reducer和actions构成的一个小整体。</p>
+<p>可以预期每个模块之间会有依赖关系，比如filter模块想要todoList的action构造函数和视图，那么我们希望对方如何导入？一种写法是像下面的代码这样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> actions <span class="keyword">from</span> <span class="string">'../todoList/actions'</span>;</span><br><span class="line"><span class="keyword">import</span> container <span class="keyword">as</span> TodoList <span class="keyword">from</span> <span class="string">'../todoList/views/container'</span>;</span><br></pre></td></tr></table></figure>
+
+<p>todoList和filter中的文件名几乎一样，但是这毕竟是模块内部的事情，不应该假设所有模块都按照这样的文件夹名命名。</p>
+<p>现在我们既然把一个目录看做一个模块，那我们要做的就是明确这个模块对外的接口，而这个接口应该实现把内部封装起来。todoList和filter模块目录下的index.js就是我们的模块接口。</p>
+<p>比如，在todoList/index.js中，代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> actions <span class="keyword">from</span> <span class="string">'../todoList/actions'</span>;</span><br><span class="line"><span class="keyword">import</span> reducer <span class="keyword">from</span> <span class="string">'./reducer'</span>;</span><br><span class="line"><span class="keyword">import</span> views <span class="keyword">as</span> TodoList <span class="keyword">from</span> <span class="string">'../todoList/views/container'</span>;</span><br><span class="line"><span class="keyword">export</span> &#123;actions, reducer, views&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>如果filter中的组件想要使用todoList中的功能，应该导入todoList这个目录，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;actions, reducer, views&#125; <span class="keyword">from</span> <span class="string">'../todoList'</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-3-状态树的设计"><a href="#3-3-状态树的设计" class="headerlink" title="3.3 状态树的设计"></a>3.3 状态树的设计</h2>
       
     </div>
     
@@ -610,7 +639,7 @@ componentDidMount只在浏览器端执行，在componentDidMount被调用的时�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-React"><span class="nav-text">1.React</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Redux"><span class="nav-text">2.Redux</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1唯一数据源"><span class="nav-text">2.1.1唯一数据源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2保持状态只读"><span class="nav-text">2.1.2保持状态只读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-3数据改变只能通过纯函数完成"><span class="nav-text">2.1.3数据改变只能通过纯函数完成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-容器组件和展示组件"><span class="nav-text">2.2 容器组件和展示组件</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-React"><span class="nav-text">1.React</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Redux"><span class="nav-text">2.Redux</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1唯一数据源"><span class="nav-text">2.1.1唯一数据源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2保持状态只读"><span class="nav-text">2.1.2保持状态只读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-3数据改变只能通过纯函数完成"><span class="nav-text">2.1.3数据改变只能通过纯函数完成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-容器组件和展示组件"><span class="nav-text">2.2 容器组件和展示组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-react-redux"><span class="nav-text">2.1 react-redux</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-connect"><span class="nav-text">2.1.1 connect</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-Provider"><span class="nav-text">2.1.2 Provider</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#3-模块化-React-和-Redux-应用"><span class="nav-text">3.模块化 React 和 Redux 应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-代码文件的组织方式"><span class="nav-text">3.1 代码文件的组织方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-确定模块的边界"><span class="nav-text">3.2 确定模块的边界</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-状态树的设计"><span class="nav-text">3.3 状态树的设计</span></a></li></ol></li></div>
             
 
           </div>
