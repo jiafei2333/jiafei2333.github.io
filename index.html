@@ -284,6 +284,168 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/29/CLI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="加菲">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/Prueba.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi 加菲">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/07/29/CLI/" itemprop="url">脚手架 CLI</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-29T19:35:40+08:00">
+                2020-07-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/脚手架/" itemprop="url" rel="index">
+                    <span itemprop="name">脚手架</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="1-创建模板"><a href="#1-创建模板" class="headerlink" title="1. 创建模板"></a>1. 创建模板</h1><p>我的模板：<a href="https://api.github.com/users/jiafei2333/repos" target="_blank" rel="noopener">https://api.github.com/users/jiafei2333/repos</a></p>
+<h1 id="2-搭建脚手架"><a href="#2-搭建脚手架" class="headerlink" title="2. 搭建脚手架"></a>2. 搭建脚手架</h1><p>代码地址：<a href="https://github.com/jiafei2333/cli" target="_blank" rel="noopener">https://github.com/jiafei2333/cli</a></p>
+<h1 id="3-READEME"><a href="#3-READEME" class="headerlink" title="3. READEME"></a>3. READEME</h1><ol>
+<li><code>yarn watch</code> 打开编译监听</li>
+<li><code>jiafei2333-cli</code> 查看命令行信息<ul>
+<li>2.1 本地全局安装 <code>npm install jiafei2333-cli -g</code></li>
+<li>2.2 <code>jiafei2333-cli install</code> 下载模板</li>
+</ul>
+</li>
+<li>更改模板配置步骤：<ul>
+<li>3.1 修改 utils/constants 中 DEFAULTS 的配置</li>
+<li>3.2 执行 <code>jiafei2333-cli config set registry xxxx</code>  |  <code>jiafei2333-cli config set type xxxx</code>  即可</li>
+</ul>
+</li>
+<li>发布流程<ul>
+<li>4.1 <code>nrm use npm</code> 切换npm源 (不是淘宝镜像可以跳过)</li>
+<li>4.2 <code>npm adduser</code> (第一次发包 npm login 先登录)</li>
+<li>4.3 <code>npm publish</code> (发布、更新包)</li>
+</ul>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/24/React-Redux-Hooks/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1849,7 +2011,10 @@ componentDidMount只在浏览器端执行，在componentDidMount被调用的时�
 
 <p>当mainMenu数据变化的时候页面菜单自动刷新显示。</p>
 <h2 id="3-4-路由问题"><a href="#3-4-路由问题" class="headerlink" title="3.4 路由问题"></a>3.4 路由问题</h2><h3 id="3-4-1-路由保护"><a href="#3-4-1-路由保护" class="headerlink" title="3.4.1 路由保护"></a>3.4.1 路由保护</h3><p>PrivateRoute.js 文件 这样写组件加载失败，之前好几周都是好好的，不知道为什么突然不行了？？</p>
-<h3 id="3-4-2-刷新问题"><a href="#3-4-2-刷新问题" class="headerlink" title="3.4.2 刷新问题"></a>3.4.2 刷新问题</h3><p>三级路由<code>localhost:3000/editorialCenter/auditing/auditPending</code>刷新界面又 <code>http://localhost:3000/editorialCenter/auditing/bundle.js 404 (Not Found)</code> ，之前怎么修复的忘记了…. </p>
+<h3 id="3-4-2-刷新问题"><a href="#3-4-2-刷新问题" class="headerlink" title="3.4.2 刷新问题"></a>3.4.2 刷新问题</h3><p>【问题】<br>三级路由<code>localhost:3000/editorialCenter/auditing/auditPending</code>刷新界面又 <code>http://localhost:3000/editorialCenter/auditing/bundle.js 404 (Not Found)</code> </p>
+<p>【解决】<br>webpack.base.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">output:&#123;</span><br><span class="line">    publicPath: <span class="string">'/'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h3 id="3-4-3-BrowserRouter-重定向问题"><a href="#3-4-3-BrowserRouter-重定向问题" class="headerlink" title="3.4.3 BrowserRouter 重定向问题"></a>3.4.3 BrowserRouter 重定向问题</h3><p>和 HashRouter 不同的是，BrowserRouter路由跳转会根据 /xxx 后面的具体页面去服务器请求，在开发模式下可以配置如下：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">devServer:&#123;</span><br><span class="line">    historyApiFallback: <span class="literal">true</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -1942,6 +2107,7 @@ componentDidMount只在浏览器端执行，在componentDidMount被调用的时�
 <li>12.<s>打包配置-打包分析-打包优化-查看bundle大小 </s>（完成）</li>
 <li>13.主题色配置</li>
 <li>14.打包之后样式引入问题</li>
+<li>15.Source Map配置及知识点</li>
 </ul>
 <p>github项目入口: <a href="https://github.com/jiafei2333/React-Redux-Antd" target="_blank" rel="noopener">https://github.com/jiafei2333/React-Redux-Antd</a></p>
 
@@ -14352,7 +14518,7 @@ componentDidMount只在浏览器端执行，在componentDidMount被调用的时�
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">76</span>
+                  <span class="site-state-item-count">77</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -14363,7 +14529,7 @@ componentDidMount只在浏览器端执行，在componentDidMount被调用的时�
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -14374,7 +14540,7 @@ componentDidMount只在浏览器端执行，在componentDidMount被调用的时�
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

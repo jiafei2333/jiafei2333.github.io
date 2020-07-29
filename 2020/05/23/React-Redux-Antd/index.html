@@ -92,7 +92,7 @@
 <meta property="og:image" content="https://jiafei2333.github.io/html/images/redux-project-less02.png">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/9/1647cf9387036a5b?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
 <meta property="og:image" content="https://jiafei2333.github.io/html/images/useRequest-hook.gif">
-<meta property="og:updated_time" content="2020-07-28T11:11:44.893Z">
+<meta property="og:updated_time" content="2020-07-29T11:31:41.918Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React+Redux+Antd">
 <meta name="twitter:description" content="1. 环境搭建npx create-react-app myapp 版本： 123456&quot;react&quot;: &quot;^16.13.1&quot;,&quot;redux&quot;: &quot;^4.0.5&quot;,&quot;react-dom&quot;: &quot;^16.13.1&quot;,&quot;react-router-dom&quot;: &quot;^5.2.0&quot;,&quot;@babel/core&quot;: &quot;^7.9.6&quot;,&quot;webpack&quot;: &quot;^4.43.0&quot;,  1.1 安装webpacknpm i">
@@ -462,7 +462,10 @@
 
 <p>当mainMenu数据变化的时候页面菜单自动刷新显示。</p>
 <h2 id="3-4-路由问题"><a href="#3-4-路由问题" class="headerlink" title="3.4 路由问题"></a>3.4 路由问题</h2><h3 id="3-4-1-路由保护"><a href="#3-4-1-路由保护" class="headerlink" title="3.4.1 路由保护"></a>3.4.1 路由保护</h3><p>PrivateRoute.js 文件 这样写组件加载失败，之前好几周都是好好的，不知道为什么突然不行了？？</p>
-<h3 id="3-4-2-刷新问题"><a href="#3-4-2-刷新问题" class="headerlink" title="3.4.2 刷新问题"></a>3.4.2 刷新问题</h3><p>三级路由<code>localhost:3000/editorialCenter/auditing/auditPending</code>刷新界面又 <code>http://localhost:3000/editorialCenter/auditing/bundle.js 404 (Not Found)</code> ，之前怎么修复的忘记了…. </p>
+<h3 id="3-4-2-刷新问题"><a href="#3-4-2-刷新问题" class="headerlink" title="3.4.2 刷新问题"></a>3.4.2 刷新问题</h3><p>【问题】<br>三级路由<code>localhost:3000/editorialCenter/auditing/auditPending</code>刷新界面又 <code>http://localhost:3000/editorialCenter/auditing/bundle.js 404 (Not Found)</code> </p>
+<p>【解决】<br>webpack.base.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">output:&#123;</span><br><span class="line">    publicPath: <span class="string">'/'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h3 id="3-4-3-BrowserRouter-重定向问题"><a href="#3-4-3-BrowserRouter-重定向问题" class="headerlink" title="3.4.3 BrowserRouter 重定向问题"></a>3.4.3 BrowserRouter 重定向问题</h3><p>和 HashRouter 不同的是，BrowserRouter路由跳转会根据 /xxx 后面的具体页面去服务器请求，在开发模式下可以配置如下：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">devServer:&#123;</span><br><span class="line">    historyApiFallback: <span class="literal">true</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -555,6 +558,7 @@
 <li>12.<s>打包配置-打包分析-打包优化-查看bundle大小 </s>（完成）</li>
 <li>13.主题色配置</li>
 <li>14.打包之后样式引入问题</li>
+<li>15.Source Map配置及知识点</li>
 </ul>
 <p>github项目入口: <a href="https://github.com/jiafei2333/React-Redux-Antd" target="_blank" rel="noopener">https://github.com/jiafei2333/React-Redux-Antd</a></p>
 
@@ -682,7 +686,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">76</span>
+                  <span class="site-state-item-count">77</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -693,7 +697,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -704,7 +708,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
