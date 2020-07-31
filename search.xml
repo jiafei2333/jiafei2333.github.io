@@ -1,23 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Babel 7</title>
+    <url>/2020/07/31/Babel7/</url>
+    <content><![CDATA[<h1 id="2-错误"><a href="#2-错误" class="headerlink" title="2. 错误"></a>2. 错误</h1><h2 id="2-1-报错"><a href="#2-1-报错" class="headerlink" title="2.1 [报错]"></a>2.1 [报错]</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> _ref = _asyncToGenerator( <span class="comment">/*#__PURE__*/</span>regeneratorRuntime.mark(<span class="function"><span class="keyword">function</span> <span class="title">_callee</span>(<span class="params">k</span>) </span>&#123;</span><br><span class="line">                                             ^</span><br><span class="line"><span class="built_in">ReferenceError</span>: regeneratorRuntime is not defined</span><br></pre></td></tr></table></figure>
+
+<p>[解决]<br>在 babel.config.js中加入plugin</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">plugins:[</span><br><span class="line">    <span class="string">"@babel/plugin-transform-runtime"</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Babel</category>
+      </categories>
+      <tags>
+        <tag>Babel</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>脚手架 CLI</title>
     <url>/2020/07/29/CLI/</url>
-    <content><![CDATA[<h1 id="1-创建模板"><a href="#1-创建模板" class="headerlink" title="1. 创建模板"></a>1. 创建模板</h1><p>我的模板：<a href="https://api.github.com/users/jiafei2333/repos" target="_blank" rel="noopener">https://api.github.com/users/jiafei2333/repos</a></p>
+    <content><![CDATA[<h1 id="1-创建模板"><a href="#1-创建模板" class="headerlink" title="1. 创建模板"></a>1. 创建模板</h1><p>我的模板：<a href="https://api.github.com/users/jiafei2333/repos" target="_blank" rel="noopener">https://api.github.com/users/jiafei2333/repos</a> 选择 <code>react-template</code></p>
 <h1 id="2-搭建脚手架"><a href="#2-搭建脚手架" class="headerlink" title="2. 搭建脚手架"></a>2. 搭建脚手架</h1><p>代码地址：<a href="https://github.com/jiafei2333/cli" target="_blank" rel="noopener">https://github.com/jiafei2333/cli</a></p>
-<h1 id="3-READEME"><a href="#3-READEME" class="headerlink" title="3. READEME"></a>3. READEME</h1><ol>
-<li><code>yarn watch</code> 打开编译监听</li>
-<li><code>jiafei2333-cli</code> 查看命令行信息<ul>
-<li>2.1 本地全局安装 <code>npm install jiafei2333-cli -g</code></li>
-<li>2.2 <code>jiafei2333-cli install</code> 下载模板</li>
-</ul>
+<h1 id="3-READEME"><a href="#3-READEME" class="headerlink" title="3. READEME"></a>3. READEME</h1><h2 id="3-1-介绍"><a href="#3-1-介绍" class="headerlink" title="3.1 介绍"></a>3.1 介绍</h2><p>前端开发CLI工具</p>
+<h2 id="3-2-包使用步骤"><a href="#3-2-包使用步骤" class="headerlink" title="3.2 包使用步骤"></a>3.2 包使用步骤</h2><ol>
+<li><p>全局安装：<code>npm install -g jiafei2333-cli</code></p>
 </li>
-<li>更改模板配置步骤：<ul>
+<li><p>查看命令：<code>jiafei2333-cli</code></p>
+</li>
+<li><p>安装本地配置文件：<code>jiafei2333-cli config set a 1</code></p>
+</li>
+<li><p>下载模板：<code>jiafei2333-cli i | install</code> 这里模板选择 <code>react-template</code>，也可以配置自己的模板</p>
+</li>
+</ol>
+<h2 id="3-3-脚手架使用步骤"><a href="#3-3-脚手架使用步骤" class="headerlink" title="3.3 脚手架使用步骤"></a>3.3 脚手架使用步骤</h2><ol>
+<li><p><code>yarn compile</code> 编译</p>
+</li>
+<li><p><code>jiafei2333-cli</code> 查看命令行信息</p>
+</li>
+<li><p>更改模板配置（二选一）：</p>
+<ul>
 <li>3.1 修改 utils/constants 中 DEFAULTS 的配置</li>
 <li>3.2 执行 <code>jiafei2333-cli config set registry xxxx</code>  |  <code>jiafei2333-cli config set type xxxx</code>  即可</li>
 </ul>
 </li>
-<li>发布流程<ul>
+<li><p>发布流程</p>
+<ul>
 <li>4.1 <code>nrm use npm</code> 切换npm源 (不是淘宝镜像可以跳过)</li>
 <li>4.2 <code>npm adduser</code> (第一次发包 npm login 先登录)</li>
 <li>4.3 <code>npm publish</code> (发布、更新包)</li>
