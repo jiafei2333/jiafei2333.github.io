@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="2. 错误2.1 [报错]123var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(k) &amp;#123;                                             ^ReferenceError: regeneratorRuntime is not def">
+<meta name="description" content="1. babel配置Babel 是一个工具链，主要用于将 ECMAScript 2015+ （又可称为ES6，ES7，ES8等）版本的代码转换为向后兼容的 JavaScript 语法，以便能够运行在当前和旧版本的浏览器或其他环境中（如低版本的 node 环境中）。 1.1 @babel/cli @babel/corecreate-react-app myapp 新建项目 [Install]yarn">
 <meta name="keywords" content="Babel">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Babel 7">
 <meta property="og:url" content="http://yoursite.com/2020/07/31/Babel7/index.html">
 <meta property="og:site_name" content="Hi 加菲">
-<meta property="og:description" content="2. 错误2.1 [报错]123var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(k) &amp;#123;                                             ^ReferenceError: regeneratorRuntime is not def">
+<meta property="og:description" content="1. babel配置Babel 是一个工具链，主要用于将 ECMAScript 2015+ （又可称为ES6，ES7，ES8等）版本的代码转换为向后兼容的 JavaScript 语法，以便能够运行在当前和旧版本的浏览器或其他环境中（如低版本的 node 环境中）。 1.1 @babel/cli @babel/corecreate-react-app myapp 新建项目 [Install]yarn">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-07-31T03:34:39.246Z">
+<meta property="og:updated_time" content="2020-08-06T14:27:44.959Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Babel 7">
-<meta name="twitter:description" content="2. 错误2.1 [报错]123var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(k) &amp;#123;                                             ^ReferenceError: regeneratorRuntime is not def">
+<meta name="twitter:description" content="1. babel配置Babel 是一个工具链，主要用于将 ECMAScript 2015+ （又可称为ES6，ES7，ES8等）版本的代码转换为向后兼容的 JavaScript 语法，以便能够运行在当前和旧版本的浏览器或其他环境中（如低版本的 node 环境中）。 1.1 @babel/cli @babel/corecreate-react-app myapp 新建项目 [Install]yarn">
 
 
 
@@ -374,10 +374,94 @@
       
 
       
-        <h1 id="2-错误"><a href="#2-错误" class="headerlink" title="2. 错误"></a>2. 错误</h1><h2 id="2-1-报错"><a href="#2-1-报错" class="headerlink" title="2.1 [报错]"></a>2.1 [报错]</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> _ref = _asyncToGenerator( <span class="comment">/*#__PURE__*/</span>regeneratorRuntime.mark(<span class="function"><span class="keyword">function</span> <span class="title">_callee</span>(<span class="params">k</span>) </span>&#123;</span><br><span class="line">                                             ^</span><br><span class="line"><span class="built_in">ReferenceError</span>: regeneratorRuntime is not defined</span><br></pre></td></tr></table></figure>
+        <h1 id="1-babel配置"><a href="#1-babel配置" class="headerlink" title="1. babel配置"></a>1. babel配置</h1><p>Babel 是一个工具链，主要用于将 ECMAScript 2015+ （又可称为ES6，ES7，ES8等）版本的代码转换为向后兼容的 JavaScript 语法，以便能够运行在当前和旧版本的浏览器或其他环境中（如低版本的 node 环境中）。</p>
+<h2 id="1-1-babel-cli-babel-core"><a href="#1-1-babel-cli-babel-core" class="headerlink" title="1.1 @babel/cli @babel/core"></a>1.1 @babel/cli @babel/core</h2><p><code>create-react-app myapp</code> 新建项目</p>
+<p>[Install]<br><code>yarn add @babel/cli @babel/core --dev</code></p>
+<p>@babel/cli 是babel提供的命令行工具，主要是提供babel这个命令。 官网推荐安装在项目中，而不是安装在全局环境，因为每个项目用的babel的版本不一样。可以单独管理和升级。</p>
+<p>Babel 的核心功能包含在 @babel/core 模块中。不安装 @babel/core，无法使用 babel 进行编译。</p>
+<p>修改 package.json, 在 script 里面新增</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"babel": "babel app.js -o ./dist/app.js"</span><br></pre></td></tr></table></figure>
+
+<p>App.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> func = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &lt;div&gt;</span><br><span class="line">      1</span><br><span class="line">      &#123;func()&#125;</span><br><span class="line">    &lt;/div&gt;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App;</span><br></pre></td></tr></table></figure>
+
+<p>执行 <code>yarn babel</code>，报错：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123; <span class="attr">SyntaxError</span>: E:\hjf\test\babel-app\src\App.js: Support <span class="keyword">for</span> the experimental syntax <span class="string">'jsx'</span> isn<span class="string">'t currently enabled </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Add @babel/preset-react (https://git.io/JfeDR) to the '</span>presets<span class="string">' section of your Babel config to en                                                able transformation.</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="1-2-babel-plugin-syntax-jsx-babel-preset-react"><a href="#1-2-babel-plugin-syntax-jsx-babel-preset-react" class="headerlink" title="1.2 @babel/plugin-syntax-jsx @babel/preset-react"></a>1.2 @babel/plugin-syntax-jsx @babel/preset-react</h2><h3 id="Install"><a href="#Install" class="headerlink" title="[Install]"></a>[Install]</h3><p><code>yarn add @babel/plugin-syntax-jsx --dev</code></p>
+<p>新建 <code>babel.config.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="string">"@babel/plugin-syntax-jsx"</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行 <code>yarn babel</code>，生成/dist/app.js文件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">let</span> func = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &lt;div&gt;</span><br><span class="line">      1</span><br><span class="line">      &#123;func()&#125;</span><br><span class="line">    &lt;/div&gt;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App;</span><br></pre></td></tr></table></figure>
+
+<p>没有任何变化…</p>
+<h3 id="Install-1"><a href="#Install-1" class="headerlink" title="[Install]"></a>[Install]</h3><p><code>yarn add @babel/preset-react --dev</code></p>
+<p>babel.config.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">+   presets: [</span><br><span class="line">+       <span class="string">"@babel/preset-react"</span></span><br><span class="line">+   ],</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="string">"@babel/plugin-syntax-jsx"</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行 <code>yarn babel</code>，生成/dist/app.js文件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> func = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="comment">/*#__PURE__*/</span>React.createElement(<span class="string">"div"</span>, <span class="literal">null</span>, <span class="string">"1"</span>, func());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App;</span><br></pre></td></tr></table></figure>
+
+<p>转换 JSX 语法</p>
+<h2 id="1-3-babel-plugin-transform-arrow-functions"><a href="#1-3-babel-plugin-transform-arrow-functions" class="headerlink" title="1.3 @babel/plugin-transform-arrow-functions"></a>1.3 @babel/plugin-transform-arrow-functions</h2><p>[Install]<br><code>yarn add @babel/plugin-transform-arrow-functions --dev</code></p>
+<p>执行 <code>yarn babel</code>，生成/dist/app.js文件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> func = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="comment">/*#__PURE__*/</span>React.createElement(<span class="string">"div"</span>, <span class="literal">null</span>, <span class="string">"1"</span>, func());</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App;</span><br></pre></td></tr></table></figure>
+
+<p>转化箭头函数，这里let没有转化</p>
+<h2 id="1-4-preset-预设的插件集合"><a href="#1-4-preset-预设的插件集合" class="headerlink" title="1.4 preset(预设的插件集合)"></a>1.4 preset(预设的插件集合)</h2><p><a href="https://www.babeljs.cn/docs/presets" target="_blank" rel="noopener">官网</a><br>预设的插件包，不需要一个一个引入</p>
+<p>【官方 Preset】：针对常用环境编写了一些 preset：</p>
+<ul>
+<li>@babel/preset-env</li>
+<li>@babel/preset-flow   </li>
+<li>@babel/preset-react</li>
+<li>@babel/preset-typescript</li>
+</ul>
+<ol>
+<li>Babel 可以删除类型注释！Babel 不做类型检查，但仍然需要安装 Flow 或 TypeScript 来执行类型检查的工作。</li>
+<li>@babel/preset-env 官方描述：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@babel/preset-env is a smart preset that allows you to use the latest JavaScript without needing to micromanage <span class="built_in">which</span> syntax transforms (and optionally, browser polyfills) are needed by your target environment(s). This both makes your life easier and JavaScript bundles smaller!</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>@babel/preset env是一个智能预置，它允许您使用最新的JavaScript，而无需对目标环境所需的语法转换（以及可选的浏览器polyfill）进行微观管理。这不仅让您的生活更轻松，而且JavaScript捆绑包更小！</p>
+<p>同时使用多个Plugin和Preset时的执行顺序：</p>
+<ol>
+<li>先执行完所有Plugin，再执行Preset。</li>
+<li>多个Plugin，按照声明次序顺序执行。</li>
+<li>多个Preset，按照声明次序逆序执行。</li>
+</ol>
+<h3 id="1-4-1-babel-preset-env"><a href="#1-4-1-babel-preset-env" class="headerlink" title="1.4.1 @babel/preset-env"></a>1.4.1 @babel/preset-env</h3><p>[Install]<br><code>yarn add @babel/preset-env --dev</code></p>
+<p>babel.config.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    presets: [</span><br><span class="line">        <span class="string">"@babel/preset-react"</span>,</span><br><span class="line">+       <span class="string">"@babel/preset-env"</span></span><br><span class="line">    ],</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="string">"@babel/plugin-syntax-jsx"</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行 <code>yarn babel</code>，生成/dist/app.js文件，转化成功</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">"use strict"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span> <span class="title">func</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-4-2-babel-preset-flow-babel-preset-typescript"><a href="#1-4-2-babel-preset-flow-babel-preset-typescript" class="headerlink" title="1.4.2 @babel/preset-flow @babel/preset-typescript"></a>1.4.2 @babel/preset-flow @babel/preset-typescript</h3><p>[Install]<br><code>yarn add @babel/preset-flow @babel/preset-typescript --dev</code></p>
+<p>babel.config.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    presets: [</span><br><span class="line">        <span class="string">"@babel/preset-react"</span>,</span><br><span class="line">        <span class="string">"@babel/preset-env"</span>,</span><br><span class="line">+       <span class="string">"@babel/preset-flow"</span>,</span><br><span class="line">+       <span class="string">"@babel/preset-typescript"</span></span><br><span class="line">    ],</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="string">"@babel/plugin-syntax-jsx"</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>安装官网推荐的预设插件包</p>
+<h2 id="1-5-babel-polyfill"><a href="#1-5-babel-polyfill" class="headerlink" title="1.5 @babel/polyfill"></a>1.5 @babel/polyfill</h2><p>App.js 新增代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>]</span><br><span class="line">arr.includes(<span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+
+<p>执行 <code>yarn babel</code>，生成/dist/app.js文件，includes 并没有转化</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">"use strict"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>];</span><br><span class="line">arr.includes(<span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+
+<p>[Install]<br><code>yarn add @babel/polyfill</code></p>
+<p>接下去阅读相关文章</p>
+<h1 id="2-错误"><a href="#2-错误" class="headerlink" title="2. 错误"></a>2. 错误</h1><h2 id="2-1-报错"><a href="#2-1-报错" class="headerlink" title="2.1 [报错]"></a>2.1 [报错]</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> _ref = _asyncToGenerator( <span class="comment">/*#__PURE__*/</span>regeneratorRuntime.mark(<span class="function"><span class="keyword">function</span> <span class="title">_callee</span>(<span class="params">k</span>) </span>&#123;</span><br><span class="line">                                             ^</span><br><span class="line"><span class="built_in">ReferenceError</span>: regeneratorRuntime is not defined</span><br></pre></td></tr></table></figure>
 
 <p>[解决]<br>在 babel.config.js中加入plugin</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plugins:[</span><br><span class="line">    <span class="string">"@babel/plugin-transform-runtime"</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h1 id="3-相关文章"><a href="#3-相关文章" class="headerlink" title="3. 相关文章"></a>3. 相关文章</h1><ol>
+<li><a href="https://www.babeljs.cn/docs/" target="_blank" rel="noopener">https://www.babeljs.cn/docs/</a></li>
+<li><a href="https://juejin.im/post/6844904008679686152" target="_blank" rel="noopener">https://juejin.im/post/6844904008679686152</a></li>
+<li><a href="https://juejin.im/post/6844904132294213639#heading-0" target="_blank" rel="noopener">https://juejin.im/post/6844904132294213639#heading-0</a></li>
+<li><a href="https://www.jianshu.com/p/cbd48919a0cc" target="_blank" rel="noopener">https://www.jianshu.com/p/cbd48919a0cc</a></li>
+</ol>
+
       
     </div>
     
@@ -498,7 +582,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">79</span>
+                  <span class="site-state-item-count">81</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -509,7 +593,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -520,7 +604,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -553,7 +637,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#2-错误"><span class="nav-text">2. 错误</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-报错"><span class="nav-text">2.1 [报错]</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-babel配置"><span class="nav-text">1. babel配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-babel-cli-babel-core"><span class="nav-text">1.1 @babel/cli @babel/core</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-babel-plugin-syntax-jsx-babel-preset-react"><span class="nav-text">1.2 @babel/plugin-syntax-jsx @babel/preset-react</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Install"><span class="nav-text">[Install]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Install-1"><span class="nav-text">[Install]</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-babel-plugin-transform-arrow-functions"><span class="nav-text">1.3 @babel/plugin-transform-arrow-functions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-preset-预设的插件集合"><span class="nav-text">1.4 preset(预设的插件集合)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-1-babel-preset-env"><span class="nav-text">1.4.1 @babel/preset-env</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-2-babel-preset-flow-babel-preset-typescript"><span class="nav-text">1.4.2 @babel/preset-flow @babel/preset-typescript</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-babel-polyfill"><span class="nav-text">1.5 @babel/polyfill</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-错误"><span class="nav-text">2. 错误</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-报错"><span class="nav-text">2.1 [报错]</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-相关文章"><span class="nav-text">3. 相关文章</span></a></li></ol></div>
             
 
           </div>

@@ -284,6 +284,321 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/09/Daily-CSS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="加菲">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/Prueba.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi 加菲">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/08/09/Daily-CSS/" itemprop="url">日常 CSS</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-09T22:33:21+08:00">
+                2020-08-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CSS/" itemprop="url" rel="index">
+                    <span itemprop="name">CSS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-loading动画"><a href="#1-loading动画" class="headerlink" title="1. loading动画"></a>1. loading动画</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.loadingImg</span>&#123;</span><br><span class="line">  <span class="attribute">animation</span>: loadingCircle <span class="number">1s</span> infinite;</span><br><span class="line">  <span class="attribute">-webkit-animation</span>: loadingCircle <span class="number">1s</span> infinite;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.myTransform(@deg: 0deg)&#123;</span><br><span class="line">  <span class="selector-tag">transform</span>: <span class="selector-tag">rotate</span>(@<span class="keyword">deg</span>);</span><br><span class="line">  <span class="selector-tag">-webkit-transform</span>: <span class="selector-tag">rotate</span>(@<span class="keyword">deg</span>);</span><br><span class="line">  <span class="selector-tag">-moz-transform</span>: <span class="selector-tag">rotate</span>(@<span class="keyword">deg</span>);</span><br><span class="line">  <span class="selector-tag">-o-transform</span>: <span class="selector-tag">rotate</span>(@<span class="keyword">deg</span>);</span><br><span class="line">  <span class="selector-tag">-ms-transform</span>: <span class="selector-tag">rotate</span>(@<span class="keyword">deg</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@<span class="keyword">keyframes</span> loadingCircle&#123;</span><br><span class="line">  <span class="selector-tag">from</span>&#123;</span><br><span class="line">    .myTransform(@deg: 0deg)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-tag">to</span>&#123;</span><br><span class="line">    .myTransform(@deg: -360deg)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">@-<span class="keyword">moz</span>-<span class="keyword">keyframes</span> loadingCircle&#123;</span><br><span class="line">  <span class="selector-tag">from</span>&#123;</span><br><span class="line">    .myTransform(@deg: 0deg)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-tag">to</span>&#123;</span><br><span class="line">    .myTransform(@deg: -360deg)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">@-<span class="keyword">webkit</span>-<span class="keyword">keyframes</span> loadingCircle&#123;</span><br><span class="line">  <span class="selector-tag">from</span>&#123;</span><br><span class="line">    .myTransform(@deg: 0deg)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-tag">to</span>&#123;</span><br><span class="line">    .myTransform(@deg: -360deg)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@-<span class="keyword">o</span>-<span class="keyword">keyframes</span> loadingCircle&#123;</span><br><span class="line">  <span class="selector-tag">from</span>&#123;</span><br><span class="line">    .myTransform(@deg: 0deg)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-tag">to</span>&#123;</span><br><span class="line">    .myTransform(@deg: -360deg)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/06/one-question-a-day/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="加菲">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/Prueba.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi 加菲">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/08/06/one-question-a-day/" itemprop="url">每日一问</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-06T22:24:32+08:00">
+                2020-08-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/面试题/" itemprop="url" rel="index">
+                    <span itemprop="name">面试题</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>[Q1] Loader和Plugin的区别是什么？</p>
+<p>[A1] </p>
+<ol>
+<li><p>loader 用于加载某些资源文件，它是一个转换器，将A文件进行编译成B文件，比如：将A.less转换为A.css，单纯的文件转换过程。 因为webpack 本身只能打包commonjs规范的js文件，对于其他资源例如 css，图片，或者其他的语法集，比如 jsx，是没有办法加载的。 这就需要对应的loader将资源转化，加载进来。从字面意思也能看出，loader是用于加载的，它作用于一个个文件上，并对这些文件进行一些处理，诸如编译、压缩等，最终一起打包到指定的文件中。</p>
+</li>
+<li><p>而plugin 用于扩展webpack的功能，是一个扩展器。它直接作用于 webpack，扩展了webpack本身的功能，针对的是loader结束后，webpack打包的整个过程，它并不直接操作文件，而是基于事件机制工作（在webpack运行的生命周期中会广播出许多事件，plugin可以监听这些事件，在合适的时机通过webpack提供的API改变输出结果。）。当然loader也时变相的扩展了 webpack ，但是它只专注于转化文件这一个领域。而plugin的功能更加的丰富，而不仅局限于资源的加载。</p>
+</li>
+</ol>
+<p>[参考答案]</p>
+<ol>
+<li>作用不同：<br>Loader直译为”加载器”。Webpack将一切文件视为模块，但是webpack原生是只能解析js文件，如果想将其他文件也打包的话，就会用到loader。 所以Loader的作用是让webpack拥有了加载和解析非JavaScript文件的能力。<br>Plugin直译为”插件”。Plugin可以扩展webpack的功能，让webpack具有更多的灵活性。 在 Webpack 运行的生命周期中会广播出许多事件，Plugin 可以监听这些事件，在合适的时机通过 Webpack 提供的 API 改变输出结果。</li>
+<li>用法不同：<br>Loader在module.rules中配置，也就是说作为模块的解析规则而存在。 类型为数组，每一项都是一个Object，里面描述了对于什么类型的文件（test），使用什么加载(loader)和使用的参数（options）<br>Plugin在plugins中单独配置。 类型为数组，每一项是一个plugin的实例，参数都通过构造函数传入。</li>
+</ol>
+<p>[Q2] 请解释React中props和state的区别？<br>[A2]</p>
+<ol>
+<li>共同点： props 和 state 都属于 react 数据接口，他们都可以决定组件的行为和状态</li>
+<li>不同点：<br>props 属于对外接口，state 属于对内接口，props 主要是父组件向子组件传递参数配置该组件，组件内部无法控制也无法修改。想要获取父组件的数据只能通过回调函数的形式（即在自组件中调用父组件的方法）。<br>state 主要用于保存，控制，修改组件自身状态，你可以理解state是一个局部的，只能被组件自身控制的数据源。不能被外界获取和修改。我们可以通过this.setState更新数据，setState导致组件重新渲染。<br>总之props是让外部对组件进行配置，state是让组件控制自己的状态</li>
+</ol>
+<p>[Q3] 浏览器的本地存储的cookie了解多少？<br>[A3] </p>
+<ol>
+<li>含义：Cookie指某些网站为了辨别用户身份而储存在用户本地终端上的数据(通常经过加密)。 cookie是服务端生成，客户端进行维护和存储。通过cookie,可以让服务器知道请求是来源哪个客户端，就可以进行客户端状态的维护，比如登陆后刷新，请求头就会携带登陆时response header中的set-cookie,Web服务器接到请求时也能读出cookie的值，根据cookie值的内容就可以判断和恢复一些用户的信息状态。也可以理解为，就是客户端用来存储数据的一种，以键值对的形式存在，既可以在客户端设置，也可以在服务器端设置，cookie会跟随任意HTTP请求一起发送。</li>
+<li>缺点：<ul>
+<li>大小最多只能存储4kb的数据（各浏览器之间略有不同），各浏览器的cookie每一个<code>name=value</code>的value值大概在4k，所以4k并不是一个域名下所有的cookie共享的，而是一个name的大小，此外很多浏览器对一个站点的cookie个数也是有限制的。</li>
+<li>不安全。</li>
+</ul>
+</li>
+<li>分类：<ul>
+<li>会话cookie：没有设置有效时间的 cookie。只要关闭了浏览器，cookie 就会被销毁。</li>
+<li>永久cookie：cookie 被保存在文件中，在有效时间内可长期存在，浏览器重启或机器重启都可以再次读取到cookie。</li>
+</ul>
+</li>
+<li>应用场景：记住密码，下次自动登录；购物车功能；保存用户的偏好，比如网页的字体大小、背景色等；记录用户浏览数据，进行商品（广告）推荐；多个站点共享登录状态（同一住域名下多个子站点）</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/01/Sentry/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -511,10 +826,94 @@
       
         
           
-            <h1 id="2-错误"><a href="#2-错误" class="headerlink" title="2. 错误"></a>2. 错误</h1><h2 id="2-1-报错"><a href="#2-1-报错" class="headerlink" title="2.1 [报错]"></a>2.1 [报错]</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> _ref = _asyncToGenerator( <span class="comment">/*#__PURE__*/</span>regeneratorRuntime.mark(<span class="function"><span class="keyword">function</span> <span class="title">_callee</span>(<span class="params">k</span>) </span>&#123;</span><br><span class="line">                                             ^</span><br><span class="line"><span class="built_in">ReferenceError</span>: regeneratorRuntime is not defined</span><br></pre></td></tr></table></figure>
+            <h1 id="1-babel配置"><a href="#1-babel配置" class="headerlink" title="1. babel配置"></a>1. babel配置</h1><p>Babel 是一个工具链，主要用于将 ECMAScript 2015+ （又可称为ES6，ES7，ES8等）版本的代码转换为向后兼容的 JavaScript 语法，以便能够运行在当前和旧版本的浏览器或其他环境中（如低版本的 node 环境中）。</p>
+<h2 id="1-1-babel-cli-babel-core"><a href="#1-1-babel-cli-babel-core" class="headerlink" title="1.1 @babel/cli @babel/core"></a>1.1 @babel/cli @babel/core</h2><p><code>create-react-app myapp</code> 新建项目</p>
+<p>[Install]<br><code>yarn add @babel/cli @babel/core --dev</code></p>
+<p>@babel/cli 是babel提供的命令行工具，主要是提供babel这个命令。 官网推荐安装在项目中，而不是安装在全局环境，因为每个项目用的babel的版本不一样。可以单独管理和升级。</p>
+<p>Babel 的核心功能包含在 @babel/core 模块中。不安装 @babel/core，无法使用 babel 进行编译。</p>
+<p>修改 package.json, 在 script 里面新增</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"babel": "babel app.js -o ./dist/app.js"</span><br></pre></td></tr></table></figure>
+
+<p>App.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> func = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &lt;div&gt;</span><br><span class="line">      1</span><br><span class="line">      &#123;func()&#125;</span><br><span class="line">    &lt;/div&gt;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App;</span><br></pre></td></tr></table></figure>
+
+<p>执行 <code>yarn babel</code>，报错：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123; <span class="attr">SyntaxError</span>: E:\hjf\test\babel-app\src\App.js: Support <span class="keyword">for</span> the experimental syntax <span class="string">'jsx'</span> isn<span class="string">'t currently enabled </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Add @babel/preset-react (https://git.io/JfeDR) to the '</span>presets<span class="string">' section of your Babel config to en                                                able transformation.</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="1-2-babel-plugin-syntax-jsx-babel-preset-react"><a href="#1-2-babel-plugin-syntax-jsx-babel-preset-react" class="headerlink" title="1.2 @babel/plugin-syntax-jsx @babel/preset-react"></a>1.2 @babel/plugin-syntax-jsx @babel/preset-react</h2><h3 id="Install"><a href="#Install" class="headerlink" title="[Install]"></a>[Install]</h3><p><code>yarn add @babel/plugin-syntax-jsx --dev</code></p>
+<p>新建 <code>babel.config.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="string">"@babel/plugin-syntax-jsx"</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行 <code>yarn babel</code>，生成/dist/app.js文件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">let</span> func = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &lt;div&gt;</span><br><span class="line">      1</span><br><span class="line">      &#123;func()&#125;</span><br><span class="line">    &lt;/div&gt;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App;</span><br></pre></td></tr></table></figure>
+
+<p>没有任何变化…</p>
+<h3 id="Install-1"><a href="#Install-1" class="headerlink" title="[Install]"></a>[Install]</h3><p><code>yarn add @babel/preset-react --dev</code></p>
+<p>babel.config.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">+   presets: [</span><br><span class="line">+       <span class="string">"@babel/preset-react"</span></span><br><span class="line">+   ],</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="string">"@babel/plugin-syntax-jsx"</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行 <code>yarn babel</code>，生成/dist/app.js文件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> func = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="comment">/*#__PURE__*/</span>React.createElement(<span class="string">"div"</span>, <span class="literal">null</span>, <span class="string">"1"</span>, func());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App;</span><br></pre></td></tr></table></figure>
+
+<p>转换 JSX 语法</p>
+<h2 id="1-3-babel-plugin-transform-arrow-functions"><a href="#1-3-babel-plugin-transform-arrow-functions" class="headerlink" title="1.3 @babel/plugin-transform-arrow-functions"></a>1.3 @babel/plugin-transform-arrow-functions</h2><p>[Install]<br><code>yarn add @babel/plugin-transform-arrow-functions --dev</code></p>
+<p>执行 <code>yarn babel</code>，生成/dist/app.js文件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> func = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="comment">/*#__PURE__*/</span>React.createElement(<span class="string">"div"</span>, <span class="literal">null</span>, <span class="string">"1"</span>, func());</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App;</span><br></pre></td></tr></table></figure>
+
+<p>转化箭头函数，这里let没有转化</p>
+<h2 id="1-4-preset-预设的插件集合"><a href="#1-4-preset-预设的插件集合" class="headerlink" title="1.4 preset(预设的插件集合)"></a>1.4 preset(预设的插件集合)</h2><p><a href="https://www.babeljs.cn/docs/presets" target="_blank" rel="noopener">官网</a><br>预设的插件包，不需要一个一个引入</p>
+<p>【官方 Preset】：针对常用环境编写了一些 preset：</p>
+<ul>
+<li>@babel/preset-env</li>
+<li>@babel/preset-flow   </li>
+<li>@babel/preset-react</li>
+<li>@babel/preset-typescript</li>
+</ul>
+<ol>
+<li>Babel 可以删除类型注释！Babel 不做类型检查，但仍然需要安装 Flow 或 TypeScript 来执行类型检查的工作。</li>
+<li>@babel/preset-env 官方描述：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@babel/preset-env is a smart preset that allows you to use the latest JavaScript without needing to micromanage <span class="built_in">which</span> syntax transforms (and optionally, browser polyfills) are needed by your target environment(s). This both makes your life easier and JavaScript bundles smaller!</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>@babel/preset env是一个智能预置，它允许您使用最新的JavaScript，而无需对目标环境所需的语法转换（以及可选的浏览器polyfill）进行微观管理。这不仅让您的生活更轻松，而且JavaScript捆绑包更小！</p>
+<p>同时使用多个Plugin和Preset时的执行顺序：</p>
+<ol>
+<li>先执行完所有Plugin，再执行Preset。</li>
+<li>多个Plugin，按照声明次序顺序执行。</li>
+<li>多个Preset，按照声明次序逆序执行。</li>
+</ol>
+<h3 id="1-4-1-babel-preset-env"><a href="#1-4-1-babel-preset-env" class="headerlink" title="1.4.1 @babel/preset-env"></a>1.4.1 @babel/preset-env</h3><p>[Install]<br><code>yarn add @babel/preset-env --dev</code></p>
+<p>babel.config.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    presets: [</span><br><span class="line">        <span class="string">"@babel/preset-react"</span>,</span><br><span class="line">+       <span class="string">"@babel/preset-env"</span></span><br><span class="line">    ],</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="string">"@babel/plugin-syntax-jsx"</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行 <code>yarn babel</code>，生成/dist/app.js文件，转化成功</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">"use strict"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span> <span class="title">func</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-4-2-babel-preset-flow-babel-preset-typescript"><a href="#1-4-2-babel-preset-flow-babel-preset-typescript" class="headerlink" title="1.4.2 @babel/preset-flow @babel/preset-typescript"></a>1.4.2 @babel/preset-flow @babel/preset-typescript</h3><p>[Install]<br><code>yarn add @babel/preset-flow @babel/preset-typescript --dev</code></p>
+<p>babel.config.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    presets: [</span><br><span class="line">        <span class="string">"@babel/preset-react"</span>,</span><br><span class="line">        <span class="string">"@babel/preset-env"</span>,</span><br><span class="line">+       <span class="string">"@babel/preset-flow"</span>,</span><br><span class="line">+       <span class="string">"@babel/preset-typescript"</span></span><br><span class="line">    ],</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="string">"@babel/plugin-syntax-jsx"</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>安装官网推荐的预设插件包</p>
+<h2 id="1-5-babel-polyfill"><a href="#1-5-babel-polyfill" class="headerlink" title="1.5 @babel/polyfill"></a>1.5 @babel/polyfill</h2><p>App.js 新增代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>]</span><br><span class="line">arr.includes(<span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+
+<p>执行 <code>yarn babel</code>，生成/dist/app.js文件，includes 并没有转化</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">"use strict"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>];</span><br><span class="line">arr.includes(<span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+
+<p>[Install]<br><code>yarn add @babel/polyfill</code></p>
+<p>接下去阅读相关文章</p>
+<h1 id="2-错误"><a href="#2-错误" class="headerlink" title="2. 错误"></a>2. 错误</h1><h2 id="2-1-报错"><a href="#2-1-报错" class="headerlink" title="2.1 [报错]"></a>2.1 [报错]</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> _ref = _asyncToGenerator( <span class="comment">/*#__PURE__*/</span>regeneratorRuntime.mark(<span class="function"><span class="keyword">function</span> <span class="title">_callee</span>(<span class="params">k</span>) </span>&#123;</span><br><span class="line">                                             ^</span><br><span class="line"><span class="built_in">ReferenceError</span>: regeneratorRuntime is not defined</span><br></pre></td></tr></table></figure>
 
 <p>[解决]<br>在 babel.config.js中加入plugin</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plugins:[</span><br><span class="line">    <span class="string">"@babel/plugin-transform-runtime"</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h1 id="3-相关文章"><a href="#3-相关文章" class="headerlink" title="3. 相关文章"></a>3. 相关文章</h1><ol>
+<li><a href="https://www.babeljs.cn/docs/" target="_blank" rel="noopener">https://www.babeljs.cn/docs/</a></li>
+<li><a href="https://juejin.im/post/6844904008679686152" target="_blank" rel="noopener">https://juejin.im/post/6844904008679686152</a></li>
+<li><a href="https://juejin.im/post/6844904132294213639#heading-0" target="_blank" rel="noopener">https://juejin.im/post/6844904132294213639#heading-0</a></li>
+<li><a href="https://www.jianshu.com/p/cbd48919a0cc" target="_blank" rel="noopener">https://www.jianshu.com/p/cbd48919a0cc</a></li>
+</ol>
+
           
         
       
@@ -1706,7 +2105,7 @@
 <p>【类组件名.defaultProps】在ES6中可以指定props 的初始值</p>
 <p>【render】<br>  函数应该是一个纯函数，完全根据this.state和this.props来决定返回的结果，而且不要产生任何副作用。</p>
 <p>【componentDidMount】<br>  render函数被调用完之后，componentDidMount函数并不是会被立刻调用，componentDidMount被调用的时候，render函数返回的东西已经引发了渲染，组件已经被”装载“到了DOM树上。</p>
-<p>  举例：<br>  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;App&gt;</span><br><span class="line">  &lt;Counter1&gt;&lt;/Counter1&gt;</span><br><span class="line">  &lt;Counter2&gt;&lt;/Counter2&gt;</span><br><span class="line">  &lt;Counter3&gt;&lt;/Counter3&gt;</span><br><span class="line">&lt;<span class="regexp">/App&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>  举例：<br>  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;App&gt;</span><br><span class="line">  &lt;Counter1&gt;<span class="xml"><span class="tag">&lt;/<span class="name">Counter1</span>&gt;</span></span></span><br><span class="line">  &lt;Counter2&gt;<span class="xml"><span class="tag">&lt;/<span class="name">Counter2</span>&gt;</span></span></span><br><span class="line">  &lt;Counter3&gt;<span class="xml"><span class="tag">&lt;/<span class="name">Counter3</span>&gt;</span></span></span><br><span class="line">&lt;<span class="regexp">/App&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>  父组件包含三个子组件，在这4个组件中各自生命周期函数中打印文字，如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">constructor App</span><br><span class="line">componentWillMount App</span><br><span class="line">render App</span><br><span class="line">constructor Counter1</span><br><span class="line">componentWillMount Counter1</span><br><span class="line">render Counter1</span><br><span class="line">constructor Counter2</span><br><span class="line">componentWillMount Counter2</span><br><span class="line">render Counter2</span><br><span class="line">constructor Counter3</span><br><span class="line">componentWillMount Counter3</span><br><span class="line">render Counter3</span><br><span class="line">componentDidMount Counter1</span><br><span class="line">componentDidMount Counter2</span><br><span class="line">componentDidMount Counter3</span><br><span class="line">componentDidMount App</span><br></pre></td></tr></table></figure>
 
@@ -2319,6 +2718,10 @@ componentDidMount只在浏览器端执行，在componentDidMount被调用的时�
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">devServer:&#123;</span><br><span class="line">    historyApiFallback: <span class="literal">true</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>在生产环境下，我这里的后台是.net环境，远程桌面是用IIS配置的站点环境，只要在服务器端下载安装 <a href="https://www.iis.net/downloads/microsoft/url-rewrite，然后在打包好的跟目录下添加项目中的" target="_blank" rel="noopener">https://www.iis.net/downloads/microsoft/url-rewrite，然后在打包好的跟目录下添加项目中的</a> <code>web.config</code>文件即可。</p>
+<h2 id="3-5-优化问题"><a href="#3-5-优化问题" class="headerlink" title="3.5 优化问题"></a>3.5 优化问题</h2><h3 id="3-5-1-babel"><a href="#3-5-1-babel" class="headerlink" title="3.5.1 babel"></a>3.5.1 babel</h3><h4 id="babel-import-plugin"><a href="#babel-import-plugin" class="headerlink" title="babel-import-plugin"></a>babel-import-plugin</h4><p>在.babelrc中配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"plugins"</span>: [</span><br><span class="line">        [<span class="string">"import"</span>,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"libraryName"</span>: <span class="string">"antd"</span>,</span><br><span class="line">                <span class="string">"libraryDirectory"</span>: <span class="string">"es"</span>,</span><br><span class="line">                <span class="string">"style"</span>: <span class="literal">true</span>   // or <span class="string">'css'</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>跟没有配置对比，多出了将近300k的css文件，其他文件的大小都是一样的 ？？？为啥<br><a href="https://jiafei2333.github.io/html/images/babel-error-Picture.png" target="_blank" rel="noopener"></a></p>
 <h1 id="4-报错"><a href="#4-报错" class="headerlink" title="4. 报错"></a>4. 报错</h1><h2 id="4-1-ant-引入-less后缀的样式文件"><a href="#4-1-ant-引入-less后缀的样式文件" class="headerlink" title="4.1 ant 引入.less后缀的样式文件"></a>4.1 ant 引入.less后缀的样式文件</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// import 'antd/dist/antd.css';</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">'antd/dist/antd.less'</span>;</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://jiafei2333.github.io/html/images/redux-project-less01.png" alt></p>
@@ -2330,6 +2733,7 @@ componentDidMount只在浏览器端执行，在componentDidMount被调用的时�
 
 <p>报错<br><img src="https://jiafei2333.github.io/html/images/redux-project-less02.png" alt></p>
 <p>当前版本 <code>&quot;less-loader&quot;: &quot;^6.1.0&quot;</code>，查了之后都说v6有兼容性问题，所以将版本改为<code>&quot;less-loader&quot;: &quot;5.0.0&quot;,</code>,这样就可以了，没有报错。</p>
+<h2 id="4-2-speed-measure-webpack-plugin"><a href="#4-2-speed-measure-webpack-plugin" class="headerlink" title="4.2 speed-measure-webpack-plugin"></a>4.2 speed-measure-webpack-plugin</h2><p><code>speed-measure-webpack-plugin</code> 和 <code>HotModuleReplacementPlugin</code> 不能同时使用，否则会报错。所以在开发环境中先把费时分析插件注释，见[webpack.base.js]。</p>
 <h1 id="5-知识点"><a href="#5-知识点" class="headerlink" title="5. 知识点"></a>5. 知识点</h1><h2 id="5-1-redux-thunk"><a href="#5-1-redux-thunk" class="headerlink" title="5.1 redux-thunk"></a>5.1 redux-thunk</h2><p>redux-thunk的原理就是判别action的类型，如果action是函数，就调用这个函数。thunk仅仅做了执行这个函数，并不在乎函数主体内是什么，也就是说thunk使得redux可以接受函数作为action，但是函数的内部可以多种多样。比如下面是一个获取商品列表的异步操作所对应的action：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> ()=&gt;<span class="function">(<span class="params">dispatch</span>)=&gt;</span>&#123;</span><br><span class="line">    fetch(<span class="string">'/api/goodList'</span>,&#123; <span class="comment">//fecth返回的是一个promise</span></span><br><span class="line">      method: <span class="string">'get'</span>,</span><br><span class="line">      dataType: <span class="string">'json'</span>,</span><br><span class="line">    &#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">json</span>)</span>&#123;</span><br><span class="line">      <span class="keyword">var</span> json=<span class="built_in">JSON</span>.parse(json);</span><br><span class="line">      <span class="keyword">if</span>(json.msg==<span class="number">200</span>)&#123;</span><br><span class="line">        dispatch(&#123;<span class="attr">type</span>:<span class="string">'init'</span>,<span class="attr">data</span>:json.data&#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,<span class="function"><span class="keyword">function</span>(<span class="params">error</span>)</span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(error);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
@@ -2388,35 +2792,69 @@ componentDidMount只在浏览器端执行，在componentDidMount被调用的时�
 <p>/src/pages/EditorialCenter/components/TableFunction.js</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> PropTypes <span class="keyword">from</span> <span class="string">'prop-types'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">get</span> from 'lodash/<span class="keyword">get</span>';</span><br><span class="line">import &#123; Table &#125; <span class="keyword">from</span> <span class="string">'antd'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> TableFunction = <span class="function">(<span class="params">&#123;loading, getColumns, data, PageIndex, PageSize, setPagination&#125;</span>) =&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &lt;Table </span><br><span class="line">            loading=&#123;loading&#125;</span><br><span class="line">            columns=&#123;getColumns&#125; </span><br><span class="line">            rowKey=&#123;<span class="string">'ArticleID'</span>&#125;</span><br><span class="line">            dataSource=&#123;<span class="keyword">get</span>(data,"Items") ?<span class="keyword">get</span>(data,"Items") : []&#125; </span><br><span class="line">            style=&#123;&#123;<span class="attr">backgroundColor</span>:<span class="string">'#fff'</span>,<span class="attr">borderRadius</span>:<span class="string">'5px'</span>&#125;&#125;</span><br><span class="line">            pagination=&#123;&#123;</span><br><span class="line">                total:<span class="keyword">get</span>(data,"Count") ? <span class="keyword">get</span>(data,"Count") : 0,</span><br><span class="line">                showTotal:(total) =&gt; `共 $&#123;total&#125; 条记录 第$&#123;PageIndex&#125;页<span class="string">`,</span></span><br><span class="line"><span class="string">                pageSize:PageSize,</span></span><br><span class="line"><span class="string">                current:PageIndex,</span></span><br><span class="line"><span class="string">                defaultCurrent:1,</span></span><br><span class="line"><span class="string">                showSizeChanger :true,</span></span><br><span class="line"><span class="string">                showQuickJumper:true,</span></span><br><span class="line"><span class="string">            &#125;&#125;</span></span><br><span class="line"><span class="string">            onChange=&#123;setPagination&#125;</span></span><br><span class="line"><span class="string">        /&gt;</span></span><br><span class="line"><span class="string">    )</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">TableFunction.propTypes = &#123;</span></span><br><span class="line"><span class="string">    loading: PropTypes.bool,</span></span><br><span class="line"><span class="string">    getColumns: PropTypes.array,</span></span><br><span class="line"><span class="string">    data: PropTypes.object,</span></span><br><span class="line"><span class="string">    PageIndex: PropTypes.number,</span></span><br><span class="line"><span class="string">    PageSize: PropTypes.number,</span></span><br><span class="line"><span class="string">    setPagination: PropTypes.func</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">export default TableFunction;</span></span><br></pre></td></tr></table></figure>
 
-<h1 id="7-相关文章"><a href="#7-相关文章" class="headerlink" title="7. 相关文章"></a>7. 相关文章</h1><ol>
+<h1 id="7-Webpack-优化"><a href="#7-Webpack-优化" class="headerlink" title="7. Webpack 优化"></a>7. Webpack 优化</h1><p><a href="https://jiafei2333.github.io/2019/11/14/Webpack-majorization/" target="_blank" rel="noopener">Webpack 优化 详解</a></p>
+<p>见<code>webpack.prod.js</code>文件，查看 <code>new BundleAnalyzerPlugin()</code>打包分析结果</p>
+<h2 id="7-1-按需加载antd"><a href="#7-1-按需加载antd" class="headerlink" title="7.1 按需加载antd"></a>7.1 按需加载antd</h2><p><code>npm install --save-dev babel-import-plugin</code></p>
+<p>打包结果分析：失败，见 3.5</p>
+<h2 id="7-2-优化构建速度"><a href="#7-2-优化构建速度" class="headerlink" title="7.2 优化构建速度"></a>7.2 优化构建速度</h2><h3 id="7-2-1-Dll"><a href="#7-2-1-Dll" class="headerlink" title="7.2.1 Dll"></a>7.2.1 Dll</h3><p><a href="https://jiafei2333.github.io/2019/11/14/Webpack-majorization/" target="_blank" rel="noopener">https://jiafei2333.github.io/2019/11/14/Webpack-majorization/</a> 见 5.DllPlugin &amp;&amp; DllReferencePlugin</p>
+<p><a href="https://github.com/jiafei2333/React-Redux-Antd/blob/master/build/webpack.dll.js" target="_blank" rel="noopener">webpack.dll.js</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">General output time took 38.24 secs</span><br></pre></td></tr></table></figure>
+
+<p>构建时能够看到<code>delegated</code>证明是用引入的<code>dll/</code>下提前生成的文件，但是看了耗时，时间并没有缩短，反而还增加了……待解决。</p>
+<h3 id="7-2-2-include-exclude"><a href="#7-2-2-include-exclude" class="headerlink" title="7.2.2 include/exclude"></a>7.2.2 include/exclude</h3><p>[使用include]</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="built_in">test</span>: /\.js$/,</span><br><span class="line">    use: <span class="string">'babel-loader'</span>,</span><br><span class="line">    include: path.resolve(__dirname, <span class="string">"../src"</span>)</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>没有配置<code>include</code>时，打包耗时如下：<br><img src="https://jiafei2333.github.io/html/images/babel-optimization01.png" alt><br>配置了<code>include</code>后，打包耗时如下：<br><img src="https://jiafei2333.github.io/html/images/babel-optimization02.png" alt><br>可以看出构建时间大大缩短了，特别是<code>babel-loader</code>的时间，打包时的<code>babel-loader</code>耗时同样由20s+缩短为3s+，大大加快了打包时间。</p>
+<p>[使用exclude]</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="built_in">test</span>: /\.js$/,</span><br><span class="line">    use: <span class="string">'babel-loader'</span>,</span><br><span class="line">    exclude: path.resolve(__dirname, <span class="string">"../node_modules/"</span>)</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>配置了<code>exclude</code>后，构建耗时如下：<br><img src="https://jiafei2333.github.io/html/images/babel-optimization03.png" alt></p>
+<h2 id="7-3-SplitChunks"><a href="#7-3-SplitChunks" class="headerlink" title="7.3 SplitChunks"></a>7.3 SplitChunks</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">optimization:&#123;</span><br><span class="line">	splitChunks: &#123;</span><br><span class="line">	<span class="comment">// initial 只操作同步的，all 所有的，async异步的（默认）</span></span><br><span class="line">	  chunks: <span class="string">'async'</span>, <span class="comment">// 默认支持异步的代码分割import()</span></span><br><span class="line">	  minSize: <span class="number">30000</span>, <span class="comment">// 文件超过30k 就会抽离</span></span><br><span class="line">	  maxSize: <span class="number">0</span>,  <span class="comment">// 没有最大上限</span></span><br><span class="line">	  minChunks: <span class="number">1</span>, <span class="comment">// 最少模块引用一次才抽离</span></span><br><span class="line">	  maxAsyncRequests: <span class="number">5</span>, <span class="comment">// 最大异步请求数，最多5个</span></span><br><span class="line">	  maxInitialRequests: <span class="number">3</span>, <span class="comment">// 最大初始化请求数，即最多首屏加载3个请求</span></span><br><span class="line">	  automaticNameDelimiter: <span class="string">'~'</span>, <span class="comment">// 抽离的命名分隔符 xxx~a~b (如果是a、b文件引用)</span></span><br><span class="line">	  automaticNameMaxLength: <span class="number">30</span>, <span class="comment">// 名字最大长度</span></span><br><span class="line">	  name: <span class="literal">true</span>,</span><br><span class="line">	  cacheGroups: &#123; <span class="comment">// 缓存组  这里面也可以配置上面的配置</span></span><br><span class="line">		vendors: &#123; <span class="comment">// 先抽离第三方</span></span><br><span class="line">		  test: <span class="regexp">/[\\/]node_modules[\\/](jquery)|(lodash)/</span>,</span><br><span class="line">		  priority: <span class="number">-1</span></span><br><span class="line">		&#125;,</span><br><span class="line">		react:&#123;</span><br><span class="line">			test: <span class="regexp">/[\\/]node_modules[\\/](react|react-dom)/</span>,</span><br><span class="line">			priority: <span class="number">-2</span>, </span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="keyword">default</span>: &#123; </span><br><span class="line">		  minChunks: <span class="number">2</span>,</span><br><span class="line">		  priority: <span class="number">-20</span>, <span class="comment">// 优先级, -2比 -20大</span></span><br><span class="line">		  reuseExistingChunk: <span class="literal">true</span></span><br><span class="line">		&#125;</span><br><span class="line">	  &#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>打包之后发现效果不明显，可能是这个项目代码太少了….待解释。</p>
+<h1 id="8-配置文件"><a href="#8-配置文件" class="headerlink" title="8. 配置文件"></a>8. 配置文件</h1><p><a href="https://github.com/jiafei2333/React-Redux-Antd/blob/master/build/webpack.base.js" target="_blank" rel="noopener">webpack.base.js</a></p>
+<p><a href="https://github.com/jiafei2333/React-Redux-Antd/blob/master/build/webpack.dev.js" target="_blank" rel="noopener">webpack.dev.js</a></p>
+<p><a href="https://github.com/jiafei2333/React-Redux-Antd/blob/master/build/webpack.prod.js" target="_blank" rel="noopener">webpack.prod.js</a></p>
+<p><a href="https://github.com/jiafei2333/React-Redux-Antd/blob/master/.babelrc" target="_blank" rel="noopener">.babelrc</a></p>
+<h1 id="8-相关文章"><a href="#8-相关文章" class="headerlink" title="8. 相关文章"></a>8. 相关文章</h1><ol>
 <li><a href="https://juejin.im/post/5b4de4496fb9a04fc226a7af" target="_blank" rel="noopener">https://juejin.im/post/5b4de4496fb9a04fc226a7af</a></li>
 <li><a href="https://medium.com/stashaway-engineering/react-redux-tips-better-way-to-handle-loading-flags-in-your-reducers-afda42a804c6" target="_blank" rel="noopener">https://medium.com/stashaway-engineering/react-redux-tips-better-way-to-handle-loading-flags-in-your-reducers-afda42a804c6</a></li>
 <li><a href="https://juejin.im/post/5b440f7ae51d45195759f345" target="_blank" rel="noopener">https://juejin.im/post/5b440f7ae51d45195759f345</a></li>
 <li><a href="https://juejin.im/post/5d6771375188257573636cf9" target="_blank" rel="noopener">https://juejin.im/post/5d6771375188257573636cf9</a></li>
+<li><a href="https://juejin.im/post/6844904093463347208" target="_blank" rel="noopener">Webpack 优化</a></li>
 </ol>
-<h1 id="8-未完成功能"><a href="#8-未完成功能" class="headerlink" title="8. 未完成功能"></a>8. 未完成功能</h1><ul>
-<li>1.<s>全局列表页loading</s>（完成，封装的自定义hook）</li>
-<li>2.按钮的loading</li>
-<li>3.nprogress</li>
-<li>4.<s>saga代替thunk</s>（完成）</li>
-<li>5.<s>配置node后台服务</s>（完成）</li>
-<li>6.antd中局部修改默认样式</li>
-<li>7.<s>react-hot-loader</s>（完成）</li>
-<li>8.<s>强制刷新时获取基本信息(菜单权限、配置信息等等)</s>（完成）</li>
-<li>9.<s>路由监听，拼接路由</s>（完成）</li>
-<li>10.<s>自定义hooks封装</s>（完成）</li>
-<li>11.<s>动态加载组件（react-loadable）</s>（完成）</li>
-<li>12.<s>打包配置-打包分析-打包优化-查看bundle大小 </s>（完成）</li>
-<li>13.主题色配置</li>
-<li>14.打包问题、引入样式问题</li>
-<li>15.<s>Source Map配置及知识点</s>（完成）</li>
-<li>16.<s>生产环境打包时拷贝web.config文件</s>（完成）</li>
-<li>17.登录判断 PrivateRoute</li>
+<h1 id="9-未完成功能"><a href="#9-未完成功能" class="headerlink" title="9. 未完成功能"></a>9. 未完成功能</h1><ul>
+<li>1.loading<ul>
+<li><s>列表页loading</s>（完成，封装的自定义hook）</li>
+<li><s>组件动态加载loading</s>（完成）</li>
+<li>按钮loading</li>
+</ul>
+</li>
+<li>2.nprogress</li>
+<li>3.<s>saga代替thunk</s>（完成）</li>
+<li>4.<s>配置node后台服务</s>（完成）</li>
+<li>5.antd中局部修改默认样式</li>
+<li>6.<s>react-hot-loader</s>（完成）</li>
+<li>7.<s>强制刷新时获取基本信息(菜单权限、配置信息等等)</s>（完成）</li>
+<li>8.<s>路由监听，拼接路由</s>（完成）</li>
+<li>9.<s>自定义hooks封装</s>（完成）</li>
+<li>10.<s>动态加载组件（react-loadable）</s>（完成）</li>
+<li>11.<s>打包配置-打包分析-打包优化-查看bundle大小 </s>（完成）</li>
+<li>12.主题色配置</li>
+<li>13.打包问题、引入样式问题</li>
+<li>14.<s>Source Map配置及知识点</s>（完成）</li>
+<li>15.<s>生产环境打包时拷贝web.config文件</s>（完成）</li>
+<li>16.登录判断 PrivateRoute</li>
+<li>17.图片打包优化，小图片生成base64等</li>
 </ul>
 <p>github项目入口: <a href="https://github.com/jiafei2333/React-Redux-Antd" target="_blank" rel="noopener">https://github.com/jiafei2333/React-Redux-Antd</a></p>
 <p>tips:<br>react-template添加配置</p>
 <ol>
 <li>webpack.prod.js</li>
+<li>webpack.base.js</li>
+<li>Loading组件和loading图</li>
+<li>babel 和 package.json</li>
+<li>webpack.dll.js</li>
 </ol>
 
           
@@ -3656,7 +4094,7 @@ componentDidMount只在浏览器端执行，在componentDidMount被调用的时�
 </ul>
 <p>在非受控组件中使用，获取真实dom元素的值，或者获取焦点、控制video、audio的播放状态、或者是一些动画</p>
 <p> useRef()？</p>
-<h2 id="Q-组件的-状态-state-和属性-props-之间有何不同？"><a href="#Q-组件的-状态-state-和属性-props-之间有何不同？" class="headerlink" title="[Q] (组件的)状态(state)和属性(props)之间有何不同？"></a>[Q] (组件的)状态(state)和属性(props)之间有何不同？</h2><p>共同点： props 和 state 都属于 react 数据接口，他们都可以决定组件的行为和状态<br>不同点：<br>props 属于对外接口，state 属于对内接口，props 主要是父组件传递参数配置该组件，组件内部无法控制也无法修改。想要获取父组件的数据只能通过回调函数的形式（即在自组件中调用父组件的方法）。<br>state 主要用于保存，控制，修改组件自身状态，你可以理解state是一个局部的，只能被组件自身控制的数据源。不能被外界获取和修改。我们可以通过this.setState更新数据，setState导致组件重新渲染。<br>总之props是让外部对组件进行配置，state是让组件控制自己的状态<br>工作中：没有state的组件叫无状态组件，反之有状态组件，工作中尽量多无状态组件，尽量少写有状态组件，增加代码的可维护性和复用性。</p>
+<h2 id="Q-组件的状态-state-和属性-props-之间有何不同？"><a href="#Q-组件的状态-state-和属性-props-之间有何不同？" class="headerlink" title="[Q] 组件的状态(state)和属性(props)之间有何不同？"></a>[Q] 组件的状态(state)和属性(props)之间有何不同？</h2><p>共同点： props 和 state 都属于 react 数据接口，他们都可以决定组件的行为和状态<br>不同点：<br>props 属于对外接口，state 属于对内接口，props 主要是父组件传递参数配置该组件，组件内部无法控制也无法修改。想要修改父组件的数据只能通过回调函数的形式（即在子组件中调用父组件的方法）。<br>state 主要用于保存，控制，修改组件自身状态，你可以理解state是一个局部的，只能被组件自身控制的数据源。不能被外界获取和修改。我们可以通过this.setState更新数据，setState导致组件重新渲染。<br>总之props是让外部对组件进行配置，state是让组件控制自己的状态<br>工作中：没有state的组件叫无状态组件，反之有状态组件，工作中尽量多无状态组件，尽量少写有状态组件，增加代码的可维护性和复用性。</p>
 <h2 id="Q-React-context-是什么？有什么用？"><a href="#Q-React-context-是什么？有什么用？" class="headerlink" title="[Q] React context 是什么？有什么用？"></a>[Q] React context 是什么？有什么用？</h2><p>1、React Context优点：能够让数据在组件树中传递，基于树形结构共享数据的方式，在某个节点组件开启提供context后，所有后代节点组件都可以获取到共享的数据。<br>而props或者state进行多级数据传递，则数据需要自顶下流经过每一级组件，无法跨级。<br>2、React Context缺点：<br>（1）context相当于全局变量， 难以追溯数据源<br>（2）耦合度高，即不利于组件复用也不利于测试<br>（3）当 props 改变或者 setState 被调用，生成新的 context，但是 shouldComponentUpdate 返回的 false 会 block 住 context，导致没有更新。<br>3、React Context使用：可以通过Provider组件的value来传递数据，也可以通过调用react.createContext()来产生context，然后在Consumer组件获得context中的数据。</p>
 <h2 id="Q-了解Redux么，说一下redux吧"><a href="#Q-了解Redux么，说一下redux吧" class="headerlink" title="[Q] 了解Redux么，说一下redux吧"></a>[Q] 了解Redux么，说一下redux吧</h2><p>Redux 本身是个状态管理框架,核心或者说目的一句话就能概括, 清晰的描述应用的状态 。<br>Redux 核心和原则<br>1.这个应用的状态是一个唯一的状态树<br>2.状态是只读的, 只能通过 action 来触发修改, 其实实际修改状态的是 reducer<br>3修改状态只能通过纯函数<br>Redux 中的概念<br>1.reducer<br>reducer 就是实际改变 state 的函数, 在 redux 中, 也只有 reducer 能够改变 state.<br>根据 redux 的原则, 整个应用只有一个唯一的状态树, 这样, 理论上只要一个 reducer 就够了. 但是, 实际编码时, 如果应用稍具规模, 只有一个 reducer 文件, 显然不利于分模块合作开发, 也不利于代码维护.<br>所以, reducer 一般是按模块, 或者根据你所使用的框架来组织, 会分散在多个文件夹中. 这时, 可以通过 redux 提供的 API combineReducers 来合并多个 reducer, 形成一个唯一的状态树.<br>reducer 的使用只要注意 2 点:1、必须是纯函数2、多个 reducer 文件时, 确保每个 reducer 处理不同的 action, 否则可能会出现后面的 reducer 被覆盖的情况<br>2.state<br>state 或者说是 store, 其实就是整个应用的状态.<br>3.action<br>redux 中的 action 其实就是一个 包含 type 字段的plain object. type 字段决定了要执行哪个 reducer, 其他字段作为 reducer 的参数.<br>4.action creator<br>action creator 本质是一个函数, 返回值是一个满足 action 的定义的 plain object. 使用 action creator 的目的就是简化 action 的定义<br>5.dispatch<br>　view层通过action来改变store从而改变当前的state，但是action只是一个对象而已,store.dispatch() 就是 view 发出 Action对象的唯一方法。<br>dispatch的中文意思就是派遣、发送的意思。 即将action发送到store.<br>6.subscribe<br> store允许使用 store.subscribe 方法设置监听函数，一旦 state 发生变化， 就自动执行这个函数。<br>7.middleware<br>redux 的 middleware 发生在 dispatching an action 和 reaches the reducer 之间. 在这个时间点, 除了可以实现异步操作, 还可以实现 logging等等.</p>
 <h2 id="Q-什么是受控组件和非受控组件？"><a href="#Q-什么是受控组件和非受控组件？" class="headerlink" title="[Q] 什么是受控组件和非受控组件？"></a>[Q] 什么是受控组件和非受控组件？</h2><p>由React控制值的表单元素称为受控组件。受控组件的特点：<br>1.由React通过JSX渲染出来<br>2.由React控制值的改变，也就是说想要改变元素的值，只能通过React提供的方法来修改，并且只能通过setState来设置受控组件的值。<br>非受控组件则是将真实数据储存在DOM节点中，由表单元素本身维持自身状态，并根据用户输入进行更新。非受控组件的特点：<br>1.由元素本身维持自身状态，不需要为状态更新编写数据处理；<br>2.在React中设置默认值需要设置defaultValue，获取值需要使用ref。<br>在大多数情况下，建议使用受控组件来实现表单，因为非受控组对比受控组件，有以下一些缺点：<br>1.无法即时校验（提前校验用户输入）；<br>2.无法根据输入值的变化禁用提交按钮（通过禁用提交来约束用户输入）；<br>3.无法强制输入格式；<br>4.无法响应值的输入（如即时获得用户的输入来改变其他状态显示）；<br>5.无法动态输入。</p>
@@ -6044,7 +6482,7 @@ componentDidMount只在浏览器端执行，在componentDidMount被调用的时�
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> MiniCssExtractPlugin = <span class="built_in">require</span>(<span class="string">"mini-css-extract-plugin"</span>);</span><br><span class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">"html-webpack-plugin"</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">mode</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    mode: mode, <span class="comment">// 这个env就是package.json script里面=后面传过来的值</span></span><br><span class="line">    entry: <span class="string">"./src/index.js"</span>, <span class="comment">// 入口</span></span><br><span class="line">    output: &#123;</span><br><span class="line">      filename: <span class="string">"bundle.js"</span>,</span><br><span class="line">      path: path.resolve(__dirname, <span class="string">"dist"</span>) <span class="comment">// 出口</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">      rules: [</span><br><span class="line">        &#123;</span><br><span class="line">          test: <span class="regexp">/\.(png|jpe?g|gif)$/</span>,</span><br><span class="line">          use: <span class="string">"file-loader"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          test: <span class="regexp">/\.js$/</span>,</span><br><span class="line">          use: &#123;</span><br><span class="line">              loader: <span class="string">"babel-loader"</span>,</span><br><span class="line">              options:&#123; <span class="comment">// .babelrc 也可以写在这个文件中</span></span><br><span class="line">                presets:[</span><br><span class="line">                    <span class="string">"@babel/preset-env"</span>,</span><br><span class="line">                    <span class="string">"@babel/preset-react"</span></span><br><span class="line">                ]</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          test: <span class="regexp">/\.css$/</span>,</span><br><span class="line">          use: [</span><br><span class="line">            mode !== <span class="string">"development"</span></span><br><span class="line">              ? MiniCssExtractPlugin.loader</span><br><span class="line">              : <span class="string">"style-loader"</span>,</span><br><span class="line">            <span class="string">"css-loader"</span></span><br><span class="line">          ]</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">      <span class="keyword">new</span> PurgecssPlugin(&#123;</span><br><span class="line">        paths: glob.sync(<span class="string">`<span class="subst">$&#123;path.join(__dirname, <span class="string">"src"</span>)&#125;</span>/**/*`</span>, &#123; <span class="attr">nodir</span>: <span class="literal">true</span> &#125;) <span class="comment">// 不匹配目录，只匹配文件</span></span><br><span class="line">      &#125;),</span><br><span class="line">      mode !== <span class="string">"development"</span> &amp;&amp;</span><br><span class="line">        <span class="keyword">new</span> MiniCssExtractPlugin(&#123;</span><br><span class="line">          filename: <span class="string">"css/[name].css"</span></span><br><span class="line">        &#125;),</span><br><span class="line">      <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">        template: <span class="string">"./src/template.html"</span>,</span><br><span class="line">        filename: <span class="string">"index.html"</span></span><br><span class="line">      &#125;)</span><br><span class="line">    ].filter(<span class="built_in">Boolean</span>)</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <h2 id="1-删除无用的Css样式"><a href="#1-删除无用的Css样式" class="headerlink" title="1.删除无用的Css样式"></a>1.删除无用的Css样式</h2><p>先来看编写的代码</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'./index.css'</span></span><br><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line">ReactDOM.render(&lt;div&gt;hello&lt;/div&gt;,<span class="built_in">document</span>.getElementById(<span class="string">'root'</span>));</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'./index.css'</span></span><br><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line">ReactDOM.render(<span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>,<span class="built_in">document</span>.getElementById(<span class="string">'root'</span>));</span><br></pre></td></tr></table></figure>
 
 <p>index.css</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span>&#123;</span><br><span class="line">    <span class="attribute">background</span>: red</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.class1</span>&#123;</span><br><span class="line">    <span class="attribute">background</span>: red</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -6140,7 +6578,7 @@ componentDidMount只在浏览器端执行，在componentDidMount被调用的时�
 <p>这里我们可以先将<code>react</code>、<code>react-dom</code>单独进行打包</p>
 </blockquote>
 <p>单独打包创建<code>webpack.dll.js</code></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> DllPlugin = <span class="built_in">require</span>(<span class="string">'webpack/lib/DllPlugin'</span>); </span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry:[<span class="string">'react'</span>,<span class="string">'react-dom'</span>], <span class="comment">// 将第三方模块react，react-dom进行打包放到react.dll.js中</span></span><br><span class="line">    mode:<span class="string">'production'</span>,</span><br><span class="line">    output:&#123;</span><br><span class="line">        filename:<span class="string">'react.dll.js'</span>,</span><br><span class="line">        path:path.resolve(__dirname,<span class="string">'dll'</span>),</span><br><span class="line">        library:<span class="string">'react'</span>, <span class="comment">// 打包后接收自治性函数的名字叫react</span></span><br><span class="line">		libraryTarget: <span class="string">'var'</span>, <span class="comment">// 打包后默认用var模式接收 这个打包后的自执行函数，这里也可以写“commonjs”  “commonjs2” “umd”  “this”...</span></span><br><span class="line">    &#125;,</span><br><span class="line">    plugins:[</span><br><span class="line">        <span class="keyword">new</span> DllPlugin(&#123;</span><br><span class="line">            name:<span class="string">'react'</span>,</span><br><span class="line">            path:path.resolve(__dirname,<span class="string">'dll/manifest.json'</span>)<span class="comment">// 生成一个缓存列表</span></span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> DllPlugin = <span class="built_in">require</span>(<span class="string">'webpack/lib/DllPlugin'</span>); </span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry:[<span class="string">'react'</span>,<span class="string">'react-dom'</span>], <span class="comment">// 将第三方模块react，react-dom进行打包放到react.dll.js中</span></span><br><span class="line">    mode:<span class="string">'production'</span>,</span><br><span class="line">    output:&#123;</span><br><span class="line">        filename:<span class="string">'react.dll.js'</span>,</span><br><span class="line">        path:path.resolve(__dirname,<span class="string">'dll'</span>),</span><br><span class="line">        library:<span class="string">'react'</span>, <span class="comment">// 打包后接收自执行函数的名字叫react</span></span><br><span class="line">		libraryTarget: <span class="string">'var'</span>, <span class="comment">// 打包后默认用var模式接收 这个打包后的自执行函数，这里也可以写“commonjs”  “commonjs2” “umd”  “this”...</span></span><br><span class="line">    &#125;,</span><br><span class="line">    plugins:[</span><br><span class="line">        <span class="keyword">new</span> DllPlugin(&#123;</span><br><span class="line">            name:<span class="string">'react'</span>,</span><br><span class="line">            path:path.resolve(__dirname,<span class="string">'dll/manifest.json'</span>)<span class="comment">// 生成一个缓存列表</span></span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>执行<code>&quot;webpack --config webpack.dll.js</code>命令，可以看到dll目录下创建了两个文件分别是<code>manifest.json</code>,<code>react.dll.js</code></p>
 <p>本地使用了import React 这样的语法，需要先去 manifest.json查找，找到后会加载对应的库的名字,可能会引用某个模块,会去.dll.js文件中查找</p>
@@ -6185,7 +6623,7 @@ componentDidMount只在浏览器端执行，在componentDidMount被调用的时�
 </ul>
 <p>配置<code>SplitChunks</code>插件</p>
 <p>配置在此，已做部分修改，默认配置可在<a href="https://npmjs.com" target="_blank" rel="noopener">https://npmjs.com</a> 上自行查找。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">optimization:&#123;</span><br><span class="line">	splitChunks: &#123;</span><br><span class="line">	<span class="comment">// initial 只操作同步的，all 所有的，async异步的（默认）</span></span><br><span class="line">	  chunks: <span class="string">'async'</span>, <span class="comment">// 默认支持异步的代码分割import()</span></span><br><span class="line">	  minSize: <span class="number">30000</span>, <span class="comment">// 文件超过30k 就会抽离</span></span><br><span class="line">	  maxSize: <span class="number">0</span>,  <span class="comment">// 没有最大上限</span></span><br><span class="line">	  minChunks: <span class="number">1</span>, <span class="comment">// 最少模块引用一次才抽离</span></span><br><span class="line">	  maxAsyncRequests: <span class="number">5</span>, <span class="comment">// 最大异步请求数，最多5个</span></span><br><span class="line">	  maxInitialRequests: <span class="number">3</span>, <span class="comment">// 最大初始化请求数，即最多首屏加载3个请求</span></span><br><span class="line">	  automaticNameDelimiter: <span class="string">'~'</span>, <span class="comment">// 抽离的命名分隔符 xxx~a~b (如果是a、b文件引用)</span></span><br><span class="line">	  automaticNameMaxLength: <span class="number">30</span>, <span class="comment">// 名字最大长度</span></span><br><span class="line">	  name: <span class="literal">true</span>,</span><br><span class="line">	  cacheGroups: &#123; <span class="comment">// 缓存组  这里面也可以配置上面的配置</span></span><br><span class="line">		vendors: &#123; <span class="comment">// 先抽离第三方</span></span><br><span class="line">		  test: <span class="regexp">/[\\/]node_modules[\\/](jquery)|(loadsh)/</span>,</span><br><span class="line">		  priority: <span class="number">-1</span></span><br><span class="line">		&#125;,</span><br><span class="line">		react:&#123;</span><br><span class="line">			test: <span class="regexp">/[\\/]node_modules[\\/](react|react-dom)/</span>,</span><br><span class="line">			priority: <span class="number">-2</span>, </span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="keyword">default</span>: &#123; </span><br><span class="line">		  minChunks: <span class="number">2</span>,</span><br><span class="line">		  priority: <span class="number">-20</span>, <span class="comment">// 优先级, -2比 -20大</span></span><br><span class="line">		  reuseExistingChunk: <span class="literal">true</span></span><br><span class="line">		&#125;</span><br><span class="line">	  &#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">optimization:&#123;</span><br><span class="line">	splitChunks: &#123;</span><br><span class="line">	<span class="comment">// initial 只操作同步的，all 所有的，async异步的（默认）</span></span><br><span class="line">	  chunks: <span class="string">'async'</span>, <span class="comment">// 默认支持异步的代码分割import()</span></span><br><span class="line">	  minSize: <span class="number">30000</span>, <span class="comment">// 文件超过30k 就会抽离</span></span><br><span class="line">	  maxSize: <span class="number">0</span>,  <span class="comment">// 没有最大上限</span></span><br><span class="line">	  minChunks: <span class="number">1</span>, <span class="comment">// 最少模块引用一次才抽离</span></span><br><span class="line">	  maxAsyncRequests: <span class="number">5</span>, <span class="comment">// 最大异步请求数，最多5个</span></span><br><span class="line">	  maxInitialRequests: <span class="number">3</span>, <span class="comment">// 最大初始化请求数，即最多首屏加载3个请求</span></span><br><span class="line">	  automaticNameDelimiter: <span class="string">'~'</span>, <span class="comment">// 抽离的命名分隔符 xxx~a~b (如果是a、b文件引用)</span></span><br><span class="line">	  automaticNameMaxLength: <span class="number">30</span>, <span class="comment">// 名字最大长度</span></span><br><span class="line">	  name: <span class="literal">true</span>,</span><br><span class="line">	  cacheGroups: &#123; <span class="comment">// 缓存组  这里面也可以配置上面的配置</span></span><br><span class="line">		vendors: &#123; <span class="comment">// 先抽离第三方</span></span><br><span class="line">		  test: <span class="regexp">/[\\/]node_modules[\\/](jquery)|(lodash)/</span>,</span><br><span class="line">		  priority: <span class="number">-1</span></span><br><span class="line">		&#125;,</span><br><span class="line">		react:&#123;</span><br><span class="line">			test: <span class="regexp">/[\\/]node_modules[\\/](react|react-dom)/</span>,</span><br><span class="line">			priority: <span class="number">-2</span>, </span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="keyword">default</span>: &#123; </span><br><span class="line">		  minChunks: <span class="number">2</span>,</span><br><span class="line">		  priority: <span class="number">-20</span>, <span class="comment">// 优先级, -2比 -20大</span></span><br><span class="line">		  reuseExistingChunk: <span class="literal">true</span></span><br><span class="line">		&#125;</span><br><span class="line">	  &#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>我们将<code>async</code>改为<code>initial</code></p>
@@ -6216,17 +6654,36 @@ componentDidMount只在浏览器端执行，在componentDidMount被调用的时�
 <h2 id="10-IgnorePlugin"><a href="#10-IgnorePlugin" class="headerlink" title="10.IgnorePlugin"></a>10.IgnorePlugin</h2><p>忽略 <code>import</code>和<code>require</code>语法</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> webpack.IgnorePlugin(<span class="regexp">/^\.\/locale$/</span>, /moment$/)</span><br></pre></td></tr></table></figure>
 
+<p>当代码中是在全局的地方配置的语言包，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;ConfigProvider&#125; <span class="keyword">from</span> <span class="string">'antd'</span>;</span><br><span class="line"><span class="keyword">import</span> zhCN <span class="keyword">from</span> <span class="string">'antd/es/locale/zh_CN'</span>;</span><br><span class="line"></span><br><span class="line">&lt;ConfigProvider locale=&#123;zhCN&#125;&gt;</span><br><span class="line">......</span><br><span class="line">&lt;<span class="regexp">/ConfigProvider&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>所以配置如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> webpack.IgnorePlugin(<span class="regexp">/^\.\/locale$/</span>, /antd\/es$/)</span><br></pre></td></tr></table></figure>
+
+<p>打包之后的体积分析，并没有变化…待解释。</p>
 <h2 id="11-费时分析"><a href="#11-费时分析" class="headerlink" title="11.费时分析"></a>11.费时分析</h2><p>可以计算每一步执行的运行速度</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> SpeedMeasureWebpackPlugin = <span class="built_in">require</span>(<span class="string">'speed-measure-webpack-plugin'</span>);</span><br><span class="line"><span class="keyword">const</span> smw = <span class="keyword">new</span> SpeedMeasureWebpackPlugin();</span><br><span class="line">  <span class="built_in">module</span>.exports =smw.wrap(&#123;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
 <h2 id="12-noParse"><a href="#12-noParse" class="headerlink" title="12.noParse"></a>12.noParse</h2><p><code>module.noParse</code>，对类似jq这类依赖库，内部不会引用其他库，我们在打包的时候就没有必要去解析，这样能够增加打包速率</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">noParse:<span class="regexp">/jquery/</span></span><br></pre></td></tr></table></figure>
 
+<p>这里用<code>noParse:/lodash/</code>测试，构建和打包时间分析都没有明显的变化….待解释。</p>
 <h2 id="13-resolve"><a href="#13-resolve" class="headerlink" title="13.resolve"></a>13.resolve</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">resolve: &#123;</span><br><span class="line">  extensions: [<span class="string">".js"</span>,<span class="string">".jsx"</span>,<span class="string">".json"</span>,<span class="string">".css"</span>],</span><br><span class="line">  alias:&#123;&#125;,</span><br><span class="line">  modules:[<span class="string">'node_modules'</span>]</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
 
+<p>这里用<code>modules:[path.resolve(__dirname, &quot;/node_modules&quot;)]</code>测试，报依赖错误…待解释。</p>
 <h2 id="14-include-exclude"><a href="#14-include-exclude" class="headerlink" title="14.include/exclude"></a>14.include/exclude</h2><p>在使用<code>loader</code>时,可以指定哪些文件不通过<code>loader</code>,或者指定哪些文件通过<code>loader</code></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  test: <span class="regexp">/\.js$/</span>,</span><br><span class="line">  use: <span class="string">"babel-loader"</span>,</span><br><span class="line">  <span class="comment">// include:path.resolve(__dirname,'src'),</span></span><br><span class="line">  exclude:<span class="regexp">/node_modules/</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
 
+<p>exclude 权重更高，exclude 会覆盖 include 里的配置。<br>webpack 里几乎所有 loader 都支持 include 和 exclude 属性，上述例子虽然是基于 babel-loader，但以上结论一样适用于其它 loader。</p>
+<p>[举例]</p>
+<p>[使用include]</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="built_in">test</span>: /\.js$/,</span><br><span class="line">    use: <span class="string">'babel-loader'</span>,</span><br><span class="line">    include: path.resolve(__dirname, <span class="string">"../src"</span>)</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>没有配置<code>include</code>时，打包耗时如下：<br><img src="https://jiafei2333.github.io/html/images/babel-optimization01.png" alt><br>配置了<code>include</code>后，打包耗时如下：<br><img src="https://jiafei2333.github.io/html/images/babel-optimization02.png" alt></p>
+<p>[使用exclude]</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="built_in">test</span>: /\.js$/,</span><br><span class="line">    use: <span class="string">'babel-loader'</span>,</span><br><span class="line">    exclude: path.resolve(__dirname, <span class="string">"../node_modules/"</span>)</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>配置了<code>exclude</code>后，构建耗时如下：<br><img src="https://jiafei2333.github.io/html/images/babel-optimization03.png" alt></p>
 <h2 id="15-happypack"><a href="#15-happypack" class="headerlink" title="15.happypack"></a>15.happypack</h2><p>多线程打包，我们可以将不同的逻辑交给不同的线程来处理</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev happypack</span><br></pre></td></tr></table></figure>
 
@@ -14826,7 +15283,7 @@ componentDidMount只在浏览器端执行，在componentDidMount被调用的时�
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">79</span>
+                  <span class="site-state-item-count">81</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -14837,7 +15294,7 @@ componentDidMount只在浏览器端执行，在componentDidMount被调用的时�
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -14848,7 +15305,7 @@ componentDidMount只在浏览器端执行，在componentDidMount被调用的时�
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
