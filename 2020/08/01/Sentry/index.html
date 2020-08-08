@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Sentry,">
 
 
 
@@ -79,17 +79,22 @@
 
 
 
-<meta name="description" content="1. 安装 DockerDocker 文档windows7 安装文档 我这里安装的是mac版本，且没有更改镜像(mac上找不到开启的docker图标…没法改镜像…)docker是否安装成功，出现版本等信息: 1docker -v  直接可以查看是否安装了docker-compose 1docker-compose -v  配置镜像 2. 开始搭建https://zhuanlan.zhihu.com">
+<meta name="description" content="1.Linux安装Sentry先后试了window7、mac，这次是买的阿里云服务搭建的。  Window下安装VMware15和CenterOS7 Linux下安装Docker docker配置阿里镜像 这步很重要，速度不知道快了多少 Linux下搭建Sentry   第4步执行到 docker-compose run --rm web upgrade  之后失败，然后看 github上的文档">
+<meta name="keywords" content="Sentry">
 <meta property="og:type" content="article">
 <meta property="og:title" content="前端错误监控 Sentry">
 <meta property="og:url" content="http://yoursite.com/2020/08/01/Sentry/index.html">
 <meta property="og:site_name" content="Hi 加菲">
-<meta property="og:description" content="1. 安装 DockerDocker 文档windows7 安装文档 我这里安装的是mac版本，且没有更改镜像(mac上找不到开启的docker图标…没法改镜像…)docker是否安装成功，出现版本等信息: 1docker -v  直接可以查看是否安装了docker-compose 1docker-compose -v  配置镜像 2. 开始搭建https://zhuanlan.zhihu.com">
+<meta property="og:description" content="1.Linux安装Sentry先后试了window7、mac，这次是买的阿里云服务搭建的。  Window下安装VMware15和CenterOS7 Linux下安装Docker docker配置阿里镜像 这步很重要，速度不知道快了多少 Linux下搭建Sentry   第4步执行到 docker-compose run --rm web upgrade  之后失败，然后看 github上的文档">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-08-03T14:14:44.435Z">
+<meta property="og:image" content="https://jiafei2333.github.io/html/images/sentry01-Pic.png">
+<meta property="og:image" content="https://jiafei2333.github.io/html/images/sentry02-Pic.png">
+<meta property="og:image" content="https://jiafei2333.github.io/html/images/sentry-email03-Pic.png">
+<meta property="og:updated_time" content="2020-08-08T05:48:55.443Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端错误监控 Sentry">
-<meta name="twitter:description" content="1. 安装 DockerDocker 文档windows7 安装文档 我这里安装的是mac版本，且没有更改镜像(mac上找不到开启的docker图标…没法改镜像…)docker是否安装成功，出现版本等信息: 1docker -v  直接可以查看是否安装了docker-compose 1docker-compose -v  配置镜像 2. 开始搭建https://zhuanlan.zhihu.com">
+<meta name="twitter:description" content="1.Linux安装Sentry先后试了window7、mac，这次是买的阿里云服务搭建的。  Window下安装VMware15和CenterOS7 Linux下安装Docker docker配置阿里镜像 这步很重要，速度不知道快了多少 Linux下搭建Sentry   第4步执行到 docker-compose run --rm web upgrade  之后失败，然后看 github上的文档">
+<meta name="twitter:image" content="https://jiafei2333.github.io/html/images/sentry01-Pic.png">
 
 
 
@@ -324,6 +329,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Sentry/" itemprop="url" rel="index">
+                    <span itemprop="name">Sentry</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -351,22 +378,33 @@
       
 
       
-        <h1 id="1-安装-Docker"><a href="#1-安装-Docker" class="headerlink" title="1. 安装 Docker"></a>1. 安装 Docker</h1><p><a href="https://www.runoob.com/docker/docker-tutorial.html" target="_blank" rel="noopener">Docker 文档</a><br><a href="https://blog.csdn.net/ncdx111/article/details/79984379" target="_blank" rel="noopener">windows7 安装文档</a></p>
-<p>我这里安装的是mac版本，且没有更改镜像(mac上找不到开启的docker图标…没法改镜像…)<br>docker是否安装成功，出现版本等信息:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker -v</span><br></pre></td></tr></table></figure>
+        <h1 id="1-Linux安装Sentry"><a href="#1-Linux安装Sentry" class="headerlink" title="1.Linux安装Sentry"></a>1.Linux安装Sentry</h1><p>先后试了window7、mac，这次是买的阿里云服务搭建的。</p>
+<ol>
+<li><a href="https://blog.csdn.net/u011519970/article/details/95340907" target="_blank" rel="noopener">Window下安装VMware15和CenterOS7</a></li>
+<li><a href="https://blog.csdn.net/u010381752/article/details/90294719" target="_blank" rel="noopener">Linux下安装Docker</a></li>
+<li><a href="https://blog.csdn.net/weixin_38421237/article/details/91399101" target="_blank" rel="noopener">docker配置阿里镜像</a> 这步很重要，速度不知道快了多少</li>
+<li><a href="https://blog.csdn.net/u010381752/article/details/90295010" target="_blank" rel="noopener">Linux下搭建Sentry</a> </li>
+</ol>
+<p>第4步执行到 <code>docker-compose run --rm web upgrade</code>  之后失败，然后看 github上的文档 <a href="https://github.com/getsentry/onpremise/" target="_blank" rel="noopener">onpremise</a>，按照下面的步骤：<br><img src="https://jiafei2333.github.io/html/images/sentry01-Pic.png" alt></p>
+<p>先修改配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp -n config.example.yml config.yml</span><br><span class="line">cp -n sentry.conf.example.py sentry.conf.py</span><br></pre></td></tr></table></figure>
 
-<p>直接可以查看是否安装了docker-compose</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose -v</span><br></pre></td></tr></table></figure>
+<p>将<code>.example</code>去掉生成2个配置文件。<br>再来配置邮箱，在<code>onpremise/sentry</code>里面，找到conf.yml可以配置发邮件的信息：<br><img src="https://jiafei2333.github.io/html/images/sentry02-Pic.png" alt></p>
+<p>配置如下：<br><img src="https://jiafei2333.github.io/html/images/sentry-email03-Pic.png" alt><br>注意：</p>
+<ol>
+<li>这里的<code>mail.from</code>和<code>mail.username</code>一样，都是邮箱地址</li>
+<li><code>mail.password</code>是邮箱的授权密码，登录邮箱就可以<code>POP3/SMTP/IMAP</code>开启服务获取密码即可。</li>
+</ol>
+<p>这里暂时先配置<code>conf.yml</code>，然后执行如下步骤：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./install.sh</span><br></pre></td></tr></table></figure>
 
-<p><a href="https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors?accounttraceid=9fcac61d25834ba8a1c05d9436dce99frupi" target="_blank" rel="noopener">配置镜像</a></p>
-<h1 id="2-开始搭建"><a href="#2-开始搭建" class="headerlink" title="2. 开始搭建"></a>2. 开始搭建</h1><p><a href="https://zhuanlan.zhihu.com/p/51446011" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/51446011</a><br><a href="https://blog.csdn.net/u010381752/article/details/90295010" target="_blank" rel="noopener">https://blog.csdn.net/u010381752/article/details/90295010</a></p>
-<h2 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h2><p><code>cp -n .env.example .env</code>，报错：</p>
+<p>一顿安装….就装好了。</p>
+<p>安装完成之后打开本地的<code>localhost:9000</code>就可以看到啦~~</p>
+<h1 id="2-报错"><a href="#2-报错" class="headerlink" title="2. 报错"></a>2. 报错</h1><p><code>cp -n .env.example .env</code>，报错：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp: cannot <span class="built_in">stat</span> <span class="string">'.env.example'</span>: No such file or directory</span><br></pre></td></tr></table></figure>
 
 <p>其实上面这条命令的意思是：cp -n .env.example .env 【将.env.example 改名为 .env】，我的文件夹中本身就是.env，所以过。</p>
-<h1 id="3-问题"><a href="#3-问题" class="headerlink" title="3. 问题"></a>3. 问题</h1><p><a href="https://walkingsun.github.io/WindBlog/2019/01/18/docker_question/" target="_blank" rel="noopener">https://walkingsun.github.io/WindBlog/2019/01/18/docker_question/</a></p>
-<p>windows7、mac都试过，没有装成功，之后装个虚拟机用linux再试。</p>
-
+<h1 id="3-相关文章"><a href="#3-相关文章" class="headerlink" title="3. 相关文章"></a>3. 相关文章</h1>
       
     </div>
     
@@ -380,6 +418,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Sentry/" rel="tag"># Sentry</a>
+          
+        </div>
       
 
       
@@ -492,7 +536,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -503,7 +547,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-count">37</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -536,7 +580,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-安装-Docker"><span class="nav-text">1. 安装 Docker</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-开始搭建"><span class="nav-text">2. 开始搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#报错"><span class="nav-text">报错</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-问题"><span class="nav-text">3. 问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Linux安装Sentry"><span class="nav-text">1.Linux安装Sentry</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-报错"><span class="nav-text">2. 报错</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-相关文章"><span class="nav-text">3. 相关文章</span></a></li></ol></div>
             
 
           </div>

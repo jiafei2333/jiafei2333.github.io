@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="[Q1] Loader和Plugin的区别是什么？ [A1]   loader 用于加载某些资源文件，它是一个转换器，将A文件进行编译成B文件，比如：将A.less转换为A.css，单纯的文件转换过程。 因为webpack 本身只能打包commonjs规范的js文件，对于其他资源例如 css，图片，或者其他的语法集，比如 jsx，是没有办法加载的。 这就需要对应的loader将资源转化，加载进来。">
+<meta name="description" content="[Q1] Loader和Plugin的区别是什么？[A1]   loader 用于加载某些资源文件，它是一个转换器，将A文件进行编译成B文件，比如：将A.less转换为A.css，单纯的文件转换过程。 因为webpack 本身只能打包commonjs规范的js文件，对于其他资源例如 css，图片，或者其他的语法集，比如 jsx，是没有办法加载的。 这就需要对应的loader将资源转化，加载进来。从">
 <meta name="keywords" content="面试题">
 <meta property="og:type" content="article">
 <meta property="og:title" content="每日一问">
 <meta property="og:url" content="http://yoursite.com/2020/08/06/one-question-a-day/index.html">
 <meta property="og:site_name" content="Hi 加菲">
-<meta property="og:description" content="[Q1] Loader和Plugin的区别是什么？ [A1]   loader 用于加载某些资源文件，它是一个转换器，将A文件进行编译成B文件，比如：将A.less转换为A.css，单纯的文件转换过程。 因为webpack 本身只能打包commonjs规范的js文件，对于其他资源例如 css，图片，或者其他的语法集，比如 jsx，是没有办法加载的。 这就需要对应的loader将资源转化，加载进来。">
+<meta property="og:description" content="[Q1] Loader和Plugin的区别是什么？[A1]   loader 用于加载某些资源文件，它是一个转换器，将A文件进行编译成B文件，比如：将A.less转换为A.css，单纯的文件转换过程。 因为webpack 本身只能打包commonjs规范的js文件，对于其他资源例如 css，图片，或者其他的语法集，比如 jsx，是没有办法加载的。 这就需要对应的loader将资源转化，加载进来。从">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-08-06T14:26:17.443Z">
+<meta property="og:updated_time" content="2020-08-08T05:35:19.775Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="每日一问">
-<meta name="twitter:description" content="[Q1] Loader和Plugin的区别是什么？ [A1]   loader 用于加载某些资源文件，它是一个转换器，将A文件进行编译成B文件，比如：将A.less转换为A.css，单纯的文件转换过程。 因为webpack 本身只能打包commonjs规范的js文件，对于其他资源例如 css，图片，或者其他的语法集，比如 jsx，是没有办法加载的。 这就需要对应的loader将资源转化，加载进来。">
+<meta name="twitter:description" content="[Q1] Loader和Plugin的区别是什么？[A1]   loader 用于加载某些资源文件，它是一个转换器，将A文件进行编译成B文件，比如：将A.less转换为A.css，单纯的文件转换过程。 因为webpack 本身只能打包commonjs规范的js文件，对于其他资源例如 css，图片，或者其他的语法集，比如 jsx，是没有办法加载的。 这就需要对应的loader将资源转化，加载进来。从">
 
 
 
@@ -374,8 +374,7 @@
       
 
       
-        <p>[Q1] Loader和Plugin的区别是什么？</p>
-<p>[A1] </p>
+        <h4 id="Q1-Loader和Plugin的区别是什么？"><a href="#Q1-Loader和Plugin的区别是什么？" class="headerlink" title="[Q1] Loader和Plugin的区别是什么？"></a>[Q1] Loader和Plugin的区别是什么？</h4><p>[A1] </p>
 <ol>
 <li><p>loader 用于加载某些资源文件，它是一个转换器，将A文件进行编译成B文件，比如：将A.less转换为A.css，单纯的文件转换过程。 因为webpack 本身只能打包commonjs规范的js文件，对于其他资源例如 css，图片，或者其他的语法集，比如 jsx，是没有办法加载的。 这就需要对应的loader将资源转化，加载进来。从字面意思也能看出，loader是用于加载的，它作用于一个个文件上，并对这些文件进行一些处理，诸如编译、压缩等，最终一起打包到指定的文件中。</p>
 </li>
@@ -387,12 +386,14 @@
 <li>作用不同：<br>Loader直译为”加载器”。Webpack将一切文件视为模块，但是webpack原生是只能解析js文件，如果想将其他文件也打包的话，就会用到loader。 所以Loader的作用是让webpack拥有了加载和解析非JavaScript文件的能力。<br>Plugin直译为”插件”。Plugin可以扩展webpack的功能，让webpack具有更多的灵活性。 在 Webpack 运行的生命周期中会广播出许多事件，Plugin 可以监听这些事件，在合适的时机通过 Webpack 提供的 API 改变输出结果。</li>
 <li>用法不同：<br>Loader在module.rules中配置，也就是说作为模块的解析规则而存在。 类型为数组，每一项都是一个Object，里面描述了对于什么类型的文件（test），使用什么加载(loader)和使用的参数（options）<br>Plugin在plugins中单独配置。 类型为数组，每一项是一个plugin的实例，参数都通过构造函数传入。</li>
 </ol>
-<p>[Q2] 请解释React中props和state的区别？<br>[A2]</p>
+<hr>
+<h4 id="Q2-请解释React中props和state的区别？"><a href="#Q2-请解释React中props和state的区别？" class="headerlink" title="[Q2] 请解释React中props和state的区别？"></a>[Q2] 请解释React中props和state的区别？</h4><p>[A2]</p>
 <ol>
 <li>共同点： props 和 state 都属于 react 数据接口，他们都可以决定组件的行为和状态</li>
 <li>不同点：<br>props 属于对外接口，state 属于对内接口，props 主要是父组件向子组件传递参数配置该组件，组件内部无法控制也无法修改。想要获取父组件的数据只能通过回调函数的形式（即在自组件中调用父组件的方法）。<br>state 主要用于保存，控制，修改组件自身状态，你可以理解state是一个局部的，只能被组件自身控制的数据源。不能被外界获取和修改。我们可以通过this.setState更新数据，setState导致组件重新渲染。<br>总之props是让外部对组件进行配置，state是让组件控制自己的状态</li>
 </ol>
-<p>[Q3] 浏览器的本地存储的cookie了解多少？<br>[A3] </p>
+<hr>
+<h4 id="Q3-浏览器的本地存储-1-的cookie了解多少？"><a href="#Q3-浏览器的本地存储-1-的cookie了解多少？" class="headerlink" title="[Q3] 浏览器的本地存储(1)的cookie了解多少？"></a>[Q3] 浏览器的本地存储(1)的cookie了解多少？</h4><p>[A3] </p>
 <ol>
 <li>含义：Cookie指某些网站为了辨别用户身份而储存在用户本地终端上的数据(通常经过加密)。 cookie是服务端生成，客户端进行维护和存储。通过cookie,可以让服务器知道请求是来源哪个客户端，就可以进行客户端状态的维护，比如登陆后刷新，请求头就会携带登陆时response header中的set-cookie,Web服务器接到请求时也能读出cookie的值，根据cookie值的内容就可以判断和恢复一些用户的信息状态。也可以理解为，就是客户端用来存储数据的一种，以键值对的形式存在，既可以在客户端设置，也可以在服务器端设置，cookie会跟随任意HTTP请求一起发送。</li>
 <li>缺点：<ul>
@@ -407,6 +408,35 @@
 </li>
 <li>应用场景：记住密码，下次自动登录；购物车功能；保存用户的偏好，比如网页的字体大小、背景色等；记录用户浏览数据，进行商品（广告）推荐；多个站点共享登录状态（同一住域名下多个子站点）</li>
 </ol>
+<p>[参考答案]</p>
+<p>Cookie最开始被设计出来其实并不是做本地存储的，而是为了弥补http在状态管理上的不足<br>http协议是一个无状态协议，客户端向服务器发请求，服务器返回响应，这次事件就完成了，但是下次发请求如何让服务端直到客户端是谁呢？在这个需求下就产生了Cookie</p>
+<p>Cookie本质上就是浏览器里面存储的一个很小的文本文件，内部以键值对的方式来存储(在chrome开发者面版的Application这一栏可以看到)都会携带相同的Cookie，服务器拿Cookie进行解析，便能拿到客户端的状态 Cookie的作用就是用来做状态存储的，但是也有很多缺陷：</p>
+<ol>
+<li>容量缺陷。Cookie的体积上限只有4KB，只能用来存储少量的信息</li>
+<li>性能缺陷。Cookie紧跟域名，不管域名下面的某一个地址需不需要这个Cookie，请求都会携带上完整的Cookie，这样随着请求数的增多，其实会造成巨大的性能浪费的，因为请求携带了很多不必要的内容</li>
+<li>安全缺陷。由于Cookie以纯文本的形式在浏览器和服务器中传递，很容易被非法用户截取，然后进行一系列的篡改，在Cookie的有限期内重新发送给服务器，这是很危险的。另外，在HttpOnly为false的情况下，Cookie信息能直接通过js脚本来读取。</li>
+</ol>
+<hr>
+<h4 id="Q4-浏览器的本地存储-2-的WebStorage了解多少"><a href="#Q4-浏览器的本地存储-2-的WebStorage了解多少" class="headerlink" title="[Q4] 浏览器的本地存储(2)的WebStorage了解多少"></a>[Q4] 浏览器的本地存储(2)的WebStorage了解多少</h4><p>[A4]</p>
+<p>html5中的Web Storage包括会话存储（sessionStorage）和本地存储（localStorage）。</p>
+<p>localStore特点：</p>
+<ul>
+<li>保存的数据长期存在，下一次访问该网站的时候，网页可以直接读取以前保存的数据。</li>
+<li>大小为5M左右</li>
+<li>仅在客户端使用，不和服务端进行通信</li>
+<li>接口封装较好</li>
+</ul>
+<p>sessionStore特点：</p>
+<ul>
+<li>会话级别的浏览器存储</li>
+<li>大小为5M左右</li>
+<li>仅在客户端使用，不和服务端进行通信</li>
+<li>接口封装较好</li>
+</ul>
+<p>作用域：localStorage只要在相同的协议、相同的主机名、相同的端口下，就能读取/修改到同一份localStorage数据。sessionStorage比localStorage更严苛一点，除了协议、主机名、端口外，还要求在同一窗口（也就是浏览器的标签页）下。</p>
+<p>[参考答案]</p>
+<p>整理参考答案</p>
+<h4 id="Q5"><a href="#Q5" class="headerlink" title="[Q5]"></a>[Q5]</h4><p>[Q6]</p>
 
       
     </div>
@@ -501,8 +531,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -530,7 +569,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -541,7 +580,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-count">37</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -564,6 +603,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Q1-Loader和Plugin的区别是什么？"><span class="nav-text">[Q1] Loader和Plugin的区别是什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Q2-请解释React中props和state的区别？"><span class="nav-text">[Q2] 请解释React中props和state的区别？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Q3-浏览器的本地存储-1-的cookie了解多少？"><span class="nav-text">[Q3] 浏览器的本地存储(1)的cookie了解多少？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Q4-浏览器的本地存储-2-的WebStorage了解多少"><span class="nav-text">[Q4] 浏览器的本地存储(2)的WebStorage了解多少</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Q5"><span class="nav-text">[Q5]</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
