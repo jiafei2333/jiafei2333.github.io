@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Hi 加菲">
 <meta property="og:description" content="[Q1] Loader和Plugin的区别是什么？[A1]   loader 用于加载某些资源文件，它是一个转换器，将A文件进行编译成B文件，比如：将A.less转换为A.css，单纯的文件转换过程。 因为webpack 本身只能打包commonjs规范的js文件，对于其他资源例如 css，图片，或者其他的语法集，比如 jsx，是没有办法加载的。 这就需要对应的loader将资源转化，加载进来。从">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-08-08T05:35:19.775Z">
+<meta property="og:updated_time" content="2020-08-11T12:53:43.352Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="每日一问">
 <meta name="twitter:description" content="[Q1] Loader和Plugin的区别是什么？[A1]   loader 用于加载某些资源文件，它是一个转换器，将A文件进行编译成B文件，比如：将A.less转换为A.css，单纯的文件转换过程。 因为webpack 本身只能打包commonjs规范的js文件，对于其他资源例如 css，图片，或者其他的语法集，比如 jsx，是没有办法加载的。 这就需要对应的loader将资源转化，加载进来。从">
@@ -320,7 +320,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-08-11T20:53:43+08:00">
+                2020-08-11
+              </time>
             
           </span>
 
@@ -433,10 +445,21 @@
 <li>仅在客户端使用，不和服务端进行通信</li>
 <li>接口封装较好</li>
 </ul>
-<p>作用域：localStorage只要在相同的协议、相同的主机名、相同的端口下，就能读取/修改到同一份localStorage数据。sessionStorage比localStorage更严苛一点，除了协议、主机名、端口外，还要求在同一窗口（也就是浏览器的标签页）下。</p>
-<p>[参考答案]</p>
-<p>整理参考答案</p>
-<h4 id="Q5"><a href="#Q5" class="headerlink" title="[Q5]"></a>[Q5]</h4><p>[Q6]</p>
+<p>作用域：localStorage只要在相同的协议、相同的主机名、相同的端口下，就能读取/修改到同一份localStorage数据。sessionStorage比localStorage更严苛一点，除了协议、主机名、端口外，还要求在同一窗口（也就是浏览器的标签页）下。<br>应用场景：1.可以用它对表单信息进行维护，将表单信息存储存储在里面，可以保证页面即使刷新也不会让之前的表单信息丢失。2.可以用它存储本次浏览记录。如果关闭页面后不需要这些记录，用sessionStorage就再合适不过了。事实上微博采取这样的存储方式。</p>
+<h4 id="Q5-在css中link和-import的区别是什么？"><a href="#Q5-在css中link和-import的区别是什么？" class="headerlink" title="[Q5] 在css中link和@import的区别是什么？"></a>[Q5] 在css中link和@import的区别是什么？</h4><p>[A5] </p>
+<ol>
+<li>从属关系区别<br>@import是 CSS 提供的语法规则，只有导入样式表的作用，import在html使用时候需要<code>&lt;style type=&quot;text/css&quot;&gt;</code>标签，同时可以直接<code>@import url(CSS文件路径地址);</code>放如css文件或css代码里引入其它css文件。；link是HTML提供的标签，不仅可以加载 CSS 文件，还可以定义 RSS、rel 连接属性等。</li>
+<li>加载顺序区别<br>加载页面时，link标签引入的 CSS 被同时加载；@import引入的 CSS 将在页面加载完毕后被加载。</li>
+<li>兼容性区别<br>@import是 CSS2.1 才有的语法，故只可在 IE5+ 才能识别；link标签作为 HTML 元素，不存在兼容性问题。</li>
+<li>DOM可控性区别<br>可以通过 JS 操作 DOM ，插入link标签来改变样式；由于 DOM 方法是基于文档的，无法使用@import的方式插入样式。</li>
+<li>权重区别<br>link和@import，谁写在后面，谁的样式就被应用，后面的样式覆盖前面的样式</li>
+</ol>
+<h4 id="Q6-常见的loader以及作用的总结？"><a href="#Q6-常见的loader以及作用的总结？" class="headerlink" title="[Q6] 常见的loader以及作用的总结？"></a>[Q6] 常见的loader以及作用的总结？</h4><p>[A6] </p>
+<ol>
+<li>babel-loader: 将ECMAScript2015+ 版本的代码转换为向后兼容的Javascript语法，以便运行在当前和旧版本的浏览器中。</li>
+<li>less-loader、sass-loader、stylus-loader：css预处理器，将他们编译为css语法；postcss-loader：自动配置样式前缀，兼容浏览器；css-loader: 解析css语法，处理css中的 @import 和 url 这样的外部资源；style-loader: 将样式插入到 DOM中，方法是在head中插入一个style标签，并把样式写入到这个标签的 innerHTML里。</li>
+<li>file-loader、url-loader: url-loader可以将满足条件(将比较小的图片，一般是小于8k)的图片转换为base64，缺点是转换后比之前大，好处是不用发送http请求；不满足条件的url-loader会自动调用file-loader来处理图片，会对图片进行打包，返回打包后的路径。</li>
+</ol>
 
       
     </div>
@@ -613,7 +636,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Q1-Loader和Plugin的区别是什么？"><span class="nav-text">[Q1] Loader和Plugin的区别是什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Q2-请解释React中props和state的区别？"><span class="nav-text">[Q2] 请解释React中props和state的区别？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Q3-浏览器的本地存储-1-的cookie了解多少？"><span class="nav-text">[Q3] 浏览器的本地存储(1)的cookie了解多少？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Q4-浏览器的本地存储-2-的WebStorage了解多少"><span class="nav-text">[Q4] 浏览器的本地存储(2)的WebStorage了解多少</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Q5"><span class="nav-text">[Q5]</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Q1-Loader和Plugin的区别是什么？"><span class="nav-text">[Q1] Loader和Plugin的区别是什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Q2-请解释React中props和state的区别？"><span class="nav-text">[Q2] 请解释React中props和state的区别？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Q3-浏览器的本地存储-1-的cookie了解多少？"><span class="nav-text">[Q3] 浏览器的本地存储(1)的cookie了解多少？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Q4-浏览器的本地存储-2-的WebStorage了解多少"><span class="nav-text">[Q4] 浏览器的本地存储(2)的WebStorage了解多少</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Q5-在css中link和-import的区别是什么？"><span class="nav-text">[Q5] 在css中link和@import的区别是什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Q6-常见的loader以及作用的总结？"><span class="nav-text">[Q6] 常见的loader以及作用的总结？</span></a></li></ol></div>
             
 
           </div>
