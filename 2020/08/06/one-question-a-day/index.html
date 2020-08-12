@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Hi 加菲">
 <meta property="og:description" content="[Q1] Loader和Plugin的区别是什么？[A1]   loader 用于加载某些资源文件，它是一个转换器，将A文件进行编译成B文件，比如：将A.less转换为A.css，单纯的文件转换过程。 因为webpack 本身只能打包commonjs规范的js文件，对于其他资源例如 css，图片，或者其他的语法集，比如 jsx，是没有办法加载的。 这就需要对应的loader将资源转化，加载进来。从">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-08-11T12:53:43.352Z">
+<meta property="og:updated_time" content="2020-08-11T15:51:09.586Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="每日一问">
 <meta name="twitter:description" content="[Q1] Loader和Plugin的区别是什么？[A1]   loader 用于加载某些资源文件，它是一个转换器，将A文件进行编译成B文件，比如：将A.less转换为A.css，单纯的文件转换过程。 因为webpack 本身只能打包commonjs规范的js文件，对于其他资源例如 css，图片，或者其他的语法集，比如 jsx，是没有办法加载的。 这就需要对应的loader将资源转化，加载进来。从">
@@ -330,7 +330,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-08-11T20:53:43+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2020-08-11T23:51:09+08:00">
                 2020-08-11
               </time>
             
@@ -459,6 +459,27 @@
 <li>babel-loader: 将ECMAScript2015+ 版本的代码转换为向后兼容的Javascript语法，以便运行在当前和旧版本的浏览器中。</li>
 <li>less-loader、sass-loader、stylus-loader：css预处理器，将他们编译为css语法；postcss-loader：自动配置样式前缀，兼容浏览器；css-loader: 解析css语法，处理css中的 @import 和 url 这样的外部资源；style-loader: 将样式插入到 DOM中，方法是在head中插入一个style标签，并把样式写入到这个标签的 innerHTML里。</li>
 <li>file-loader、url-loader: url-loader可以将满足条件(将比较小的图片，一般是小于8k)的图片转换为base64，缺点是转换后比之前大，好处是不用发送http请求；不满足条件的url-loader会自动调用file-loader来处理图片，会对图片进行打包，返回打包后的路径。</li>
+</ol>
+<p>[参考答案]</p>
+<ol>
+<li>raw-loader：加载文件原始内容（utf-8）</li>
+<li>file-loader：把文件输出到一个文件夹中，在代码中通过相对URL去引用输出的文件</li>
+<li>url-loader:和file-loader类似，但是能在文件很小的情况下以base64的方式把文件内容注入到代码中</li>
+<li>source-map-loader:加载额外的Source Map文件，以方便断点调试</li>
+<li>svg-inline-loader：将压缩后的 SVG 内容注入代码中</li>
+<li>image-loader：加载并且压缩图片文件</li>
+<li>json-loader 加载 JSON 文件（默认包含）</li>
+<li>handlebars-loader: 将 Handlebars 模版编译成函数并返回</li>
+<li>babel-loader：把ES6转化成ES5</li>
+<li>ts-loader: 将 TypeScript 转换成 JavaScript</li>
+<li>awesome-typescript-loader：将 TypeScript 转换成 JavaScript，性能优于 ts-loader</li>
+<li>css-loader：加载css，支持模块化、压缩、文件导入等特性</li>
+<li>style-loader：把css代码注入到js中，通过DOM操作去加载css</li>
+<li>eslint-loader：通过ESLint检查JS代码</li>
+<li>tslint-loader：通过 TSLint检查 TypeScript 代码</li>
+<li>postcss-loader：扩展 CSS 语法，使用下一代 CSS，可以配合 autoprefixer 插件自动补齐 CSS3 前缀</li>
+<li>vue-loader：加载 Vue.js 单文件组件</li>
+<li>cache-loader: 可以在一些性能开销较大的 Loader 之前添加，目的是将结果缓存到磁盘里</li>
 </ol>
 
       
