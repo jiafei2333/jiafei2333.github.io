@@ -92,7 +92,7 @@
 <meta property="og:image" content="https://jiafei2333.github.io/html/images/sentry-email03-Pic.png">
 <meta property="og:image" content="https://jiafei2333.github.io/html/images/sentry-port-Pic.png">
 <meta property="og:image" content="https://jiafei2333.github.io/html/images/sentry-email02-Pic.png">
-<meta property="og:updated_time" content="2020-08-12T12:25:07.566Z">
+<meta property="og:updated_time" content="2020-08-18T14:47:08.150Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端错误监控 Sentry">
 <meta name="twitter:description" content="1.Linux安装Sentry我这里用的是阿里云服务器：CenterOS7.8，CUP1核，内存4G。 步骤：1、 [CenterOS安装Docker]2、[docker配置阿里镜像] 这步很重要，速度不知道快了多少3、安装docker-compose  官网地址：https://docs.docker.com/compose/install/太慢了，我这里用phyon装的看这里https://b">
@@ -336,8 +336,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-08-12T20:25:07+08:00">
-                2020-08-12
+              <time title="更新于" itemprop="dateModified" datetime="2020-08-18T22:47:08+08:00">
+                2020-08-18
               </time>
             
           </span>
@@ -445,8 +445,11 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./install.sh</span><br><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
 
 <p>点击测试按钮，再发送测试邮件就能发送成功了。<br><img src="https://jiafei2333.github.io/html/images/sentry-email02-Pic.png" alt></p>
-<p>配置钉钉：看这个步骤<a href="https://my.oschina.net/u/4290244/blog/3349141" target="_blank" rel="noopener">https://my.oschina.net/u/4290244/blog/3349141</a></p>
-<h2 id="2-2-性能分析"><a href="#2-2-性能分析" class="headerlink" title="2.2 性能分析"></a>2.2 性能分析</h2><h1 id="3-旧版报错方案"><a href="#3-旧版报错方案" class="headerlink" title="3. 旧版报错方案"></a>3. 旧版报错方案</h1><p>这部分的报错过程都是按照 <a href="https://blog.csdn.net/u010381752/article/details/90295010" target="_blank" rel="noopener">[Linux下搭建Sentry]</a> 这种方式安装的，没有仔细看 onpremise github文档导致的<del>~</del>记录下，毕竟装的时候太折磨了…</p>
+<p>测试邮箱如上图能够发送成功，但是我本地测试了一下，当项目中报错时，错误日志信息已经发送到Sentry服务，但是并没有发送邮件。（我又点了发送测试邮件的按钮，能够发送邮件）</p>
+<p>配置钉钉：看这个步骤<a href="https://my.oschina.net/u/4290244/blog/3349141" target="_blank" rel="noopener">https://my.oschina.net/u/4290244/blog/3349141</a><br>获取自定义钉钉webhook <a href="https://ding-doc.dingtalk.com/doc#/serverapi2/qf2nxq" target="_blank" rel="noopener">https://ding-doc.dingtalk.com/doc#/serverapi2/qf2nxq</a></p>
+<p>邮箱、钉钉一样，测试都能发送消息，实际项目中报错的时候都不能发送。</p>
+<h2 id="2-2-性能分析"><a href="#2-2-性能分析" class="headerlink" title="2.2 性能分析"></a>2.2 性能分析</h2><h2 id="2-3-SourceMap"><a href="#2-3-SourceMap" class="headerlink" title="2.3 SourceMap"></a>2.3 SourceMap</h2><p>生产环境打包后的代码，快速定位到源码。</p>
+<h1 id="3-旧版报错方案"><a href="#3-旧版报错方案" class="headerlink" title="3. 旧版报错方案"></a>3. 旧版报错方案</h1><p>这部分的报错过程都是按照 <a href="https://blog.csdn.net/u010381752/article/details/90295010" target="_blank" rel="noopener">[Linux下搭建Sentry]</a> 这种方式安装的，没有仔细看 onpremise github文档导致的<del>~</del>记录下，毕竟装的时候太折磨了…</p>
 <ol>
 <li><a href="https://walkingsun.github.io/WindBlog/2019/01/18/docker_question/" target="_blank" rel="noopener">[dial tcp: lookup production.cloudflare.docker.com]</a></li>
 <li><a href="https://blog.csdn.net/a704397849/article/details/100609695" target="_blank" rel="noopener">[docker启动失败报错:Failed to start docker.service: Unit is not loaded properly: Invalid argument]</a></li>
@@ -630,7 +633,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Linux安装Sentry"><span class="nav-text">1.Linux安装Sentry</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-玩转Sentry"><span class="nav-text">2. 玩转Sentry</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-接入邮件-钉钉服务"><span class="nav-text">2.1 接入邮件|钉钉服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-性能分析"><span class="nav-text">2.2 性能分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-旧版报错方案"><span class="nav-text">3. 旧版报错方案</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Linux安装Sentry"><span class="nav-text">1.Linux安装Sentry</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-玩转Sentry"><span class="nav-text">2. 玩转Sentry</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-接入邮件-钉钉服务"><span class="nav-text">2.1 接入邮件|钉钉服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-性能分析"><span class="nav-text">2.2 性能分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-SourceMap"><span class="nav-text">2.3 SourceMap</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-旧版报错方案"><span class="nav-text">3. 旧版报错方案</span></a></li></ol></div>
             
 
           </div>
