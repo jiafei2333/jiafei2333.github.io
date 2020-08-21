@@ -95,7 +95,7 @@
 <meta property="og:image" content="https://jiafei2333.github.io/html/images/sentry-mail02.png">
 <meta property="og:image" content="https://jiafei2333.github.io/html/images/sentry-setting01.png">
 <meta property="og:image" content="https://jiafei2333.github.io/html/images/sentry-sourceMap01.png">
-<meta property="og:updated_time" content="2020-08-20T14:32:01.407Z">
+<meta property="og:updated_time" content="2020-08-21T02:36:51.076Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端错误监控 Sentry">
 <meta name="twitter:description" content="1.Linux安装Sentry我这里用的是阿里云服务器：CenterOS7.8，CUP1核，内存4G。 步骤：1、 [CenterOS安装Docker]2、[docker配置阿里镜像] 这步很重要，速度不知道快了多少3、安装docker-compose  官网地址：https://docs.docker.com/compose/install/太慢了，我这里用phyon装的看这里https://b">
@@ -339,8 +339,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-08-20T22:32:01+08:00">
-                2020-08-20
+              <time title="更新于" itemprop="dateModified" datetime="2020-08-21T10:36:51+08:00">
+                2020-08-21
               </time>
             
           </span>
@@ -454,16 +454,13 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[This is an example Python exception] This is an example Python exception http://xxx.xxx.xxx.xxx:9000/organizations/sentry/issues/7/</span><br></pre></td></tr></table></figure>
 
 <p>点钉钉的测试按钮，机器人也能自动发送消息….</p>
+<p>针对测试邮件能够发送，报错邮件不能发送问题<a href="https://blog.csdn.net/github_38281308/article/details/106905367，查看这个发型可能跟docker有关，待研究docker" target="_blank" rel="noopener">https://blog.csdn.net/github_38281308/article/details/106905367，查看这个发型可能跟docker有关，待研究docker</a>…</p>
 <h2 id="2-2-性能分析"><a href="#2-2-性能分析" class="headerlink" title="2.2 性能分析"></a>2.2 性能分析</h2><h2 id="2-3-SourceMap"><a href="#2-3-SourceMap" class="headerlink" title="2.3 SourceMap"></a>2.3 SourceMap</h2><p>生产环境打包后的代码，快速定位到源码。</p>
-<ol>
-<li><p>安装插件<br><code>yarn add @sentry/webpack-plugin --dev</code></p>
-</li>
-<li><p>根目录下新建 <code>.sentryclirc</code>，配置如下</p>
+<p>1、 安装插件<br><code>yarn add @sentry/webpack-plugin --dev</code></p>
+<p>2、根目录下新建 <code>.sentryclirc</code>，配置如下</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[defaults]</span><br><span class="line">url = http://xxx.xxx.xxx.xxx:9000/ </span><br><span class="line">org = sentry</span><br><span class="line">project = react</span><br><span class="line">[auth]</span><br><span class="line">token = xxxxxxxxxxxxxx</span><br></pre></td></tr></table></figure>
 
-</li>
-</ol>
-<p>1、url是sentry上报的网址<br>2、3、如下图<br><img src="https://jiafei2333.github.io/html/images/sentry-setting01.png" alt><br>4、token就是 API keys，Auth Tokens 新建一个令牌（注意生成token的时候要勾选 project:write 选项）</p>
+<p>① url是sentry上报的网址<br>② ③如下图<br><img src="https://jiafei2333.github.io/html/images/sentry-setting01.png" alt><br>④ token就是 API keys，Auth Tokens 新建一个令牌（注意生成token的时候要勾选 project:write 选项）</p>
 <p>3、配置插件参数<br>生产打包webpack配置：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> SentryPlugin (&#123;</span><br><span class="line">    release: <span class="string">"production@1.0.1"</span>,<span class="comment">//版本号  </span></span><br><span class="line">    include: path.join(__dirname,<span class="string">'../dist/'</span>), <span class="comment">//需要上传到sentry服务器的资源目录,会自动匹配js 以及map文件</span></span><br><span class="line">    ignore: [<span class="string">'node_modules'</span>], <span class="comment">//忽略文件目录,当然我们在inlcude中制定了文件路径,这个忽略目录可以不加</span></span><br><span class="line">    configFile :<span class="string">'.sentryclirc'</span>,  </span><br><span class="line">    urlPrefix : <span class="string">"~/"</span>    <span class="comment">//  线上对应的url资源的相对路径 比如我的域名是 http://XXX  .com/,静态资源都在 static文件夹里面,</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
@@ -471,22 +468,18 @@
 <p>4、配置Sentry dns参数</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Sentry.init(&#123;</span><br><span class="line">  dsn: <span class="string">"http://73779960f3a74f4b893f54b81b386020@121.40.178.235:9000/2"</span>,</span><br><span class="line">  release: <span class="string">"production@1.0.1"</span> <span class="comment">// 这个版本号与上一步一致</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
-<ol start="3">
-<li>配置<code>devtool</code></li>
-</ol>
+<p>5、 配置<code>devtool</code></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">devtool:isDev?<span class="string">'eval-cheap-module-source-map'</span> : <span class="string">'nosources-source-map'</span>, <span class="comment">// 'source-map'</span></span><br></pre></td></tr></table></figure>
 
 <p><img src="https://jiafei2333.github.io/html/images/sentry-sourceMap01.png" alt><br>从打包时间来看，<code>nosources-source-map</code> 耗时 58s左右，<code>source-map</code> 耗时 20s左右，可看具体需求配置。</p>
 <p>这样的话基本 source map配置就结束了，有几个问：</p>
 <p>1) <code>@sentry/wepback-plugin</code> 配置之后，打包之后的代码带.map文件，不能自动删除，部署到服务器时的时候需要手动删除。<br>2) 生产打包时同一个版本传到Sentry，.map和.js文件会一直追加，文件越来越多，需要手动删除。</p>
 <p>解决方案：可以尝试用<code>webpack-sentry-plugin</code>插件代替，上传完之后可自动删除.map文件且可以过滤.js文件不上传到Sentry服务器上，但是我没配成功….</p>
-<ol start="4">
-<li>配置 environment （可选）</li>
-</ol>
+<p>5、 配置 environment （可选）</p>
 <p>入口文件配置更改如下：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Sentry.init(&#123;</span><br><span class="line">  dsn: <span class="string">"http://xxxxx@xxx.xxx.xxx.xxx:9000/x"</span>,</span><br><span class="line">  release: <span class="string">"production@1.0.3"</span>,</span><br><span class="line">  environment: <span class="string">'env_react1'</span>, <span class="comment">// process.env.NODE_ENV 可以在Sentry-&gt;版本-&gt;环境区分</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
-<p>统一版本的还是放在一个版本下面，然后可以用环境进行区分</p>
+<p>配置了<code>environment</code>之后，可以在Sentry服务后台左侧版本菜单下查看，同一版本的还是放在一个版本下面，然后可以用环境进行区分</p>
 <h1 id="3-旧版报错方案"><a href="#3-旧版报错方案" class="headerlink" title="3. 旧版报错方案"></a>3. 旧版报错方案</h1><p>这部分的报错过程都是按照 <a href="https://blog.csdn.net/u010381752/article/details/90295010" target="_blank" rel="noopener">[Linux下搭建Sentry]</a> 这种方式安装的，没有仔细看 onpremise github文档导致的<del>~</del>记录下，毕竟装的时候太折磨了…</p>
 <ol>
 <li><a href="https://walkingsun.github.io/WindBlog/2019/01/18/docker_question/" target="_blank" rel="noopener">[dial tcp: lookup production.cloudflare.docker.com]</a></li>
