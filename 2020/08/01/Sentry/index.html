@@ -92,7 +92,10 @@
 <meta property="og:image" content="https://jiafei2333.github.io/html/images/sentry-email03-Pic.png">
 <meta property="og:image" content="https://jiafei2333.github.io/html/images/sentry-port-Pic.png">
 <meta property="og:image" content="https://jiafei2333.github.io/html/images/sentry-email02-Pic.png">
-<meta property="og:updated_time" content="2020-08-19T10:49:29.563Z">
+<meta property="og:image" content="https://jiafei2333.github.io/html/images/sentry-mail02.png">
+<meta property="og:image" content="https://jiafei2333.github.io/html/images/sentry-setting01.png">
+<meta property="og:image" content="https://jiafei2333.github.io/html/images/sentry-sourceMap01.png">
+<meta property="og:updated_time" content="2020-08-20T14:32:01.407Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端错误监控 Sentry">
 <meta name="twitter:description" content="1.Linux安装Sentry我这里用的是阿里云服务器：CenterOS7.8，CUP1核，内存4G。 步骤：1、 [CenterOS安装Docker]2、[docker配置阿里镜像] 这步很重要，速度不知道快了多少3、安装docker-compose  官网地址：https://docs.docker.com/compose/install/太慢了，我这里用phyon装的看这里https://b">
@@ -336,8 +339,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-08-19T18:49:29+08:00">
-                2020-08-19
+              <time title="更新于" itemprop="dateModified" datetime="2020-08-20T22:32:01+08:00">
+                2020-08-20
               </time>
             
           </span>
@@ -447,7 +450,7 @@
 <p>点击测试按钮，再发送测试邮件就能发送成功了。<br><img src="https://jiafei2333.github.io/html/images/sentry-email02-Pic.png" alt></p>
 <p>测试邮箱如上图能够发送成功，但是我本地测试了一下，当项目中报错时，错误日志信息已经发送到Sentry服务，但是并没有发送邮件。（我又点了发送测试邮件的按钮，能够发送邮件）</p>
 <p>配置钉钉：看这个步骤<a href="https://my.oschina.net/u/4290244/blog/3349141" target="_blank" rel="noopener">https://my.oschina.net/u/4290244/blog/3349141</a><br>获取自定义钉钉webhook <a href="https://ding-doc.dingtalk.com/doc#/serverapi2/qf2nxq" target="_blank" rel="noopener">https://ding-doc.dingtalk.com/doc#/serverapi2/qf2nxq</a></p>
-<p>【邮箱、钉钉一样，测试都能发送消息，实际项目中报错的时候都不能发送。】<br><a href="https://jiafei2333.github.io/html/images/sentry-mail02.png" target="_blank" rel="noopener"></a><br>邮箱一直能收到测试邮件….</p>
+<p>【邮箱、钉钉一样，测试都能发送消息，实际项目中报错的时候都不能发送。】<br><img src="https://jiafei2333.github.io/html/images/sentry-mail02.png" alt><br>邮箱一直能收到测试邮件….</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[This is an example Python exception] This is an example Python exception http://xxx.xxx.xxx.xxx:9000/organizations/sentry/issues/7/</span><br></pre></td></tr></table></figure>
 
 <p>点钉钉的测试按钮，机器人也能自动发送消息….</p>
@@ -460,7 +463,7 @@
 
 </li>
 </ol>
-<p>1、url是sentry上报的网址<br>2、3、如下图<br><a href="https://jiafei2333.github.io/html/images/sentry-setting01.png" target="_blank" rel="noopener"></a><br>4、token就是 API keys，Auth Tokens 新建一个令牌（注意生成token的时候要勾选 project:write 选项）</p>
+<p>1、url是sentry上报的网址<br>2、3、如下图<br><img src="https://jiafei2333.github.io/html/images/sentry-setting01.png" alt><br>4、token就是 API keys，Auth Tokens 新建一个令牌（注意生成token的时候要勾选 project:write 选项）</p>
 <p>3、配置插件参数<br>生产打包webpack配置：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> SentryPlugin (&#123;</span><br><span class="line">    release: <span class="string">"production@1.0.1"</span>,<span class="comment">//版本号  </span></span><br><span class="line">    include: path.join(__dirname,<span class="string">'../dist/'</span>), <span class="comment">//需要上传到sentry服务器的资源目录,会自动匹配js 以及map文件</span></span><br><span class="line">    ignore: [<span class="string">'node_modules'</span>], <span class="comment">//忽略文件目录,当然我们在inlcude中制定了文件路径,这个忽略目录可以不加</span></span><br><span class="line">    configFile :<span class="string">'.sentryclirc'</span>,  </span><br><span class="line">    urlPrefix : <span class="string">"~/"</span>    <span class="comment">//  线上对应的url资源的相对路径 比如我的域名是 http://XXX  .com/,静态资源都在 static文件夹里面,</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
@@ -473,7 +476,7 @@
 </ol>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">devtool:isDev?<span class="string">'eval-cheap-module-source-map'</span> : <span class="string">'nosources-source-map'</span>, <span class="comment">// 'source-map'</span></span><br></pre></td></tr></table></figure>
 
-<p><a href="https://jiafei2333.github.io/html/images/sentry-sourceMap01.png" target="_blank" rel="noopener"></a><br>从打包时间来看，<code>nosources-source-map</code> 耗时 58s左右，<code>source-map</code> 耗时 20s左右，可看具体需求配置。</p>
+<p><img src="https://jiafei2333.github.io/html/images/sentry-sourceMap01.png" alt><br>从打包时间来看，<code>nosources-source-map</code> 耗时 58s左右，<code>source-map</code> 耗时 20s左右，可看具体需求配置。</p>
 <p>这样的话基本 source map配置就结束了，有几个问：</p>
 <p>1) <code>@sentry/wepback-plugin</code> 配置之后，打包之后的代码带.map文件，不能自动删除，部署到服务器时的时候需要手动删除。<br>2) 生产打包时同一个版本传到Sentry，.map和.js文件会一直追加，文件越来越多，需要手动删除。</p>
 <p>解决方案：可以尝试用<code>webpack-sentry-plugin</code>插件代替，上传完之后可自动删除.map文件且可以过滤.js文件不上传到Sentry服务器上，但是我没配成功….</p>

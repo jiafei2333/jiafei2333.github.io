@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Hi 加菲">
 <meta property="og:description" content="1. loading动画12345678910111213141516171819202122232425262728293031323334353637383940414243444546.loadingImg&amp;#123;  animation: loadingCircle 1s infinite;  -webkit-animation: loadingCircle 1s infinite;&amp;#">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-08-06T14:34:34.814Z">
+<meta property="og:updated_time" content="2020-08-20T14:33:59.835Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="日常 CSS">
 <meta name="twitter:description" content="1. loading动画12345678910111213141516171819202122232425262728293031323334353637383940414243444546.loadingImg&amp;#123;  animation: loadingCircle 1s infinite;  -webkit-animation: loadingCircle 1s infinite;&amp;#">
@@ -330,8 +330,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-08-06T22:34:34+08:00">
-                2020-08-06
+              <time title="更新于" itemprop="dateModified" datetime="2020-08-20T22:33:59+08:00">
+                2020-08-20
               </time>
             
           </span>
@@ -387,6 +387,18 @@
 
       
         <h2 id="1-loading动画"><a href="#1-loading动画" class="headerlink" title="1. loading动画"></a>1. loading动画</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.loadingImg</span>&#123;</span><br><span class="line">  <span class="attribute">animation</span>: loadingCircle <span class="number">1s</span> infinite;</span><br><span class="line">  <span class="attribute">-webkit-animation</span>: loadingCircle <span class="number">1s</span> infinite;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.myTransform(@deg: 0deg)&#123;</span><br><span class="line">  <span class="selector-tag">transform</span>: <span class="selector-tag">rotate</span>(@<span class="keyword">deg</span>);</span><br><span class="line">  <span class="selector-tag">-webkit-transform</span>: <span class="selector-tag">rotate</span>(@<span class="keyword">deg</span>);</span><br><span class="line">  <span class="selector-tag">-moz-transform</span>: <span class="selector-tag">rotate</span>(@<span class="keyword">deg</span>);</span><br><span class="line">  <span class="selector-tag">-o-transform</span>: <span class="selector-tag">rotate</span>(@<span class="keyword">deg</span>);</span><br><span class="line">  <span class="selector-tag">-ms-transform</span>: <span class="selector-tag">rotate</span>(@<span class="keyword">deg</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@<span class="keyword">keyframes</span> loadingCircle&#123;</span><br><span class="line">  <span class="selector-tag">from</span>&#123;</span><br><span class="line">    .myTransform(@deg: 0deg)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-tag">to</span>&#123;</span><br><span class="line">    .myTransform(@deg: -360deg)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">@-<span class="keyword">moz</span>-<span class="keyword">keyframes</span> loadingCircle&#123;</span><br><span class="line">  <span class="selector-tag">from</span>&#123;</span><br><span class="line">    .myTransform(@deg: 0deg)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-tag">to</span>&#123;</span><br><span class="line">    .myTransform(@deg: -360deg)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">@-<span class="keyword">webkit</span>-<span class="keyword">keyframes</span> loadingCircle&#123;</span><br><span class="line">  <span class="selector-tag">from</span>&#123;</span><br><span class="line">    .myTransform(@deg: 0deg)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-tag">to</span>&#123;</span><br><span class="line">    .myTransform(@deg: -360deg)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@-<span class="keyword">o</span>-<span class="keyword">keyframes</span> loadingCircle&#123;</span><br><span class="line">  <span class="selector-tag">from</span>&#123;</span><br><span class="line">    .myTransform(@deg: 0deg)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-tag">to</span>&#123;</span><br><span class="line">    .myTransform(@deg: -360deg)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-文本溢出"><a href="#2-文本溢出" class="headerlink" title="2. 文本溢出"></a>2. 文本溢出</h2><p>单行</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">overflow</span>: <span class="selector-tag">hidden</span>;</span><br><span class="line"><span class="selector-tag">text-overflow</span><span class="selector-pseudo">:ellipsis</span>;</span><br><span class="line"><span class="selector-tag">white-space</span>: <span class="selector-tag">nowrap</span>;</span><br></pre></td></tr></table></figure>
+
+<p>多行</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">display</span>: <span class="selector-tag">-webkit-box</span>;</span><br><span class="line"><span class="selector-tag">-webkit-box-orient</span>: <span class="selector-tag">vertical</span>;</span><br><span class="line"><span class="selector-tag">-webkit-line-clamp</span>: 3;</span><br><span class="line"><span class="selector-tag">overflow</span>: <span class="selector-tag">hidden</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-取消边框"><a href="#3-取消边框" class="headerlink" title="3. 取消边框"></a>3. 取消边框</h2><p>表单元素在手机中点击时会出现边框，取消边框的写法如下：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">input</span>, <span class="selector-tag">textarea</span>, <span class="selector-tag">button</span>, <span class="selector-tag">a</span>&#123; <span class="attribute">-webkit-tap-highlight-color</span>:<span class="built_in">rgba</span>(0,0,0,0); &#125;</span><br></pre></td></tr></table></figure>
+
+<p>webkit是苹果浏览器引擎，tap点击，highlight背景高亮，color颜色，颜色用数值调节。</p>
+
       
     </div>
     
@@ -558,7 +570,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-loading动画"><span class="nav-text">1. loading动画</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-loading动画"><span class="nav-text">1. loading动画</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-文本溢出"><span class="nav-text">2. 文本溢出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-取消边框"><span class="nav-text">3. 取消边框</span></a></li></ol></div>
             
 
           </div>

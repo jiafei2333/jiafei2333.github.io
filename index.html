@@ -331,8 +331,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-08-06T22:34:34+08:00">
-                2020-08-06
+              <time title="更新于" itemprop="dateModified" datetime="2020-08-20T22:33:59+08:00">
+                2020-08-20
               </time>
             
           </span>
@@ -390,6 +390,18 @@
         
           
             <h2 id="1-loading动画"><a href="#1-loading动画" class="headerlink" title="1. loading动画"></a>1. loading动画</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.loadingImg</span>&#123;</span><br><span class="line">  <span class="attribute">animation</span>: loadingCircle <span class="number">1s</span> infinite;</span><br><span class="line">  <span class="attribute">-webkit-animation</span>: loadingCircle <span class="number">1s</span> infinite;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.myTransform(@deg: 0deg)&#123;</span><br><span class="line">  <span class="selector-tag">transform</span>: <span class="selector-tag">rotate</span>(@<span class="keyword">deg</span>);</span><br><span class="line">  <span class="selector-tag">-webkit-transform</span>: <span class="selector-tag">rotate</span>(@<span class="keyword">deg</span>);</span><br><span class="line">  <span class="selector-tag">-moz-transform</span>: <span class="selector-tag">rotate</span>(@<span class="keyword">deg</span>);</span><br><span class="line">  <span class="selector-tag">-o-transform</span>: <span class="selector-tag">rotate</span>(@<span class="keyword">deg</span>);</span><br><span class="line">  <span class="selector-tag">-ms-transform</span>: <span class="selector-tag">rotate</span>(@<span class="keyword">deg</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@<span class="keyword">keyframes</span> loadingCircle&#123;</span><br><span class="line">  <span class="selector-tag">from</span>&#123;</span><br><span class="line">    .myTransform(@deg: 0deg)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-tag">to</span>&#123;</span><br><span class="line">    .myTransform(@deg: -360deg)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">@-<span class="keyword">moz</span>-<span class="keyword">keyframes</span> loadingCircle&#123;</span><br><span class="line">  <span class="selector-tag">from</span>&#123;</span><br><span class="line">    .myTransform(@deg: 0deg)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-tag">to</span>&#123;</span><br><span class="line">    .myTransform(@deg: -360deg)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">@-<span class="keyword">webkit</span>-<span class="keyword">keyframes</span> loadingCircle&#123;</span><br><span class="line">  <span class="selector-tag">from</span>&#123;</span><br><span class="line">    .myTransform(@deg: 0deg)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-tag">to</span>&#123;</span><br><span class="line">    .myTransform(@deg: -360deg)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@-<span class="keyword">o</span>-<span class="keyword">keyframes</span> loadingCircle&#123;</span><br><span class="line">  <span class="selector-tag">from</span>&#123;</span><br><span class="line">    .myTransform(@deg: 0deg)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-tag">to</span>&#123;</span><br><span class="line">    .myTransform(@deg: -360deg)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-文本溢出"><a href="#2-文本溢出" class="headerlink" title="2. 文本溢出"></a>2. 文本溢出</h2><p>单行</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">overflow</span>: <span class="selector-tag">hidden</span>;</span><br><span class="line"><span class="selector-tag">text-overflow</span><span class="selector-pseudo">:ellipsis</span>;</span><br><span class="line"><span class="selector-tag">white-space</span>: <span class="selector-tag">nowrap</span>;</span><br></pre></td></tr></table></figure>
+
+<p>多行</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">display</span>: <span class="selector-tag">-webkit-box</span>;</span><br><span class="line"><span class="selector-tag">-webkit-box-orient</span>: <span class="selector-tag">vertical</span>;</span><br><span class="line"><span class="selector-tag">-webkit-line-clamp</span>: 3;</span><br><span class="line"><span class="selector-tag">overflow</span>: <span class="selector-tag">hidden</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-取消边框"><a href="#3-取消边框" class="headerlink" title="3. 取消边框"></a>3. 取消边框</h2><p>表单元素在手机中点击时会出现边框，取消边框的写法如下：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">input</span>, <span class="selector-tag">textarea</span>, <span class="selector-tag">button</span>, <span class="selector-tag">a</span>&#123; <span class="attribute">-webkit-tap-highlight-color</span>:<span class="built_in">rgba</span>(0,0,0,0); &#125;</span><br></pre></td></tr></table></figure>
+
+<p>webkit是苹果浏览器引擎，tap点击，highlight背景高亮，color颜色，颜色用数值调节。</p>
+
           
         
       
@@ -484,8 +496,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-08-19T18:50:11+08:00">
-                2020-08-19
+              <time title="更新于" itemprop="dateModified" datetime="2020-08-20T22:33:10+08:00">
+                2020-08-20
               </time>
             
           </span>
@@ -700,6 +712,30 @@
 <li><p>语义化的好处：<br>1）为了在没有CSS的情况下，页面也能呈现出很好地内容结构、代码结构<br>2）用户体验：例如title、alt用于解释名词<br>3）有利于SEO：利于被搜索引擎收录，更便于搜索引擎的爬虫程序来识别<br>4）方便其他设备解析（如屏幕阅读器、盲人阅读器、移动设备）以意义的方式来渲染网页<br>5）便于项目的开发及维护，使HTML代码更具有可读性</p>
 </li>
 </ol>
+<p>[参考答案]<br>很多时候我们写HTML，为了方便都会直接使用div和span标签，在通过class来确定具体样式。网站哪一部分为标题，哪一部分为导航，哪一部分为头部和尾部，都只能通过class来进行确定。 但是class命名规范却又没有一套统一的标准，依次导致很多时候无法确定整体网站的结构 因此，在HTML5出现后，添加了关于页面布局结构的新标签。而在html书写过程中，根据不同的内容使用合适的标签进行开发，即为语义化。</p>
+<p>在编程中，语义指的是一段代码的含义(这个HTML的元素有什么作用，扮演了什么样的角色)。HTML语义元素清楚地向浏览器和开发者描述其意义，例如form、table以及img等</p>
+<p>1.优点：对搜索引擎友好，有了良好的结构和语义，网页内容自然容易被搜索引擎抓取<br>2.HTML5新增语义元素 article aside details figcaption figure footer&gt; header main mark nav section summary time<br>3.为什么要语义化？<br>语义化的优势主要在于以下几点：<br> 其他开发者便于阅读代码，通过不同标签明白每个模块的作用和区别<br> 结构明确、语义清晰的页面能有更好的用户体验，在样式(css)没有加载前也有较为明确的结构，更如img这一类的，在图片无法加载的情况下有alt标签告知用户此处图片的具体内容；<br> 利于seo，语义化便于搜索引擎爬虫理解，和搜索引擎建立良好的沟通，能让爬虫爬取更多关键有效的信息<br> 方便其他设备阅读(如屏幕阅读器，盲人设备和移动设备等)<br>4.如何语义化？<br>一般的网站分为头部、导航、文章(或其他模块)、侧栏、底部，根据不同的部位，使用不同的标签进行书写。<br>表示页面不同位置的标签：header、nav、article、section、footer、aside<br>表示具体元素的作用或者意义的标签：a、abbr、address、audio、blockquote、caption、code、datalist、del、detail、ol、ul、figure、figuration、img、input、mark、p等</p>
+<ul>
+<li>尽可能少的使用无语义的标签div和span</li>
+<li>在语义不明显时，既可以使用div或者p时，尽量用p，因为p在默认情况下有上下间距，对兼容特殊终端有利；</li>
+<li>不要使用纯样式标签，如b、font、u等，改用css设置</li>
+<li>需要强调的文本，可以包含在strong或者em标签中(浏览器预设样式，能用css指定就不用他们)，strong默认样式是加粗(不要加b)，em是斜体(不用i)</li>
+<li>使用表格时，标题要用caption，表头用thead，主体部分用tbody包围，尾部用tfoot包围。表头和一般单元格要区分开，表头用th，，单元格用td</li>
+<li>表单域要用fieldset标签包起来，并用legend标签说明表单的用途</li>
+<li>每个input标签对应的说明文件都需要使用label标签。并且通过input设置为id属性，在label标签中设置for=someld来让说明文本和相对应的input关联起来</li>
+</ul>
+<p>5.注意点： em、strong、dfn、code、samp、kbd、var、cite等，虽然这些标签定义的文本大多会呈现处特殊的样式，但实际上，这些标签都拥有确切的语义 我们并不反对使用它们，但是如果您只是为了达到某种视觉效果而使用这些标签的话，我们建议您可以使用样式表，那么做会达到更加丰富的效果。</p>
+<h3 id="Q13-常见的plugin以及作用的总结"><a href="#Q13-常见的plugin以及作用的总结" class="headerlink" title="[Q13] 常见的plugin以及作用的总结"></a>[Q13] 常见的plugin以及作用的总结</h3><p>[A13] </p>
+<ol>
+<li><code>clean-webpack-plugin</code> 每次打包之前都清空dist目录下的文件</li>
+<li><code>html-webpack-plugin</code> 配置打包生成的html，以哪个文件为模板、生成的html文件名、压缩配置等。</li>
+<li><code>mini-css-extract-plugin</code> 抽离css样式，压缩配置</li>
+<li><code>speed-measure-webpack-plugin</code> 费时分析，可以查看打包、构建速度，很好的优化分析工具</li>
+<li><code>optimize-css-assets-webpack-plugin</code> css压缩</li>
+<li><code>terser-webpack-plugin</code> js压缩，配置<code>drop_console: true</code> 去掉所有console.log输出</li>
+<li><code>@sentry/webpack-plugin</code> 配置Sentry服务</li>
+<li><code>new webpack.HotModuleReplacementPlugin()</code> 模块热替换</li>
+</ol>
 
           
         
@@ -795,8 +831,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-08-19T18:49:29+08:00">
-                2020-08-19
+              <time title="更新于" itemprop="dateModified" datetime="2020-08-20T22:32:01+08:00">
+                2020-08-20
               </time>
             
           </span>
@@ -908,7 +944,7 @@
 <p>点击测试按钮，再发送测试邮件就能发送成功了。<br><img src="https://jiafei2333.github.io/html/images/sentry-email02-Pic.png" alt></p>
 <p>测试邮箱如上图能够发送成功，但是我本地测试了一下，当项目中报错时，错误日志信息已经发送到Sentry服务，但是并没有发送邮件。（我又点了发送测试邮件的按钮，能够发送邮件）</p>
 <p>配置钉钉：看这个步骤<a href="https://my.oschina.net/u/4290244/blog/3349141" target="_blank" rel="noopener">https://my.oschina.net/u/4290244/blog/3349141</a><br>获取自定义钉钉webhook <a href="https://ding-doc.dingtalk.com/doc#/serverapi2/qf2nxq" target="_blank" rel="noopener">https://ding-doc.dingtalk.com/doc#/serverapi2/qf2nxq</a></p>
-<p>【邮箱、钉钉一样，测试都能发送消息，实际项目中报错的时候都不能发送。】<br><a href="https://jiafei2333.github.io/html/images/sentry-mail02.png" target="_blank" rel="noopener"></a><br>邮箱一直能收到测试邮件….</p>
+<p>【邮箱、钉钉一样，测试都能发送消息，实际项目中报错的时候都不能发送。】<br><img src="https://jiafei2333.github.io/html/images/sentry-mail02.png" alt><br>邮箱一直能收到测试邮件….</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[This is an example Python exception] This is an example Python exception http://xxx.xxx.xxx.xxx:9000/organizations/sentry/issues/7/</span><br></pre></td></tr></table></figure>
 
 <p>点钉钉的测试按钮，机器人也能自动发送消息….</p>
@@ -921,7 +957,7 @@
 
 </li>
 </ol>
-<p>1、url是sentry上报的网址<br>2、3、如下图<br><a href="https://jiafei2333.github.io/html/images/sentry-setting01.png" target="_blank" rel="noopener"></a><br>4、token就是 API keys，Auth Tokens 新建一个令牌（注意生成token的时候要勾选 project:write 选项）</p>
+<p>1、url是sentry上报的网址<br>2、3、如下图<br><img src="https://jiafei2333.github.io/html/images/sentry-setting01.png" alt><br>4、token就是 API keys，Auth Tokens 新建一个令牌（注意生成token的时候要勾选 project:write 选项）</p>
 <p>3、配置插件参数<br>生产打包webpack配置：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> SentryPlugin (&#123;</span><br><span class="line">    release: <span class="string">"production@1.0.1"</span>,<span class="comment">//版本号  </span></span><br><span class="line">    include: path.join(__dirname,<span class="string">'../dist/'</span>), <span class="comment">//需要上传到sentry服务器的资源目录,会自动匹配js 以及map文件</span></span><br><span class="line">    ignore: [<span class="string">'node_modules'</span>], <span class="comment">//忽略文件目录,当然我们在inlcude中制定了文件路径,这个忽略目录可以不加</span></span><br><span class="line">    configFile :<span class="string">'.sentryclirc'</span>,  </span><br><span class="line">    urlPrefix : <span class="string">"~/"</span>    <span class="comment">//  线上对应的url资源的相对路径 比如我的域名是 http://XXX  .com/,静态资源都在 static文件夹里面,</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
@@ -934,7 +970,7 @@
 </ol>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">devtool:isDev?<span class="string">'eval-cheap-module-source-map'</span> : <span class="string">'nosources-source-map'</span>, <span class="comment">// 'source-map'</span></span><br></pre></td></tr></table></figure>
 
-<p><a href="https://jiafei2333.github.io/html/images/sentry-sourceMap01.png" target="_blank" rel="noopener"></a><br>从打包时间来看，<code>nosources-source-map</code> 耗时 58s左右，<code>source-map</code> 耗时 20s左右，可看具体需求配置。</p>
+<p><img src="https://jiafei2333.github.io/html/images/sentry-sourceMap01.png" alt><br>从打包时间来看，<code>nosources-source-map</code> 耗时 58s左右，<code>source-map</code> 耗时 20s左右，可看具体需求配置。</p>
 <p>这样的话基本 source map配置就结束了，有几个问：</p>
 <p>1) <code>@sentry/wepback-plugin</code> 配置之后，打包之后的代码带.map文件，不能自动删除，部署到服务器时的时候需要手动删除。<br>2) 生产打包时同一个版本传到Sentry，.map和.js文件会一直追加，文件越来越多，需要手动删除。</p>
 <p>解决方案：可以尝试用<code>webpack-sentry-plugin</code>插件代替，上传完之后可自动删除.map文件且可以过滤.js文件不上传到Sentry服务器上，但是我没配成功….</p>
