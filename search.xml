@@ -207,6 +207,16 @@
 <li><code>terser-webpack-plugin</code> js压缩，配置<code>drop_console: true</code> 去掉所有console.log输出</li>
 <li><code>@sentry/webpack-plugin</code> 配置Sentry服务</li>
 <li><code>new webpack.HotModuleReplacementPlugin()</code> 模块热替换</li>
+<li>webpack-bundle-analyzer: 可视化 Webpack 输出文件的体积 (业务组件、依赖第三方模块) 分析工具</li>
+</ol>
+<p>[参考答案]</p>
+<ol>
+<li>define-plugin：定义环境变量(Webpack4 之后指定 mode 会自动配置)</li>
+<li>ignore-plugin：忽略部分文件</li>
+<li>commons-chunk-plugin：提取公共代码</li>
+<li>webpack-parallel-uglify-plugin: 多进程执行代码压缩，提升构建速度</li>
+<li>serviceworker-webpack-plugin：为网页应用增加离线缓存功能</li>
+<li>ModuleConcatenationPlugin: 开启 Scope Hoisting</li>
 </ol>
 ]]></content>
       <categories>
@@ -332,7 +342,7 @@
 <figure class="highlight"><table><tr><td class="code"><pre><span class="line">"babel": "babel app.js -o ./dist/app.js"</span><br></pre></td></tr></table></figure>
 
 <p>App.js</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> func = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &lt;div&gt;</span><br><span class="line">      1</span><br><span class="line">      &#123;func()&#125;</span><br><span class="line">    &lt;/div&gt;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> func = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">      1</span></span><br><span class="line"><span class="xml">      &#123;func()&#125;</span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App;</span><br></pre></td></tr></table></figure>
 
 <p>执行 <code>yarn babel</code>，报错：</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&#123; <span class="attr">SyntaxError</span>: E:\hjf\test\babel-app\src\App.js: Support <span class="keyword">for</span> the experimental syntax <span class="string">'jsx'</span> isn<span class="string">'t currently enabled </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Add @babel/preset-react (https://git.io/JfeDR) to the '</span>presets<span class="string">' section of your Babel config to en                                                able transformation.</span></span><br></pre></td></tr></table></figure>
@@ -342,7 +352,7 @@
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="string">"@babel/plugin-syntax-jsx"</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>执行 <code>yarn babel</code>，生成/dist/app.js文件</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">let</span> func = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &lt;div&gt;</span><br><span class="line">      1</span><br><span class="line">      &#123;func()&#125;</span><br><span class="line">    &lt;/div&gt;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">let</span> func = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">      1</span></span><br><span class="line"><span class="xml">      &#123;func()&#125;</span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App;</span><br></pre></td></tr></table></figure>
 
 <p>没有任何变化…</p>
 <h3 id="Install-1"><a href="#Install-1" class="headerlink" title="[Install]"></a>[Install]</h3><p><code>yarn add @babel/preset-react --dev</code></p>
@@ -1442,8 +1452,8 @@ componentDidMount只在浏览器端执行，在componentDidMount被调用的时�
         <category>Redux</category>
       </categories>
       <tags>
-        <tag>React</tag>
         <tag>Redux</tag>
+        <tag>React</tag>
         <tag>Antd</tag>
       </tags>
   </entry>
@@ -1865,9 +1875,20 @@ componentDidMount只在浏览器端执行，在componentDidMount被调用的时�
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayHi</span>(<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(<span class="string">'防抖成功'</span>); <span class="keyword">this</span>.style.color = <span class="string">'red'</span>; &#125;</span><br></pre></td></tr></table></figure>
 
 <p>这个时候 <code>fn.apply(this, arguments);</code>的作用就显而易见了</p>
+<p>【应用场景】</p>
+<ol>
+<li>表单的连续点击，防止重复提交。比如重复发送一篇文章，提交按钮一直点，但是在一定的时间内只会触发一次。</li>
+<li>类百度的搜索，连续输入等输入停止后再搜索。</li>
+<li>一直拖动浏览器窗口，只想触发一次事件等。</li>
+</ol>
 <h3 id="节流"><a href="#节流" class="headerlink" title="节流"></a>节流</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> canRun = <span class="literal">true</span>; <span class="comment">// 通过闭包保存一个标记</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!canRun) <span class="keyword">return</span>; <span class="comment">// 在函数开头判断标记是否为true，不为true则return</span></span><br><span class="line">    canRun = <span class="literal">false</span>; <span class="comment">// 立即设置为false</span></span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123; <span class="comment">// 将外部传入的函数的执行放在setTimeout中</span></span><br><span class="line">      fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">      <span class="comment">// 最后在setTimeout执行完毕后再把标记设置为true(关键)表示可以执行下一次循环了。当定时器没有执行的时候标记永远是false，在开头被return掉</span></span><br><span class="line">      canRun = <span class="literal">true</span>;</span><br><span class="line">    &#125;, <span class="number">500</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayHi</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(e.target.innerWidth, e.target.innerHeight);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'resize'</span>, throttle(sayHi));</span><br></pre></td></tr></table></figure>
 
-<p>【应用场景】防抖可以是提交按钮一直点，但是在一定的时间内只会触发一次；节流可以是scroll，用滚动条计算高度的时候原先会实时计算，用节流，可以每隔例如300ms计算一次。</p>
+<p>【应用场景】</p>
+<ol>
+<li>节流可以是scroll，用滚动条计算高度的时候原先会实时计算，用节流，可以每隔例如300ms计算一次。</li>
+<li>自动保存草稿功能，当用户在输入的时候(一直触发事件),单位时间内只保存一次草稿。</li>
+<li>游戏中的刷新率</li>
+</ol>
 <h2 id="Q-介绍下-Set、Map、WeakSet-和-WeakMap-的区别？"><a href="#Q-介绍下-Set、Map、WeakSet-和-WeakMap-的区别？" class="headerlink" title="[Q] 介绍下 Set、Map、WeakSet 和 WeakMap 的区别？"></a>[Q] 介绍下 Set、Map、WeakSet 和 WeakMap 的区别？</h2><h2 id="Q-介绍下深度优先遍历和广度优先遍历，如何实现？"><a href="#Q-介绍下深度优先遍历和广度优先遍历，如何实现？" class="headerlink" title="[Q] 介绍下深度优先遍历和广度优先遍历，如何实现？"></a>[Q] 介绍下深度优先遍历和广度优先遍历，如何实现？</h2><h2 id="A"><a href="#A" class="headerlink" title="[A]"></a>[A]</h2><h2 id="Q-有以下-3-个判断数组的方法，请分别介绍它们之间的区别和优劣Object-prototype-toString-call-、-instanceof-以及-Array-isArray"><a href="#Q-有以下-3-个判断数组的方法，请分别介绍它们之间的区别和优劣Object-prototype-toString-call-、-instanceof-以及-Array-isArray" class="headerlink" title="[Q] 有以下 3 个判断数组的方法，请分别介绍它们之间的区别和优劣Object.prototype.toString.call() 、 instanceof 以及 Array.isArray() ?"></a>[Q] 有以下 3 个判断数组的方法，请分别介绍它们之间的区别和优劣Object.prototype.toString.call() 、 instanceof 以及 Array.isArray() ?</h2><h3 id="A-1"><a href="#A-1" class="headerlink" title="[A]"></a>[A]</h3><ol>
 <li>Object.prototype.toString.call()</li>
 </ol>

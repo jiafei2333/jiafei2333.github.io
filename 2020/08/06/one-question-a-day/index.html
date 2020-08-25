@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Hi 加菲">
 <meta property="og:description" content="[Q1] Loader和Plugin的区别是什么？[A1]   loader 用于加载某些资源文件，它是一个转换器，将A文件进行编译成B文件，比如：将A.less转换为A.css，单纯的文件转换过程。 因为webpack 本身只能打包commonjs规范的js文件，对于其他资源例如 css，图片，或者其他的语法集，比如 jsx，是没有办法加载的。 这就需要对应的loader将资源转化，加载进来。从">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-08-20T14:33:10.327Z">
+<meta property="og:updated_time" content="2020-08-25T01:13:16.609Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="每日一问">
 <meta name="twitter:description" content="[Q1] Loader和Plugin的区别是什么？[A1]   loader 用于加载某些资源文件，它是一个转换器，将A文件进行编译成B文件，比如：将A.less转换为A.css，单纯的文件转换过程。 因为webpack 本身只能打包commonjs规范的js文件，对于其他资源例如 css，图片，或者其他的语法集，比如 jsx，是没有办法加载的。 这就需要对应的loader将资源转化，加载进来。从">
@@ -330,8 +330,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-08-20T22:33:10+08:00">
-                2020-08-20
+              <time title="更新于" itemprop="dateModified" datetime="2020-08-25T09:13:16+08:00">
+                2020-08-25
               </time>
             
           </span>
@@ -567,6 +567,16 @@
 <li><code>terser-webpack-plugin</code> js压缩，配置<code>drop_console: true</code> 去掉所有console.log输出</li>
 <li><code>@sentry/webpack-plugin</code> 配置Sentry服务</li>
 <li><code>new webpack.HotModuleReplacementPlugin()</code> 模块热替换</li>
+<li>webpack-bundle-analyzer: 可视化 Webpack 输出文件的体积 (业务组件、依赖第三方模块) 分析工具</li>
+</ol>
+<p>[参考答案]</p>
+<ol>
+<li>define-plugin：定义环境变量(Webpack4 之后指定 mode 会自动配置)</li>
+<li>ignore-plugin：忽略部分文件</li>
+<li>commons-chunk-plugin：提取公共代码</li>
+<li>webpack-parallel-uglify-plugin: 多进程执行代码压缩，提升构建速度</li>
+<li>serviceworker-webpack-plugin：为网页应用增加离线缓存功能</li>
+<li>ModuleConcatenationPlugin: 开启 Scope Hoisting</li>
 </ol>
 
       

@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Hi 加菲">
 <meta property="og:description" content="CSS[Q1] 已知如下代码，如何修改才能让图片宽度为 300px ？注意下面代码不可修改。1&amp;lt;img src=&quot;1.jpg&quot; style=&quot;width:480px!important;”&amp;gt;  [A1]没有顺序，置前置后都生效1、max-width: 300px;2、transform: scale(0.625,0.625);3、zoom: 0.5;    （zoom的缩放是相对于左上">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-08-19T10:53:07.892Z">
+<meta property="og:updated_time" content="2020-08-25T01:19:09.958Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="100道前端面试题">
 <meta name="twitter:description" content="CSS[Q1] 已知如下代码，如何修改才能让图片宽度为 300px ？注意下面代码不可修改。1&amp;lt;img src=&quot;1.jpg&quot; style=&quot;width:480px!important;”&amp;gt;  [A1]没有顺序，置前置后都生效1、max-width: 300px;2、transform: scale(0.625,0.625);3、zoom: 0.5;    （zoom的缩放是相对于左上">
@@ -330,8 +330,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-08-19T18:53:07+08:00">
-                2020-08-19
+              <time title="更新于" itemprop="dateModified" datetime="2020-08-25T09:19:09+08:00">
+                2020-08-25
               </time>
             
           </span>
@@ -444,9 +444,20 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayHi</span>(<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(<span class="string">'防抖成功'</span>); <span class="keyword">this</span>.style.color = <span class="string">'red'</span>; &#125;</span><br></pre></td></tr></table></figure>
 
 <p>这个时候 <code>fn.apply(this, arguments);</code>的作用就显而易见了</p>
+<p>【应用场景】</p>
+<ol>
+<li>表单的连续点击，防止重复提交。比如重复发送一篇文章，提交按钮一直点，但是在一定的时间内只会触发一次。</li>
+<li>类百度的搜索，连续输入等输入停止后再搜索。</li>
+<li>一直拖动浏览器窗口，只想触发一次事件等。</li>
+</ol>
 <h3 id="节流"><a href="#节流" class="headerlink" title="节流"></a>节流</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> canRun = <span class="literal">true</span>; <span class="comment">// 通过闭包保存一个标记</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!canRun) <span class="keyword">return</span>; <span class="comment">// 在函数开头判断标记是否为true，不为true则return</span></span><br><span class="line">    canRun = <span class="literal">false</span>; <span class="comment">// 立即设置为false</span></span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123; <span class="comment">// 将外部传入的函数的执行放在setTimeout中</span></span><br><span class="line">      fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">      <span class="comment">// 最后在setTimeout执行完毕后再把标记设置为true(关键)表示可以执行下一次循环了。当定时器没有执行的时候标记永远是false，在开头被return掉</span></span><br><span class="line">      canRun = <span class="literal">true</span>;</span><br><span class="line">    &#125;, <span class="number">500</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayHi</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(e.target.innerWidth, e.target.innerHeight);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'resize'</span>, throttle(sayHi));</span><br></pre></td></tr></table></figure>
 
-<p>【应用场景】防抖可以是提交按钮一直点，但是在一定的时间内只会触发一次；节流可以是scroll，用滚动条计算高度的时候原先会实时计算，用节流，可以每隔例如300ms计算一次。</p>
+<p>【应用场景】</p>
+<ol>
+<li>节流可以是scroll，用滚动条计算高度的时候原先会实时计算，用节流，可以每隔例如300ms计算一次。</li>
+<li>自动保存草稿功能，当用户在输入的时候(一直触发事件),单位时间内只保存一次草稿。</li>
+<li>游戏中的刷新率</li>
+</ol>
 <h2 id="Q-介绍下-Set、Map、WeakSet-和-WeakMap-的区别？"><a href="#Q-介绍下-Set、Map、WeakSet-和-WeakMap-的区别？" class="headerlink" title="[Q] 介绍下 Set、Map、WeakSet 和 WeakMap 的区别？"></a>[Q] 介绍下 Set、Map、WeakSet 和 WeakMap 的区别？</h2><h2 id="Q-介绍下深度优先遍历和广度优先遍历，如何实现？"><a href="#Q-介绍下深度优先遍历和广度优先遍历，如何实现？" class="headerlink" title="[Q] 介绍下深度优先遍历和广度优先遍历，如何实现？"></a>[Q] 介绍下深度优先遍历和广度优先遍历，如何实现？</h2><h2 id="A"><a href="#A" class="headerlink" title="[A]"></a>[A]</h2><h2 id="Q-有以下-3-个判断数组的方法，请分别介绍它们之间的区别和优劣Object-prototype-toString-call-、-instanceof-以及-Array-isArray"><a href="#Q-有以下-3-个判断数组的方法，请分别介绍它们之间的区别和优劣Object-prototype-toString-call-、-instanceof-以及-Array-isArray" class="headerlink" title="[Q] 有以下 3 个判断数组的方法，请分别介绍它们之间的区别和优劣Object.prototype.toString.call() 、 instanceof 以及 Array.isArray() ?"></a>[Q] 有以下 3 个判断数组的方法，请分别介绍它们之间的区别和优劣Object.prototype.toString.call() 、 instanceof 以及 Array.isArray() ?</h2><h3 id="A-1"><a href="#A-1" class="headerlink" title="[A]"></a>[A]</h3><ol>
 <li>Object.prototype.toString.call()</li>
 </ol>
