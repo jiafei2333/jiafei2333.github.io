@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Hi 加菲">
 <meta property="og:description" content="[Q1] Loader和Plugin的区别是什么？[A1]   loader 用于加载某些资源文件，它是一个转换器，将A文件进行编译成B文件，比如：将A.less转换为A.css，单纯的文件转换过程。 因为webpack 本身只能打包commonjs规范的js文件，对于其他资源例如 css，图片，或者其他的语法集，比如 jsx，是没有办法加载的。 这就需要对应的loader将资源转化，加载进来。从">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-08-25T01:13:16.609Z">
+<meta property="og:updated_time" content="2021-05-25T07:28:13.618Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="每日一问">
 <meta name="twitter:description" content="[Q1] Loader和Plugin的区别是什么？[A1]   loader 用于加载某些资源文件，它是一个转换器，将A文件进行编译成B文件，比如：将A.less转换为A.css，单纯的文件转换过程。 因为webpack 本身只能打包commonjs规范的js文件，对于其他资源例如 css，图片，或者其他的语法集，比如 jsx，是没有办法加载的。 这就需要对应的loader将资源转化，加载进来。从">
@@ -330,8 +330,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-08-25T09:13:16+08:00">
-                2020-08-25
+              <time title="更新于" itemprop="dateModified" datetime="2021-05-25T15:28:13+08:00">
+                2021-05-25
               </time>
             
           </span>
@@ -505,14 +505,13 @@
 <p>存储型<br>存储型，将恶意脚本存储了起来，确实，存储型的XSS将脚本存储到了服务端的数据库，然后在客户端执行这些脚本，从而达到攻击的效果</p>
 <p>常见的场景是留言评论区提交一段代码，如果前后端没有做好转义的工作，那评论内容存到了数据库，在页面渲染过程中直接执行，相当于执行一段位置逻辑的js代码，是非常恐怖的。这就是存储型的xss攻击</p>
 <p>反射型<br>反射型xss指的是恶意脚本作为网络请求的一部分 比如我输入</p>
-<p><a href="http://baidu.com?q=" target="_blank" rel="noopener">http://baidu.com?q=</a><script>alert("你完蛋了")</script><br>这样在服务端会拿到q参数，然后将内容返回给浏览器端，浏览器将这些内容作为HTML的一部分解析，发现是一个脚本，直接执行，这样被攻击了</p>
+<p><code>http://baidu.com?q=&lt;script&gt;alert(&quot;你完蛋了&quot;)&lt;/script&gt;</code><br>这样在服务端会拿到q参数，然后将内容返回给浏览器端，浏览器将这些内容作为HTML的一部分解析，发现是一个脚本，直接执行，这样被攻击了</p>
 <p>之所以叫它反射型，是因为恶意脚本是通过作为网络请求的参数，经过服务器，然后在反射到HTML文档中，执行解析。和存储型不一样的是：服务器并不会存储这些恶意脚本</p>
 <p>文档型<br>文档型的XSS攻击并不会经过服务端，而是作为中间人的角色，在数据传输过程劫持到网络数据包，然后修改里面的html文档 这样的劫持方式包括wifi路由劫持或者本地恶意软件等</p>
 <p>防范措施<br>明白三种xss攻击的原理，发现一个共同点：都是让恶意脚本直接能在浏览器中执行 那么要防范它，就是要避免这些脚本代码的执行 为了完成这一点，必须做到一个信念，两个利用。</p>
 <p>一个信念<br>千万不要相信任何用户的输入！ 无论是在前端和服务端，都要对用户的输入进行转码或过滤</p>
 <p>如</p>
-<script>alert('你完了！')</script>
-<p>转码后变为：</p>
+<p><code>&lt;script&gt;alert(&#39;你完了！&#39;)&lt;/script&gt;</code><br>转码后变为：</p>
 <p>&lt;script&gt;alert(&#39;你完蛋了&#39;)&lt;/script&gt;<br>这样的代码在html解析的过程中是无法执行的 当然也可以利用关键词过滤的方式，将script标签给删除。那么现在的内容只剩下</p>
 <p>什么都没有</p>
 <p>利用CSP<br>CSP，即浏览器中的内容安全策略，它的核心思想就是服务器决定浏览器加载哪些资源，具体来说可以完成以下功能： 1.限制其他域下的资源加载 2.禁止向其他域提交数据 3.提供上报机制，能帮助我们及时发现XSS攻击</p>
@@ -699,7 +698,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-count">82</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -721,7 +720,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -774,7 +773,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

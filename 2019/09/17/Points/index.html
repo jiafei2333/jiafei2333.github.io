@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Hi 加菲">
 <meta property="og:description" content="for…of &amp;amp; for…infor…of mdn上的解释：for…of语句在可迭代对象（包括 Array，Map，Set，String，TypedArray，arguments 对象等等）上创建一个迭代循环，调用自定义迭代钩子，并为每个不同属性的值执行语句  1234567891011121314function* foo()&amp;#123;  yield 1;  yield 2;&amp;#125">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-11T12:58:16.000Z">
+<meta property="og:updated_time" content="2021-05-25T08:13:46.934Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript基础知识梳理">
 <meta name="twitter:description" content="for…of &amp;amp; for…infor…of mdn上的解释：for…of语句在可迭代对象（包括 Array，Map，Set，String，TypedArray，arguments 对象等等）上创建一个迭代循环，调用自定义迭代钩子，并为每个不同属性的值执行语句  1234567891011121314function* foo()&amp;#123;  yield 1;  yield 2;&amp;#125">
@@ -329,8 +329,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-12-11T20:58:16+08:00">
-                2019-12-11
+              <time title="更新于" itemprop="dateModified" datetime="2021-05-25T16:13:46+08:00">
+                2021-05-25
               </time>
             
           </span>
@@ -397,7 +397,7 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">a</span>:<span class="number">1</span>, <span class="attr">b</span>:<span class="number">2</span>, <span class="attr">c</span>:<span class="number">3</span>&#125;;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> prop <span class="keyword">in</span> obj) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(prop);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// "a" "b" "c"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 也可以遍历数组</span></span><br><span class="line"><span class="keyword">let</span> arr = [<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">in</span> arr)&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(i, arr[i])</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// "0" 3</span></span><br><span class="line"><span class="comment">// "1" 4</span></span><br><span class="line"><span class="comment">// "2" 5</span></span><br></pre></td></tr></table></figure>
 
 <p>示例</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//for of  for in </span></span><br><span class="line"><span class="keyword">let</span> arr = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>];</span><br><span class="line"><span class="comment">//迭代每一项的值，一般适用于数组 或者 </span></span><br><span class="line"><span class="comment">//for of 是用来迭代那些实现了迭代器功能的对象</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> item <span class="keyword">of</span> arr)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(item); <span class="comment">// a b c</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> item <span class="keyword">in</span> arr)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(item); <span class="comment">// 0 1 2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> obj = &#123;<span class="attr">name</span>:<span class="string">'zhufeng'</span>,<span class="attr">age</span>:<span class="number">10</span>&#125;</span><br><span class="line"><span class="comment">//for in 是 迭代对的属性的</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> item <span class="keyword">in</span> obj)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(item); <span class="comment">// name   age</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//for of  for in </span></span><br><span class="line"><span class="keyword">let</span> arr = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>];</span><br><span class="line"><span class="comment">//迭代每一项的值，一般适用于数组 或者 </span></span><br><span class="line"><span class="comment">//for of 是用来迭代那些实现了迭代器功能的对象</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> item <span class="keyword">of</span> arr)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(item); <span class="comment">// a b c</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> item <span class="keyword">in</span> arr)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(item); <span class="comment">// 0 1 2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> obj = &#123;<span class="attr">name</span>:<span class="string">'jiafei'</span>,<span class="attr">age</span>:<span class="number">10</span>&#125;</span><br><span class="line"><span class="comment">//for in 是 迭代对的属性的</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> item <span class="keyword">in</span> obj)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(item); <span class="comment">// name   age</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="Array-from-amp-…"><a href="#Array-from-amp-…" class="headerlink" title="Array.from  &amp;  …"></a>Array.from  &amp;  …</h2><h2 id="Array-对数组的操作"><a href="#Array-对数组的操作" class="headerlink" title="Array 对数组的操作"></a>Array 对数组的操作</h2><h3 id="slice"><a href="#slice" class="headerlink" title="slice"></a>slice</h3><blockquote>
 <p>slice() 方法返回一个新的数组对象，这一对象是一个由 begin 和 end 决定的原数组的浅拷贝（包括 begin，不包括end）。原始数组不会被改变。</p>
@@ -526,7 +526,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-count">82</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -548,7 +548,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -601,7 +601,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

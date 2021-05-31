@@ -91,7 +91,7 @@
 <meta property="og:image" content="https://jiafei2333.github.io/html/images/css-flex.png">
 <meta property="og:image" content="https://jiafei2333.github.io/html/images/js-base02.jpg">
 <meta property="og:image" content="https://jiafei2333.github.io/html/images/js-base03.png">
-<meta property="og:updated_time" content="2020-03-11T12:36:50.061Z">
+<meta property="og:updated_time" content="2021-05-25T08:13:05.477Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端面试题4天训练营">
 <meta name="twitter:description" content="第一天非常有必要和大家聊的三个话题1. 大前端时代需要掌握的技术栈HTML5 https://developer.mozilla.org/zh-CN/docs/Web/Guide/HTML/HTML5   语义化标签类  &amp;lt;article&amp;gt;&amp;lt;/article&amp;gt;、&amp;lt;footer&amp;gt;&amp;lt;/footer&amp;gt;、&amp;lt;header&amp;gt;&amp;lt;/header&amp;g">
@@ -335,8 +335,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-03-11T20:36:50+08:00">
-                2020-03-11
+              <time title="更新于" itemprop="dateModified" datetime="2021-05-25T16:13:05+08:00">
+                2021-05-25
               </time>
             
           </span>
@@ -647,7 +647,7 @@
 <ol start="2">
 <li>BAT笔试题中几道关于堆栈内存和闭包作用域的题</li>
 </ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a=&#123;&#125;, b=<span class="string">'0'</span>, c=<span class="number">0</span>;  </span><br><span class="line">a[b]=<span class="string">'珠峰'</span>;</span><br><span class="line">a[c]=<span class="string">'培训'</span>;  </span><br><span class="line"><span class="built_in">console</span>.log(a[b]);</span><br><span class="line"><span class="comment">// 对象中属性名不能重复，数字属性名=对象属性名</span></span><br><span class="line"><span class="comment">//衍生=&gt; 对象和数组的区别</span></span><br><span class="line">---------------------</span><br><span class="line"><span class="comment">//example 2</span></span><br><span class="line"><span class="keyword">let</span> a=&#123;&#125;, b=<span class="built_in">Symbol</span>(<span class="string">'1'</span>), c=<span class="built_in">Symbol</span>(<span class="string">'1'</span>);  </span><br><span class="line">a[b]=<span class="string">'珠峰'</span>;</span><br><span class="line">a[c]=<span class="string">'培训'</span>;  </span><br><span class="line"><span class="built_in">console</span>.log(a[b]);</span><br><span class="line"><span class="comment">// 衍生 =&gt; 自己实现一个Symbol</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">---------------------</span><br><span class="line"><span class="comment">//example 3</span></span><br><span class="line"><span class="keyword">let</span> a=&#123;&#125;, b=&#123;<span class="attr">n</span>:<span class="string">'1'</span>&#125;, c=&#123;<span class="attr">m</span>:<span class="string">'2'</span>&#125;;  </span><br><span class="line">a[b]=<span class="string">'珠峰'</span>;</span><br><span class="line">a[c]=<span class="string">'培训'</span>;  </span><br><span class="line"><span class="built_in">console</span>.log(a[b]);</span><br><span class="line"><span class="comment">//衍生=&gt; Object.prototype.toString项目中的应用 和 valueOf的区别</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a=&#123;&#125;, b=<span class="string">'0'</span>, c=<span class="number">0</span>;  </span><br><span class="line">a[b]=<span class="string">'加菲'</span>;</span><br><span class="line">a[c]=<span class="string">'培训'</span>;  </span><br><span class="line"><span class="built_in">console</span>.log(a[b]);</span><br><span class="line"><span class="comment">// 对象中属性名不能重复，数字属性名=对象属性名</span></span><br><span class="line"><span class="comment">//衍生=&gt; 对象和数组的区别</span></span><br><span class="line">---------------------</span><br><span class="line"><span class="comment">//example 2</span></span><br><span class="line"><span class="keyword">let</span> a=&#123;&#125;, b=<span class="built_in">Symbol</span>(<span class="string">'1'</span>), c=<span class="built_in">Symbol</span>(<span class="string">'1'</span>);  </span><br><span class="line">a[b]=<span class="string">'加菲'</span>;</span><br><span class="line">a[c]=<span class="string">'培训'</span>;  </span><br><span class="line"><span class="built_in">console</span>.log(a[b]);</span><br><span class="line"><span class="comment">// 衍生 =&gt; 自己实现一个Symbol</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">---------------------</span><br><span class="line"><span class="comment">//example 3</span></span><br><span class="line"><span class="keyword">let</span> a=&#123;&#125;, b=&#123;<span class="attr">n</span>:<span class="string">'1'</span>&#125;, c=&#123;<span class="attr">m</span>:<span class="string">'2'</span>&#125;;  </span><br><span class="line">a[b]=<span class="string">'加菲'</span>;</span><br><span class="line">a[c]=<span class="string">'培训'</span>;  </span><br><span class="line"><span class="built_in">console</span>.log(a[b]);</span><br><span class="line"><span class="comment">//衍生=&gt; Object.prototype.toString项目中的应用 和 valueOf的区别</span></span><br></pre></td></tr></table></figure>
 
 <p>如图：<br>obj里面存{name:’xxx’}转化为”[object Object]”这个字符串，通过toString()转化，可以知道，所有对象，不管存的是什么，toString()之后的结果都是字符串”[object Object]”<br>堆内存：存储引用类型值的空间；<br>栈内存：存储基本类型值和执行代码的环境。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> test = (<span class="function"><span class="keyword">function</span>(<span class="params">i</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        alert(i*=<span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)(<span class="number">2</span>);</span><br><span class="line">test(<span class="number">5</span>);</span><br></pre></td></tr></table></figure>
@@ -802,7 +802,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-count">82</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -824,7 +824,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -877,7 +877,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
